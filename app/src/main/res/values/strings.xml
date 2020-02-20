@@ -7,4 +7,5 @@
     <string name="title_activity_home">Home</string>
     <string name="pseudo">Pseudo</string>
     <string name="title_activity_signup">signup</string>
+    <string name="pas_encore_de_compte">Pas encore de compte ?</string>
 </resources>

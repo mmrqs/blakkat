@@ -1,7 +1,6 @@
 package fr.efrei.android.blakkat;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,7 +11,7 @@ import android.widget.EditText;
 import fr.efrei.android.blakkat.model.User;
 import fr.efrei.android.blakkat.model.manager.UserManager;
 
-public class Signup extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
 
     private Button btnReturn;
     private Button btnSignup;
@@ -48,7 +47,7 @@ public class Signup extends AppCompatActivity {
     public void Return() {
         setContentView(R.layout.activity_main);
 
-        Intent mainIntent = new Intent(Signup.this, MainActivity.class);
+        Intent mainIntent = new Intent(SignupActivity.this, MainActivity.class);
         startActivity(mainIntent);
     }
 
@@ -63,7 +62,7 @@ public class Signup extends AppCompatActivity {
             editor.putString("Pseudo",pseudo);
             editor.commit();
 
-            Intent homeIntent = new Intent(Signup.this, Home.class);
+            Intent homeIntent = new Intent(SignupActivity.this, Home.class);
             startActivity(homeIntent);
         } else {
             editTextPseudo.setError("This pseudo already exists");

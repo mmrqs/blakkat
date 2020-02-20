@@ -29,24 +29,54 @@
 
         <EditText
             android:id="@+id/editText_Pseudo"
-            android:layout_width="match_parent"
+            android:layout_width="341dp"
             android:layout_height="wrap_content"
+            android:autofillHints=""
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/pseudo"
-            android:autofillHints="" />
+            android:text="@string/pseudo" />
 
         <Button
             android:id="@+id/signin"
-            android:layout_width="266dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="@string/sign_in" />
 
-        <Button
-            android:id="@+id/signup"
-            android:layout_width="267dp"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_up" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="bottom">
+
+            <TextView
+                android:id="@+id/textViewHome"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:text="@string/pas_encore_de_compte"
+                android:layout_marginLeft="15dp"
+                android:textColor="#9B9B9B"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/signup"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="@string/sign_up"
+                android:textColor="#B40606"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

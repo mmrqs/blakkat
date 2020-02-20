@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -22,9 +23,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-
-
 
         btnSignup = findViewById(R.id.signup);
         editTextPseudo = findViewById(R.id.editText_Pseudo);
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signup() {
-        Intent signupIntent = new Intent(MainActivity.this, Signup.class);
+        Intent signupIntent = new Intent(MainActivity.this, SignupActivity.class);
         startActivity(signupIntent);
     }
 

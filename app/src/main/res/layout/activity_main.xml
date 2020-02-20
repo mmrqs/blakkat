@@ -18,6 +18,7 @@
             android:layout_gravity="center_horizontal"
             android:contentDescription="TODO"
             app:srcCompat="@drawable/logoblakkatdark" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -25,6 +26,15 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editText_Pseudo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@string/pseudo"
+            android:autofillHints="" />
 
         <Button
             android:id="@+id/signin"

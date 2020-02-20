@@ -4,4 +4,7 @@
     <string name="sign_in">Sign In</string>
     <string name="todo">TODO</string>
     <string name="logo">logo</string>
+    <string name="title_activity_home">Home</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="title_activity_signup">signup</string>
 </resources>

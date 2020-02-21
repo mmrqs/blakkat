@@ -11,6 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import fr.efrei.android.blakkat.model.manager.UserManager;
+import fr.efrei.android.blakkat.model.provider.EnvelopeConverter;
+import fr.efrei.android.blakkat.model.provider.ISerieProvider;
+import fr.efrei.android.blakkat.model.provider.Serie;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +38,26 @@ public class MainActivity extends AppCompatActivity {
         editTextPseudo = findViewById(R.id.editText_Pseudo);
         btnSignin = findViewById(R.id.signin);
         pref = getSharedPreferences("Pseudo",MODE_PRIVATE);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.betaseries.com/")
+                .addConverterFactory(new EnvelopeConverter())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ISerieProvider provider = retrofit.create(ISerieProvider.class);
+
+        provider.getOne(1).enqueue(new Callback<Serie>() {
+            @Override
+            public void onResponse(Call<Serie> call, Response<Serie> response) {
+                editTextPseudo.setText(response.body().getTitle());
+            }
+
+            @Override
+            public void onFailure(Call<Serie> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override

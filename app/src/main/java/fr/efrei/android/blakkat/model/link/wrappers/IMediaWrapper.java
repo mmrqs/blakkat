@@ -1,7 +1,10 @@
-package fr.efrei.android.blakkat.model.provider.wrappers;
+package fr.efrei.android.blakkat.model.link.wrappers;
 
-import fr.efrei.android.blakkat.model.provider.medias.Media;
+import java.util.List;
+
+import fr.efrei.android.blakkat.model.link.medias.Media;
 
 public interface IMediaWrapper<T extends Media> {
     T getMedia();
+    List<T> getMedias();
 }

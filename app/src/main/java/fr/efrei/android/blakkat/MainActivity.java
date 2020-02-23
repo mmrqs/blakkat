@@ -9,10 +9,12 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.List;
+
+import fr.efrei.android.blakkat.model.link.converters.WrapperConverter;
+import fr.efrei.android.blakkat.model.link.providers.IMovieProvider;
 import fr.efrei.android.blakkat.model.manager.UserManager;
-import fr.efrei.android.blakkat.model.provider.IShowProvider;
-import fr.efrei.android.blakkat.model.provider.Show;
-import fr.efrei.android.blakkat.model.provider.WrapperConverter;
+import fr.efrei.android.blakkat.model.link.medias.Movie;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,22 +46,21 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        IShowProvider provider = retrofit.create(IShowProvider.class);
+        IMovieProvider provider = retrofit.create(IMovieProvider.class);
 
-        provider.getOne(1).enqueue(new Callback<Show>() {
+        provider.getList().enqueue(new Callback<List<Movie>>() {
             @Override
-            public void onResponse(Call<Show> call, Response<Show> response) {
-                editTextPseudo.setText(response.body().getTitle());
+            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+                editTextPseudo.setText(response.body().get(35).getTitle());
             }
 
             @Override
-            public void onFailure(Call<Show> call, Throwable t) {
+            public void onFailure(Call<List<Movie>> call, Throwable t) {
                 t.printStackTrace();
             }
         });
 
         btnSignin.setOnClickListener(view -> signin(editTextPseudo.getText().toString()));
-
         btnSignup.setOnClickListener(view -> signup());
     }
 

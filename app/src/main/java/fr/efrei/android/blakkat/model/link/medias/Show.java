@@ -1,4 +1,4 @@
-package fr.efrei.android.blakkat.model.provider.medias;
+package fr.efrei.android.blakkat.model.link.medias;
 
 public class Show implements Media {
     private int id;

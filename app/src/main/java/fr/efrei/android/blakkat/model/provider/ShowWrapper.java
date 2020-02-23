@@ -1,6 +1,6 @@
 package fr.efrei.android.blakkat.model.provider;
 
-public class ShowWrapper {
+public class ShowWrapper implements IMediaWrapper {
     private Show show;
 
     public ShowWrapper() {}
@@ -11,5 +11,10 @@ public class ShowWrapper {
 
     public void setShow(Show show) {
         this.show = show;
+    }
+
+    @Override
+    public Media getMedia() {
+        return show;
     }
 }

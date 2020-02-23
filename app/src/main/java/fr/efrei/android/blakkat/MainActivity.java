@@ -11,7 +11,8 @@ import android.widget.EditText;
 
 import fr.efrei.android.blakkat.model.manager.UserManager;
 import fr.efrei.android.blakkat.model.provider.IShowProvider;
-import fr.efrei.android.blakkat.model.provider.ShowWrapper;
+import fr.efrei.android.blakkat.model.provider.Show;
+import fr.efrei.android.blakkat.model.provider.WrapperConverter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,19 +40,20 @@ public class MainActivity extends AppCompatActivity {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.betaseries.com/")
+                .addConverterFactory(new WrapperConverter())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         IShowProvider provider = retrofit.create(IShowProvider.class);
 
-        provider.getOne(1).enqueue(new Callback<ShowWrapper>() {
+        provider.getOne(1).enqueue(new Callback<Show>() {
             @Override
-            public void onResponse(Call<ShowWrapper> call, Response<ShowWrapper> response) {
-                editTextPseudo.setText(response.body().getShow().getTitle());
+            public void onResponse(Call<Show> call, Response<Show> response) {
+                editTextPseudo.setText(response.body().getTitle());
             }
 
             @Override
-            public void onFailure(Call<ShowWrapper> call, Throwable t) {
+            public void onFailure(Call<Show> call, Throwable t) {
                 t.printStackTrace();
             }
         });

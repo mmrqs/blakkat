@@ -1,6 +1,6 @@
 package fr.efrei.android.blakkat.model.provider;
 
-public class Show {
+public class Show implements Media {
     private int id;
     private String title;
 

@@ -8,5 +8,5 @@ public interface IShowProvider {
     String KEY = "b0781d3bbc01";
 
     @GET("shows/display?key=" + KEY)
-    Call<ShowWrapper> getOne(@Query("id")int id);
+    Call<Show> getOne(@Query("id")int id);
 }

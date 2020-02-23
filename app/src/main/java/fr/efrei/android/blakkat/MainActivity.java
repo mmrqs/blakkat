@@ -5,15 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
 import fr.efrei.android.blakkat.model.manager.UserManager;
-import fr.efrei.android.blakkat.model.provider.EnvelopeConverter;
-import fr.efrei.android.blakkat.model.provider.ISerieProvider;
-import fr.efrei.android.blakkat.model.provider.Serie;
+import fr.efrei.android.blakkat.model.provider.IShowProvider;
+import fr.efrei.android.blakkat.model.provider.ShowWrapper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,41 +35,30 @@ public class MainActivity extends AppCompatActivity {
         btnSignup = findViewById(R.id.signup);
         editTextPseudo = findViewById(R.id.editText_Pseudo);
         btnSignin = findViewById(R.id.signin);
-        pref = getSharedPreferences("Pseudo",MODE_PRIVATE);
+        pref = getSharedPreferences("Pseudo", MODE_PRIVATE);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.betaseries.com/")
-                .addConverterFactory(new EnvelopeConverter())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        ISerieProvider provider = retrofit.create(ISerieProvider.class);
+        IShowProvider provider = retrofit.create(IShowProvider.class);
 
-        provider.getOne(1).enqueue(new Callback<Serie>() {
+        provider.getOne(1).enqueue(new Callback<ShowWrapper>() {
             @Override
-            public void onResponse(Call<Serie> call, Response<Serie> response) {
-                editTextPseudo.setText(response.body().getTitle());
+            public void onResponse(Call<ShowWrapper> call, Response<ShowWrapper> response) {
+                editTextPseudo.setText(response.body().getShow().getTitle());
             }
 
             @Override
-            public void onFailure(Call<Serie> call, Throwable t) {
+            public void onFailure(Call<ShowWrapper> call, Throwable t) {
                 t.printStackTrace();
             }
         });
 
-        btnSignin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signin(editTextPseudo.getText().toString());
-            }
-        });
+        btnSignin.setOnClickListener(view -> signin(editTextPseudo.getText().toString()));
 
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signup();
-            }
-        });
+        btnSignup.setOnClickListener(view -> signup());
     }
 
     public void signup() {

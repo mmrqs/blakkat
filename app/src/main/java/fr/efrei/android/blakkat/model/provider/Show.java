@@ -1,11 +1,10 @@
 package fr.efrei.android.blakkat.model.provider;
 
-public class Serie {
+public class Show {
     private int id;
     private String title;
-    private String director;
 
-    public Serie() {}
+    public Show() {}
 
     public String getTitle() {
         return title;
@@ -13,5 +12,13 @@ public class Serie {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -1,10 +1,10 @@
 package fr.efrei.android.blakkat.model;
 
-public class Show implements IMedia {
+public class Anime implements IMedia {
     private int id;
     private String title;
 
-    public Show() {}
+    public Anime() {}
 
     public String getTitle() {
         return title;

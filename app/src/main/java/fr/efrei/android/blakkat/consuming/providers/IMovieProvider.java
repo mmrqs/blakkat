@@ -7,12 +7,10 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface IMovieProvider {
-    String KEY = "b0781d3bbc01";
-
-    @GET("movies/movie?key=" + KEY)
+public interface IMovieProvider extends IProvider {
+    @GET("movies/movie")
     Call<Movie> getOne(@Query("id")int id);
 
-    @GET("movies/list?key=" + KEY)
+    @GET("movies/list")
     Call<List<Movie>> getList();
 }

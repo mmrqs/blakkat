@@ -11,18 +11,17 @@ import android.widget.EditText;
 
 import java.util.List;
 
-import fr.efrei.android.blakkat.consuming.converters.WrapperConverter;
 import fr.efrei.android.blakkat.consuming.providers.IMovieProvider;
+import fr.efrei.android.blakkat.consuming.providers.IProvider;
+import fr.efrei.android.blakkat.consuming.providers.ProviderHelper;
+import fr.efrei.android.blakkat.consuming.providers.exception.NoRegistredProvidedException;
 import fr.efrei.android.blakkat.model.User;
 import fr.efrei.android.blakkat.model.Movie;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-
     private Button btnSignup;
     private EditText editTextPseudo;
     private Button btnSignin;
@@ -37,15 +36,10 @@ public class MainActivity extends AppCompatActivity {
         btnSignup = findViewById(R.id.signup);
         editTextPseudo = findViewById(R.id.editText_Pseudo);
         btnSignin = findViewById(R.id.signin);
-        pref = getSharedPreferences("Pseudo", MODE_PRIVATE);
+        pref = getSharedPreferences("user_pseudo", MODE_PRIVATE);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.betaseries.com/")
-                .addConverterFactory(new WrapperConverter())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        IMovieProvider provider = retrofit.create(IMovieProvider.class);
+        ProviderHelper providerHelper = new ProviderHelper();
+        IMovieProvider provider = (IMovieProvider)providerHelper.getProviderFor(Movie.class);
 
         provider.getList().enqueue(new Callback<List<Movie>>() {
             @Override

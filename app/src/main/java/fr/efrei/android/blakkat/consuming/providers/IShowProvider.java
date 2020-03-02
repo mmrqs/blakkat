@@ -7,12 +7,10 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface IShowProvider {
-    String KEY = "b0781d3bbc01";
-
-    @GET("shows/display?key=" + KEY)
+public interface IShowProvider extends IProvider {
+    @GET("shows/display")
     Call<Show> getOne(@Query("id")int id);
 
-    @GET("shows/list?key=" + KEY)
+    @GET("shows/list")
     Call<List<Show>> getList();
 }

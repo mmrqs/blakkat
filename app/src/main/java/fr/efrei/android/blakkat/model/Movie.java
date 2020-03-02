@@ -1,6 +1,6 @@
 package fr.efrei.android.blakkat.model;
 
-public class Movie implements Media {
+public class Movie implements IMedia {
     private int id;
     private String title;
     private String director;

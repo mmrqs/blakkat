@@ -2,7 +2,7 @@ package fr.efrei.android.blakkat.consuming.wrappers;
 
 import java.util.List;
 
-import fr.efrei.android.blakkat.model.Media;
+import fr.efrei.android.blakkat.model.IMedia;
 import fr.efrei.android.blakkat.model.Show;
 
 public class ShowWrapper implements IMediaWrapper {
@@ -20,7 +20,7 @@ public class ShowWrapper implements IMediaWrapper {
     }
 
     @Override
-    public Media getMedia() {
+    public IMedia getMedia() {
         return show;
     }
 

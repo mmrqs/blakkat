@@ -6,7 +6,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import fr.efrei.android.blakkat.model.Media;
+import fr.efrei.android.blakkat.model.IMedia;
 import fr.efrei.android.blakkat.consuming.wrappers.IMediaWrapper;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
@@ -42,7 +42,7 @@ public class WrapperConverter extends Converter.Factory {
         Type underlyingType = parameterizedType.getActualTypeArguments()[0];
 
         //casts the type to a media type, to enforce type checking
-        Class<? extends Media> mediaKlazz = (Class<? extends Media>)underlyingType;
+        Class<? extends IMedia> mediaKlazz = (Class<? extends IMedia>)underlyingType;
 
         //actual asking for the converter ; we get the wrapper matching list of media
         // and then a converter that matches this
@@ -59,7 +59,7 @@ public class WrapperConverter extends Converter.Factory {
      */
     private Converter<ResponseBody, ?> mediaWrapperConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
         //casts the type to a media type, to enforce type checking
-        Class<? extends Media> mediaKlazz = (Class<? extends Media>)type;
+        Class<? extends IMedia> mediaKlazz = (Class<? extends IMedia>)type;
 
         //actual asking for the converter ; we get the wrapper matching the media class
         // and then a converter that matches this

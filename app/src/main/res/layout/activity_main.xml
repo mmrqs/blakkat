@@ -16,7 +16,6 @@
             android:layout_width="139dp"
             android:layout_height="81dp"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="TODO"
             app:srcCompat="@drawable/logoblakkatdark" />
 
     </LinearLayout>
@@ -29,7 +28,7 @@
 
         <EditText
             android:id="@+id/editText_Pseudo"
-            android:layout_width="341dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:ems="10"
@@ -38,17 +37,12 @@
 
         <Button
             android:id="@+id/signin"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/sign_in" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,21 +57,22 @@
                 android:text="@string/pas_encore_de_compte"
                 android:layout_marginLeft="15dp"
                 android:textColor="#9B9B9B"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_gravity="bottom|left"/>
 
             <Button
                 android:id="@+id/signup"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:text="@string/sign_up"
                 android:textColor="#B40606"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_gravity="bottom|right"/>
 
 
         </LinearLayout>
 
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

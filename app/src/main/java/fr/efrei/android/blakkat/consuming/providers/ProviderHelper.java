@@ -1,10 +1,6 @@
 package fr.efrei.android.blakkat.consuming.providers;
 
-import java.util.HashMap;
-
 import fr.efrei.android.blakkat.consuming.converters.WrapperConverter;
-import fr.efrei.android.blakkat.consuming.providers.exception.NoRegistredProvidedException;
-import fr.efrei.android.blakkat.model.*;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -14,36 +10,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProviderHelper {
     private static final String BETA_SERIES_KEY = "b0781d3bbc01";
     private static final String BETA_SERIES_URL = "http://api.betaseries.com/";
-    private static final String JIKAN_URL = "http://api.betaseries.com/";
+    private static final String JIKAN_URL = "https://api.jikan.moe/v3/";
 
     private Retrofit jikan;
     private Retrofit betaSeries;
 
-    private HashMap<Class<? extends IMedia>, IProvider> providerRegistry;
+    private GeneralProvider generalProvider;
 
     public ProviderHelper() {
         this.jikan = buildJikan();
         this.betaSeries = buildBetaSeries();
-        this.providerRegistry = buildProviderRegistry();
+
+        this.generalProvider = new GeneralProvider(betaSeries, jikan);
     }
 
-    public IProvider getProviderFor(Class<? extends IMedia> mediaKlazz) {
-        return providerRegistry.get(mediaKlazz);
-    }
-
-    /**
-     * Build the registry to map {@link IMedia} to their {@link IProvider}
-     * {@link Anime} with {@link IAnimeProvider}
-     * {@link Show} with {@link IShowProvider}
-     * {@link Movie} with {@link IMovieProvider}
-     * @return a {@link HashMap} containing {@link IMedia} and their {@link IProvider}
-     */
-    private HashMap<Class<? extends IMedia>, IProvider> buildProviderRegistry() {
-        HashMap<Class<? extends IMedia>, IProvider> registry = new HashMap<>();
-        registry.put(Movie.class, betaSeries.create(IMovieProvider.class));
-        registry.put(Show.class, betaSeries.create(IShowProvider.class));
-        registry.put(Anime.class, jikan.create(IAnimeProvider.class));
-        return registry;
+    public GeneralProvider getGeneralProvider() {
+        return generalProvider;
     }
 
     /**
@@ -53,6 +35,7 @@ public class ProviderHelper {
     private Retrofit buildJikan() {
         return new Retrofit.Builder()
                 .baseUrl(JIKAN_URL)
+                .addConverterFactory(new WrapperConverter())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }

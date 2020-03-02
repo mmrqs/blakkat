@@ -2,10 +2,13 @@ package fr.efrei.android.blakkat.consuming.converters;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import fr.efrei.android.blakkat.consuming.wrappers.AnimeWrapper;
 import fr.efrei.android.blakkat.model.IMedia;
 import fr.efrei.android.blakkat.consuming.wrappers.IMediaWrapper;
 import okhttp3.ResponseBody;
@@ -72,7 +75,7 @@ public class WrapperConverter extends Converter.Factory {
 
     /**
      * This is the fallback
-     * Asks for a converteur for the type provided
+     * Asks for a converter for the type provided
      * @return a lambda converter that (should) directly convert json into an instance
      */
     private Converter<ResponseBody, ?> gsonConverter(Type type, Annotation[] annotations, Retrofit retrofit) {

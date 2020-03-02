@@ -11,14 +11,6 @@ public class ShowWrapper implements IMediaWrapper {
 
     public ShowWrapper() {}
 
-    public void setShow(Show show) {
-        this.show = show;
-    }
-
-    public void setShows(List<Show> shows) {
-        this.shows = shows;
-    }
-
     @Override
     public IMedia getMedia() {
         return show;

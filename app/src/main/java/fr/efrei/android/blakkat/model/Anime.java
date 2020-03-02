@@ -1,7 +1,7 @@
 package fr.efrei.android.blakkat.model;
 
 public class Anime implements IMedia {
-    private int id;
+    private int mal_id;
     private String title;
 
     public Anime() {}
@@ -15,10 +15,10 @@ public class Anime implements IMedia {
     }
 
     public int getId() {
-        return id;
+        return mal_id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.mal_id = id;
     }
 }

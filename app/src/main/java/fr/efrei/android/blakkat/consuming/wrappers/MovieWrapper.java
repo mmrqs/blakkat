@@ -11,14 +11,6 @@ public class MovieWrapper implements IMediaWrapper<Movie> {
     public MovieWrapper() {
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
-    }
-
     @Override
     public Movie getMedia() {
         return movie;

@@ -2,6 +2,8 @@ package fr.efrei.android.blakkat.consuming.converters;
 
 import java.util.HashMap;
 
+import fr.efrei.android.blakkat.consuming.wrappers.AnimeWrapper;
+import fr.efrei.android.blakkat.model.Anime;
 import fr.efrei.android.blakkat.model.IMedia;
 import fr.efrei.android.blakkat.model.Movie;
 import fr.efrei.android.blakkat.model.Show;
@@ -19,8 +21,9 @@ class WrapperRegistery {
     static Class<? extends IMediaWrapper> getWrapper(Class<? extends IMedia> klazz) {
         if(wrappers == null) {
             wrappers = new HashMap<>();
-            wrappers.put(Show.class, ShowWrapper.class);
+            wrappers.put(Anime.class, AnimeWrapper.class);
             wrappers.put(Movie.class, MovieWrapper.class);
+            wrappers.put(Show.class, ShowWrapper.class);
         }
         return wrappers.get(klazz);
     }

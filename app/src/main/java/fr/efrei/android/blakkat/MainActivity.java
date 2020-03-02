@@ -5,18 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import fr.efrei.android.blakkat.consuming.providers.IMovieProvider;
-import fr.efrei.android.blakkat.consuming.providers.IProvider;
 import fr.efrei.android.blakkat.consuming.providers.ProviderHelper;
-import fr.efrei.android.blakkat.consuming.providers.exception.NoRegistredProvidedException;
+import fr.efrei.android.blakkat.model.Anime;
+import fr.efrei.android.blakkat.model.IMedia;
 import fr.efrei.android.blakkat.model.User;
-import fr.efrei.android.blakkat.model.Movie;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,17 +42,20 @@ public class MainActivity extends AppCompatActivity {
         pref = getSharedPreferences("user_pseudo", MODE_PRIVATE);
 
         ProviderHelper providerHelper = new ProviderHelper();
-        IMovieProvider provider = (IMovieProvider)providerHelper.getProviderFor(Movie.class);
 
-        provider.getList().enqueue(new Callback<List<Movie>>() {
+        List<IMedia> results = new ArrayList<>();
+
+        providerHelper.getGeneralProvider().getAnimeProvider()
+                .searchFor("Tengen").enqueue(new Callback<List<Anime>>() {
             @Override
-            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
-                editTextPseudo.setText(response.body().get(35).getTitle());
+            public void onResponse(Call<List<Anime>> call, Response<List<Anime>> response) {
+                results.addAll(response.body());
+                toastage(String.valueOf(results.size()));
             }
 
             @Override
-            public void onFailure(Call<List<Movie>> call, Throwable t) {
-                t.printStackTrace();
+            public void onFailure(Call<List<Anime>> call, Throwable t) {
+                Log.e("", t.toString());
             }
         });
 
@@ -73,5 +79,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             editTextPseudo.setError("Wrong pseudo");
         }
+    }
+
+    public void toastage(String truc) {
+        Toast.makeText(this, truc, Toast.LENGTH_LONG).show();
     }
 }

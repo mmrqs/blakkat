@@ -1,4 +1,4 @@
-package fr.efrei.android.blakkat.model.link.converters;
+package fr.efrei.android.blakkat.consuming.converters;
 
 import androidx.annotation.Nullable;
 
@@ -6,8 +6,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import fr.efrei.android.blakkat.model.link.medias.Media;
-import fr.efrei.android.blakkat.model.link.wrappers.IMediaWrapper;
+import fr.efrei.android.blakkat.model.Media;
+import fr.efrei.android.blakkat.consuming.wrappers.IMediaWrapper;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Retrofit;

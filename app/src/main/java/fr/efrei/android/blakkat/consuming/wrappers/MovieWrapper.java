@@ -1,8 +1,8 @@
-package fr.efrei.android.blakkat.model.link.wrappers;
+package fr.efrei.android.blakkat.consuming.wrappers;
 
 import java.util.List;
 
-import fr.efrei.android.blakkat.model.link.medias.Movie;
+import fr.efrei.android.blakkat.model.Movie;
 
 public class MovieWrapper implements IMediaWrapper<Movie> {
     private Movie movie;

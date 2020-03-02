@@ -11,10 +11,10 @@ import android.widget.EditText;
 
 import java.util.List;
 
-import fr.efrei.android.blakkat.model.link.converters.WrapperConverter;
-import fr.efrei.android.blakkat.model.link.providers.IMovieProvider;
-import fr.efrei.android.blakkat.model.manager.UserManager;
-import fr.efrei.android.blakkat.model.link.medias.Movie;
+import fr.efrei.android.blakkat.consuming.converters.WrapperConverter;
+import fr.efrei.android.blakkat.consuming.providers.IMovieProvider;
+import fr.efrei.android.blakkat.model.User;
+import fr.efrei.android.blakkat.model.Movie;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private Button btnSignup;
     private EditText editTextPseudo;
     private Button btnSignin;
-    private UserManager userManager;
     private SharedPreferences pref;
 
     @Override
@@ -70,21 +69,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signin(String pseudo) {
-        userManager = new UserManager(this);
-        userManager.open();
-
-        if(userManager.checkUser(pseudo)) {
-
+        if(User.exists(pseudo)) {
             SharedPreferences.Editor editor = pref.edit();
-            editor.putString("Pseudo",pseudo);
-            editor.commit();
+            editor.putString("user_pseudo", pseudo);
+            editor.apply();
 
             Intent homeIntent = new Intent(MainActivity.this, Home.class);
             startActivity(homeIntent);
         } else {
             editTextPseudo.setError("Wrong pseudo");
         }
-
-        userManager.close();
     }
 }

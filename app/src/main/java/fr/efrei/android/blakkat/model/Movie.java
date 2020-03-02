@@ -1,4 +1,4 @@
-package fr.efrei.android.blakkat.model.link.medias;
+package fr.efrei.android.blakkat.model;
 
 public class Movie implements Media {
     private int id;

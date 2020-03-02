@@ -9,14 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import fr.efrei.android.blakkat.model.User;
-import fr.efrei.android.blakkat.model.manager.UserManager;
 
 public class SignupActivity extends AppCompatActivity {
-
     private Button btnReturn;
     private Button btnSignup;
     private EditText editTextPseudo;
-    private UserManager userManager;
     private SharedPreferences pref;
 
     @Override
@@ -32,42 +29,39 @@ public class SignupActivity extends AppCompatActivity {
         btnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Return();
+                back();
             }
         });
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Signup(editTextPseudo.getText().toString());
+                signup(editTextPseudo.getText().toString());
             }
         });
     }
 
-    public void Return() {
+    public void back() {
         setContentView(R.layout.activity_main);
 
         Intent mainIntent = new Intent(SignupActivity.this, MainActivity.class);
         startActivity(mainIntent);
     }
 
-    public void Signup(String pseudo) {
-        userManager = new UserManager(this);
-        userManager.open();
-
-        if(!userManager.checkUser(pseudo)) {
-            userManager.addUser(new User(pseudo));
+    public void signup(String pseudo) {
+        if(!User.exists(pseudo)) {
+            User current = new User(pseudo);
+            current.save();
 
             SharedPreferences.Editor editor = pref.edit();
-            editor.putString("Pseudo",pseudo);
-            editor.commit();
+            editor.putString("user_pseudo", pseudo);
+            editor.apply();
 
             Intent homeIntent = new Intent(SignupActivity.this, Home.class);
             startActivity(homeIntent);
         } else {
             editTextPseudo.setError("This pseudo already exists");
         }
-        userManager.close();
     }
 
 }

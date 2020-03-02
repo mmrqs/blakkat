@@ -1,8 +1,8 @@
-package fr.efrei.android.blakkat.model.link.providers;
+package fr.efrei.android.blakkat.consuming.providers;
 
 import java.util.List;
 
-import fr.efrei.android.blakkat.model.link.medias.Show;
+import fr.efrei.android.blakkat.model.Show;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

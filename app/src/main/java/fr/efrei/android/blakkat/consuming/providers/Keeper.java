@@ -26,6 +26,8 @@ public class Keeper {
         this.mangaProvider = jikan.create(IMangaProvider.class);
         this.movieProvider = betaSeries.create(IMovieProvider.class);
         this.showProvider = betaSeries.create(IShowProvider.class);
+
+        initProviderList();
     }
 
     private void initProviderList() {

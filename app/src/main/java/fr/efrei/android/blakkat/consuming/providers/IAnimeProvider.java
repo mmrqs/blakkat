@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface IAnimeProvider {
+public interface IAnimeProvider extends IProvider {
     @GET("anime/{id}")
     Call<Anime> getOne(@Path("id")int id);
 

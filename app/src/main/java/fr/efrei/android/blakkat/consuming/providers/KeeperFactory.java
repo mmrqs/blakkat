@@ -8,35 +8,33 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * This class helps to generate and manage the {@link Retrofit} instances
- * and the {@link GeneralProvider}
+ * This class helps to generate and manage the {@link Keeper} instance
  */
-public class ProviderHelper {
+public class KeeperFactory {
     private static final String BETA_SERIES_KEY = "b0781d3bbc01";
     private static final String BETA_SERIES_URL = "http://api.betaseries.com/";
     private static final String JIKAN_URL = "https://api.jikan.moe/v3/";
 
-    private Retrofit jikan;
-    private Retrofit betaSeries;
+    private static Keeper instance;
 
-    private GeneralProvider generalProvider;
+    private static Keeper createKeeper() {
+        Retrofit jikan = buildJikan();
+        Retrofit betaSeries = buildBetaSeries();
 
-    public ProviderHelper() {
-        this.jikan = buildJikan();
-        this.betaSeries = buildBetaSeries();
-
-        this.generalProvider = new GeneralProvider(betaSeries, jikan);
+        return new Keeper(betaSeries, jikan);
     }
 
-    public GeneralProvider getGeneralProvider() {
-        return generalProvider;
+    public static Keeper getKeeper() {
+        if (instance == null)
+            instance = createKeeper();
+        return instance;
     }
 
     /**
      * Building the {@link Retrofit} instance for Jikan
      * @return new {@link Retrofit} instance for the Jikan API
      */
-    private Retrofit buildJikan() {
+    private static Retrofit buildJikan() {
         return new Retrofit.Builder()
                 .baseUrl(JIKAN_URL)
                 .addConverterFactory(new WrapperConverter())
@@ -49,7 +47,7 @@ public class ProviderHelper {
      * Key management is handled from this point, no further worries needed
      * @return new {@link Retrofit} instance for the BetaSeries API
      */
-    private Retrofit buildBetaSeries() {
+    private static Retrofit buildBetaSeries() {
         return new Retrofit.Builder()
                 .baseUrl(BETA_SERIES_URL)
                 .client(getBetaSeriesClient())
@@ -63,7 +61,7 @@ public class ProviderHelper {
      * It has an interceptor that will add their key to every request made
      * @return speccifically built {@link OkHttpClient} for the BetaSeries API
      */
-    private OkHttpClient getBetaSeriesClient() {
+    private static OkHttpClient getBetaSeriesClient() {
         return new OkHttpClient.Builder().addInterceptor(chain -> {
             Request original = chain.request();
             HttpUrl newUrl = original.url().newBuilder()

@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface IMangaProvider {
+public interface IMangaProvider extends IProvider {
     @GET("manga/{id}")
     Call<Manga> getOne(@Path("id")int id);
 

@@ -7,7 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface IShowProvider {
+public interface IShowProvider extends IProvider {
     @GET("shows/display")
     Call<Show> getOne(@Query("id")int id);
 

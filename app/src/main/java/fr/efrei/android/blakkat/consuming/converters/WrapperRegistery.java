@@ -14,8 +14,13 @@ import fr.efrei.android.blakkat.consuming.wrappers.MovieWrapper;
 import fr.efrei.android.blakkat.consuming.wrappers.ShowWrapper;
 
 /**
- * Only serves as a singleton dictionnary of the model classes and their corresponding wrappers
- * For instance, it will contain { Foo, FooWrapper }
+ * Only serves as a singleton {@link HashMap} of the model classes extending {@link IMedia}
+ * and their corresponding wrappers ; for instance, it will contain { Foo, FooWrapper }
+ * Currently
+ * {@link Anime} to {@link AnimeWrapper}
+ * {@link Manga} to {@link MangaWrapper}
+ * {@link Movie} to {@link MovieWrapper}
+ * {@link Show} to {@link ShowWrapper}
  */
 class WrapperRegistery {
     private static HashMap<Class<? extends IMedia>, Class<? extends IMediaWrapper>> wrappers;

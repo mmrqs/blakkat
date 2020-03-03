@@ -7,6 +7,10 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * This class helps to generate and manage the {@link Retrofit} instances
+ * and the {@link GeneralProvider}
+ */
 public class ProviderHelper {
     private static final String BETA_SERIES_KEY = "b0781d3bbc01";
     private static final String BETA_SERIES_URL = "http://api.betaseries.com/";

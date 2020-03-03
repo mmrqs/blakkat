@@ -2,6 +2,10 @@ package fr.efrei.android.blakkat.consuming.providers;
 
 import retrofit2.Retrofit;
 
+/**
+ * Holds instances to the providers for every {@link fr.efrei.android.blakkat.model.IMedia}
+ * TODO may be used in general purpose requests
+ */
 public class GeneralProvider {
     private IAnimeProvider animeProvider;
     private IMangaProvider mangaProvider;

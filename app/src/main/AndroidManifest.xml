@@ -14,8 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:theme">
-        <activity android:name=".SearchActivity"></activity>
-        <!-- SugarORM -->
+        <activity android:name=".displayActivity"></activity>
+        <activity android:name=".SearchActivity" /> <!-- SugarORM -->
         <meta-data
             android:name="DATABASE"
             android:value="blakkat_sugar.db" />

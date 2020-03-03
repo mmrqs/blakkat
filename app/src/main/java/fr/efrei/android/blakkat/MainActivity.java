@@ -5,23 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import fr.efrei.android.blakkat.consuming.providers.ProviderHelper;
-import fr.efrei.android.blakkat.model.IMedia;
-import fr.efrei.android.blakkat.model.Movie;
 import fr.efrei.android.blakkat.model.User;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private Button btnSignup;
@@ -39,26 +29,6 @@ public class MainActivity extends AppCompatActivity {
         editTextPseudo = findViewById(R.id.editText_Pseudo);
         btnSignin = findViewById(R.id.signin);
         pref = getSharedPreferences("user_pseudo", MODE_PRIVATE);
-
-        ProviderHelper providerHelper = new ProviderHelper();
-
-        List<IMedia> results = new ArrayList<>();
-
-        providerHelper.getGeneralProvider().getMovieProvider()
-                .getOne(666).enqueue(new Callback<Movie>() {
-            @Override
-            public void onResponse(Call<Movie> call, Response<Movie> response) {
-                results.add(response.body());
-                Log.i("tamer", results.get(0).getReleaseDate().toString());
-                toastage(String.valueOf(results.size()));
-            }
-
-            @Override
-            public void onFailure(Call<Movie> call, Throwable t) {
-                t.printStackTrace();
-                Log.e("MANGETESMORTS", t.getLocalizedMessage());
-            }
-        });
 
         btnSignin.setOnClickListener(view -> signin(editTextPseudo.getText().toString()));
         btnSignup.setOnClickListener(view -> signup());

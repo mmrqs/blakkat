@@ -18,5 +18,5 @@ public interface IMovieProvider {
     Call<List<Movie>> searchFor(@Query("title")String name);
 
     @GET("movie/search")
-    Call<List<Movie>> searchFor5Results(@Query("title")String name, @Query("nbpp") int nbpp);
+    Call<List<Movie>> searchForNbResults(@Query("title")String name, @Query("nbpp") int nbpp);
 }

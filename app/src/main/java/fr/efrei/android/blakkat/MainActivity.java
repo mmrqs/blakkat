@@ -13,12 +13,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import fr.efrei.android.blakkat.consuming.providers.ProviderHelper;
-import fr.efrei.android.blakkat.model.Manga;
 import fr.efrei.android.blakkat.model.IMedia;
+import fr.efrei.android.blakkat.model.Manga;
 import fr.efrei.android.blakkat.model.User;
 import retrofit2.Call;
 import retrofit2.Callback;

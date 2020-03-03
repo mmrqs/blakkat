@@ -1,34 +1,56 @@
 package fr.efrei.android.blakkat.model;
 
+import java.util.Date;
+import java.util.List;
+
 public class Movie implements IMedia {
     private int id;
     private String title;
-    private String director;
+    private String poster;
+    private Date release_date;
+    private String synopsis;
+    private float score;
 
     public Movie() {
     }
 
+    @Override
     public int getId() {
-        return id;
+        return 0;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public String getProviderHint() {
+        return this.getClass().getSimpleName();
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    @Override
+    public String getImageUrl() {
+        return poster;
     }
 
-    public String getDirector() {
-        return director;
+    @Override
+    public Date getReleaseDate() {
+        return release_date;
     }
 
-    public void setDirector(String director) {
-        this.director = director;
+    @Override
+    public float getPublicScore() {
+        return score;
+    }
+
+    @Override
+    public List<String> getGenres() {
+        return null;
+    }
+
+    @Override
+    public String getSynopsis() {
+        return synopsis;
     }
 }

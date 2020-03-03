@@ -24,7 +24,7 @@ public class SignupActivity extends AppCompatActivity {
         btnReturn = findViewById(R.id.btnReturn);
         btnSignup = findViewById(R.id.btnSignup_activitySignup);
         editTextPseudo = findViewById(R.id.editTextSignup_activitySignup);
-        pref = getSharedPreferences("Pseudo",MODE_PRIVATE);
+        pref = getSharedPreferences("user_pseudo", MODE_PRIVATE);
 
         btnReturn.setOnClickListener(new View.OnClickListener() {
             @Override

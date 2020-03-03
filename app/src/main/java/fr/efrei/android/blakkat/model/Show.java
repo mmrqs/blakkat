@@ -1,24 +1,56 @@
 package fr.efrei.android.blakkat.model;
 
+import java.util.Date;
+import java.util.List;
+
 public class Show implements IMedia {
     private int id;
     private String title;
+    private String poster;
+    private Date release_date;
+    private String description;
+    private float score;
 
-    public Show() {}
+    public Show() {
+    }
 
+    @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
+    public String getProviderHint() {
+        return this.getClass().getSimpleName();
+    }
+
+    @Override
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    @Override
+    public String getImageUrl() {
+        return poster;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public Date getReleaseDate() {
+        return release_date;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public float getPublicScore() {
+        return score;
+    }
+
+    @Override
+    public List<String> getGenres() {
+        return null;
+    }
+
+    @Override
+    public String getSynopsis() {
+        return description;
     }
 }

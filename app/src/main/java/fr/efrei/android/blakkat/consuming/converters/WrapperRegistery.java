@@ -8,10 +8,10 @@ import fr.efrei.android.blakkat.model.Anime;
 import fr.efrei.android.blakkat.model.IMedia;
 import fr.efrei.android.blakkat.model.Manga;
 import fr.efrei.android.blakkat.model.Movie;
-import fr.efrei.android.blakkat.model.Show;
 import fr.efrei.android.blakkat.consuming.wrappers.IMediaWrapper;
 import fr.efrei.android.blakkat.consuming.wrappers.MovieWrapper;
 import fr.efrei.android.blakkat.consuming.wrappers.ShowWrapper;
+import fr.efrei.android.blakkat.model.Show;
 
 /**
  * Only serves as a singleton {@link HashMap} of the model classes extending {@link IMedia}

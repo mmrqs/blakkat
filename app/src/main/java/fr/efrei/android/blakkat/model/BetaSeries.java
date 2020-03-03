@@ -7,6 +7,7 @@ public abstract class BetaSeries<T extends IMedia> implements IMedia {
     private String title;
     private ScoreBundle notes;
     private ImageBundle images;
+    private List<String> genres;
 
     @Override
     public int getId() {
@@ -35,7 +36,7 @@ public abstract class BetaSeries<T extends IMedia> implements IMedia {
 
     @Override
     public List<String> getGenres() {
-        return null;
+        return genres;
     }
 
     private static class ScoreBundle {

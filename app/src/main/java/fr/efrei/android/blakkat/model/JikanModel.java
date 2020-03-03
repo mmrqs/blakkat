@@ -2,14 +2,16 @@ package fr.efrei.android.blakkat.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class JikanModel<T extends IMedia> implements IMedia {
     private int mal_id;
     private String title;
     private String image_url;
-    private Date start_date;
     private String synopsis;
     private float score;
+    private List<MALGenre> genres;
+    private List<String> curatedGenres;
 
     @Override
     public int getId() {
@@ -32,11 +34,6 @@ public abstract class JikanModel<T extends IMedia> implements IMedia {
     }
 
     @Override
-    public Date getReleaseDate() {
-        return start_date;
-    }
-
-    @Override
     public float getPublicScore() {
         return score;
     }
@@ -48,6 +45,15 @@ public abstract class JikanModel<T extends IMedia> implements IMedia {
 
     @Override
     public List<String> getGenres() {
-        return null;
+        if(curatedGenres == null)
+            curatedGenres = genres.stream().map(g -> g.name).collect(Collectors.toList());
+        return curatedGenres;
+    }
+
+    private static class MALGenre {
+        private String name;
+    }
+    static class DateBundle {
+        Date from;
     }
 }

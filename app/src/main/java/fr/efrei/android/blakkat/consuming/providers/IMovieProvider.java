@@ -16,4 +16,7 @@ public interface IMovieProvider extends IProvider {
 
     @GET("movies/search")
     Call<List<Movie>> searchFor(@Query("title")String name);
+
+    @GET("movie/search")
+    Call<List<Movie>> searchFor5Results(@Query("title")String name, @Query("nbpp") int nbpp);
 }

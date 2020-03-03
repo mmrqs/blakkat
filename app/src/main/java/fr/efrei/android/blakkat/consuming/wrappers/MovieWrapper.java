@@ -8,9 +8,6 @@ public class MovieWrapper implements IMediaWrapper<Movie> {
     private Movie movie;
     private List<Movie> movies;
 
-    public MovieWrapper() {
-    }
-
     @Override
     public Movie getMedia() {
         return movie;

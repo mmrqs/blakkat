@@ -18,6 +18,7 @@ public abstract class JikanModel<T extends IMedia> implements IMedia {
         return mal_id;
     }
 
+    //TODO is this necessary ?
     @Override
     public String getProviderHint() {
         return this.getClass().getSimpleName();
@@ -46,7 +47,9 @@ public abstract class JikanModel<T extends IMedia> implements IMedia {
     @Override
     public List<String> getGenres() {
         if(curatedGenres == null)
-            curatedGenres = genres.stream().map(g -> g.name).collect(Collectors.toList());
+            curatedGenres = genres.stream()
+                    .map(g -> g.name)
+                    .collect(Collectors.toList());
         return curatedGenres;
     }
 

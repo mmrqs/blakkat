@@ -15,6 +15,4 @@ public interface IMangaProvider extends IProvider {
 
     @GET("search/manga")
     Call<List<Manga>> searchFor(@Query("q") String name);
-
-
 }

@@ -7,9 +7,6 @@ import fr.efrei.android.blakkat.model.Anime;
 public class AnimeWrapper implements IMediaWrapper<Anime> {
     private List<Anime> results;
 
-    public AnimeWrapper() {
-    }
-
     @Override
     public Anime getMedia() {
         return null;

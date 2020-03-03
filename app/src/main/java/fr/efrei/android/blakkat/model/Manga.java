@@ -8,6 +8,7 @@ public class Manga extends JikanModel<Manga> {
 
     @Override
     public Date getReleaseDate() {
-        return start_date == null ? published.from : start_date;
+        return start_date == null ?
+                published.from : start_date;
     }
 }

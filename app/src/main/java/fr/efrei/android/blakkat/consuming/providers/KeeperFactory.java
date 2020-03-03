@@ -24,6 +24,9 @@ public class KeeperFactory {
         return new Keeper(betaSeries, jikan);
     }
 
+    /**
+     * @return the {@link Keeper} instance ; creates it if necessary
+     */
     public static Keeper getKeeper() {
         if (instance == null)
             instance = createKeeper();

@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Objects;
 
 import fr.efrei.android.blakkat.model.IMedia;
 import fr.efrei.android.blakkat.consuming.wrappers.IMediaWrapper;
@@ -55,7 +56,7 @@ public class WrapperConverter extends Converter.Factory {
                         .getListWrapper(mediaKlazz), annotations);
 
         //this lambda returns the list of medias from the converted wrapper
-        return body -> delegate.convert(body).getMedias();
+        return body -> Objects.requireNonNull(delegate.convert(body)).getMedias();
     }
 
     /**
@@ -77,7 +78,7 @@ public class WrapperConverter extends Converter.Factory {
                         .getInstanceWrapper(mediaKlazz), annotations);
 
         //this lambda returns the media from the converted wrapper
-        return body -> delegate.convert(body).getMedia();
+        return body -> Objects.requireNonNull(delegate.convert(body)).getMedia();
     }
 
     /**

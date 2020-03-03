@@ -14,6 +14,7 @@ public abstract class BetaSeries<T extends IMedia> implements IMedia {
         return id;
     }
 
+    //TODO is this necessary ?
     @Override
     public String getProviderHint() {
         return this.getClass().getSimpleName();

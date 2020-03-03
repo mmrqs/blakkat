@@ -26,19 +26,9 @@ public class SignupActivity extends AppCompatActivity {
         editTextPseudo = findViewById(R.id.editTextSignup_activitySignup);
         pref = getSharedPreferences("user_pseudo", MODE_PRIVATE);
 
-        btnReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                back();
-            }
-        });
+        btnReturn.setOnClickListener(view -> back());
 
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signup(editTextPseudo.getText().toString());
-            }
-        });
+        btnSignup.setOnClickListener(view -> signup(editTextPseudo.getText().toString()));
     }
 
     public void back() {

@@ -17,7 +17,7 @@ import java.util.List;
 
 import fr.efrei.android.blakkat.consuming.providers.ProviderHelper;
 import fr.efrei.android.blakkat.model.IMedia;
-import fr.efrei.android.blakkat.model.Manga;
+import fr.efrei.android.blakkat.model.Movie;
 import fr.efrei.android.blakkat.model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,17 +44,19 @@ public class MainActivity extends AppCompatActivity {
 
         List<IMedia> results = new ArrayList<>();
 
-        providerHelper.getGeneralProvider().getMangaProvider()
-                .searchFor("Tengen").enqueue(new Callback<List<Manga>>() {
+        providerHelper.getGeneralProvider().getMovieProvider()
+                .getOne(666).enqueue(new Callback<Movie>() {
             @Override
-            public void onResponse(Call<List<Manga>> call, Response<List<Manga>> response) {
-                results.addAll(response.body());
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+                results.add(response.body());
+                Log.i("tamer", results.get(0).getReleaseDate().toString());
                 toastage(String.valueOf(results.size()));
             }
 
             @Override
-            public void onFailure(Call<List<Manga>> call, Throwable t) {
-                Log.e("", t.toString());
+            public void onFailure(Call<Movie> call, Throwable t) {
+                t.printStackTrace();
+                Log.e("MANGETESMORTS", t.getLocalizedMessage());
             }
         });
 

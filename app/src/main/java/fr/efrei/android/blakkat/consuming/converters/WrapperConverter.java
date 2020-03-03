@@ -2,13 +2,10 @@ package fr.efrei.android.blakkat.consuming.converters;
 
 import androidx.annotation.Nullable;
 
-import com.google.gson.Gson;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import fr.efrei.android.blakkat.consuming.wrappers.AnimeWrapper;
 import fr.efrei.android.blakkat.model.IMedia;
 import fr.efrei.android.blakkat.consuming.wrappers.IMediaWrapper;
 import okhttp3.ResponseBody;
@@ -26,9 +23,9 @@ public class WrapperConverter extends Converter.Factory {
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
         try {
             if(type.toString().contains("List")) {
-                return listMediaWrapperConverter(type, annotations, retrofit);
+                return listWrapperConverter(type, annotations, retrofit);
             } else {
-                return mediaWrapperConverter(type, annotations, retrofit);
+                return instanceWrapperConverter(type, annotations, retrofit);
             }
         } catch (ClassCastException e) {
             return gsonConverter(type, annotations, retrofit);
@@ -39,7 +36,7 @@ public class WrapperConverter extends Converter.Factory {
      * Asks for a converter for the corresponding wrapper for the list of media
      * @return a lambda converter that extracts the list of media from its wrapper
      */
-    private Converter<ResponseBody, ?> listMediaWrapperConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+    private Converter<ResponseBody, ?> listWrapperConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
         //extracting the parameter type (in List<Foo>, it is Foo)
         ParameterizedType parameterizedType = (ParameterizedType)type;
         Type underlyingType = parameterizedType.getActualTypeArguments()[0];
@@ -47,10 +44,15 @@ public class WrapperConverter extends Converter.Factory {
         //casts the type to a media type, to enforce type checking
         Class<? extends IMedia> mediaKlazz = (Class<? extends IMedia>)underlyingType;
 
-        //actual asking for the converter ; we get the wrapper matching list of media
+        // checking if the media has a registered wrapper
+        if(!WrapperRegistry.hasListWrapper(mediaKlazz))
+            return gsonConverter(type, annotations, retrofit);
+
+        // actual asking for the converter ; we get the wrapper matching the media list class
         // and then a converter that matches this
         Converter<ResponseBody, ? extends IMediaWrapper> delegate = retrofit
-                .nextResponseBodyConverter(this, WrapperRegistery.getWrapper(mediaKlazz), annotations);
+                .nextResponseBodyConverter(this, WrapperRegistry
+                        .getListWrapper(mediaKlazz), annotations);
 
         //this lambda returns the list of medias from the converted wrapper
         return body -> delegate.convert(body).getMedias();
@@ -60,14 +62,19 @@ public class WrapperConverter extends Converter.Factory {
      * Asks for a converter for the corresponding wrapper for the media class
      * @return a lambda converter that extracts the media from its wrapper
      */
-    private Converter<ResponseBody, ?> mediaWrapperConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+    private Converter<ResponseBody, ?> instanceWrapperConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
         //casts the type to a media type, to enforce type checking
         Class<? extends IMedia> mediaKlazz = (Class<? extends IMedia>)type;
+
+        // checking if the media has a registered wrapper
+        if(!WrapperRegistry.hasInstanceWrapper(mediaKlazz))
+            return gsonConverter(type, annotations, retrofit);
 
         //actual asking for the converter ; we get the wrapper matching the media class
         // and then a converter that matches this
         Converter<ResponseBody, ? extends IMediaWrapper> delegate = retrofit
-                .nextResponseBodyConverter(this, WrapperRegistery.getWrapper(mediaKlazz), annotations);
+                .nextResponseBodyConverter(this, WrapperRegistry
+                        .getInstanceWrapper(mediaKlazz), annotations);
 
         //this lambda returns the media from the converted wrapper
         return body -> delegate.convert(body).getMedia();
@@ -80,9 +87,9 @@ public class WrapperConverter extends Converter.Factory {
      */
     private Converter<ResponseBody, ?> gsonConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
         //asking for the converter matching the type
-        Converter<ResponseBody, ? extends IMediaWrapper> delegate = retrofit
+        Converter<ResponseBody, ?> delegate = retrofit
                 .nextResponseBodyConverter(this, type, annotations);
 
-        return body -> delegate.convert(body);
+        return delegate::convert;
     }
 }

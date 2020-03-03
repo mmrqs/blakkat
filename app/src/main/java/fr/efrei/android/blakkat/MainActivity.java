@@ -17,7 +17,7 @@ import java.util.List;
 
 import fr.efrei.android.blakkat.consuming.providers.ProviderHelper;
 import fr.efrei.android.blakkat.model.IMedia;
-import fr.efrei.android.blakkat.model.Manga;
+import fr.efrei.android.blakkat.model.Show;
 import fr.efrei.android.blakkat.model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,17 +44,17 @@ public class MainActivity extends AppCompatActivity {
 
         List<IMedia> results = new ArrayList<>();
 
-        providerHelper.getGeneralProvider().getMangaProvider()
-                .searchFor("Tengen").enqueue(new Callback<List<Manga>>() {
+        providerHelper.getGeneralProvider().getShowProvider()
+                .searchFor("Chern").enqueue(new Callback<List<Show>>() {
             @Override
-            public void onResponse(Call<List<Manga>> call, Response<List<Manga>> response) {
+            public void onResponse(Call<List<Show>> call, Response<List<Show>> response) {
                 results.addAll(response.body());
                 toastage(String.valueOf(results.size()));
             }
 
             @Override
-            public void onFailure(Call<List<Manga>> call, Throwable t) {
-                Log.e("", t.toString());
+            public void onFailure(Call<List<Show>> call, Throwable t) {
+                Log.e("mangetesmorts", t.toString());
             }
         });
 

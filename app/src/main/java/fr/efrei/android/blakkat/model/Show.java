@@ -1,52 +1,21 @@
 package fr.efrei.android.blakkat.model;
 
+import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
-public class Show implements IMedia {
-    private int id;
-    private String title;
-    private String poster;
-    private Date release_date;
+public class Show extends BetaSeries<Show> {
     private String description;
-    private float score;
-
-    public Show() {
-    }
-
-    @Override
-    public int getId() {
-        return 0;
-    }
-
-    @Override
-    public String getProviderHint() {
-        return this.getClass().getSimpleName();
-    }
-
-    @Override
-    public String getTitle() {
-        return title;
-    }
-
-    @Override
-    public String getImageUrl() {
-        return poster;
-    }
+    private int creation;
+    private Date releaseDate;
 
     @Override
     public Date getReleaseDate() {
-        return release_date;
-    }
-
-    @Override
-    public float getPublicScore() {
-        return score;
-    }
-
-    @Override
-    public List<String> getGenres() {
-        return null;
+        if(releaseDate == null) {
+            Calendar c = Calendar.getInstance();
+            c.set(creation, 0, 1);
+            releaseDate = c.getTime();
+        }
+        return releaseDate;
     }
 
     @Override

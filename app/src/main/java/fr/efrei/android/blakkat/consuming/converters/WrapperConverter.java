@@ -3,14 +3,19 @@ package fr.efrei.android.blakkat.consuming.converters;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.efrei.android.blakkat.consuming.wrappers.AnimeWrapper;
+import fr.efrei.android.blakkat.consuming.wrappers.ShowWrapper;
 import fr.efrei.android.blakkat.model.IMedia;
 import fr.efrei.android.blakkat.consuming.wrappers.IMediaWrapper;
+import fr.efrei.android.blakkat.model.Show;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Retrofit;

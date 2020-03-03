@@ -16,4 +16,7 @@ public interface IShowProvider {
 
     @GET("shows/search")
     Call<List<Show>> searchFor(@Query("title")String name);
+
+    @GET("shows/search")
+    Call<List<Show>> searchFor5Results(@Query("title")String name, @Query("nbpp") int nbpp);
 }

@@ -59,10 +59,10 @@ public class SearchActivity extends AppCompatActivity {
 
                 List<IMedia> results = new ArrayList<>();
 
-                providerHelper.getGeneralProvider().getMangaProvider()
-                        .searchFor(t).enqueue(new Callback<List<Manga>>() {
+                providerHelper.getGeneralProvider().getShowProvider()
+                        .searchFor5Results(t,5).enqueue(new Callback<List<Show>>() {
                     @Override
-                    public void onResponse(Call<List<Manga>> call, Response<List<Manga>> response) {
+                    public void onResponse(Call<List<Show>> call, Response<List<Show>> response) {
                         results.addAll(response.body());
                         toastage(String.valueOf(results.size()));
                         mAdapter = new CardAdapter(results);
@@ -70,7 +70,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<List<Manga>> call, Throwable t) {
+                    public void onFailure(Call<List<Show>> call, Throwable t) {
                         Log.e("", t.toString());
                     }
                 });

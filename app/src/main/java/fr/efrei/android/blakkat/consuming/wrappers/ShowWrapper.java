@@ -12,12 +12,12 @@ public class ShowWrapper implements IMediaWrapper {
     public ShowWrapper() {}
 
     @Override
-    public IMedia getMedia() {
+    public Show getMedia() {
         return show;
     }
 
     @Override
-    public List getMedias() {
+    public List<Show> getMedias() {
         return shows;
     }
 }

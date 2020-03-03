@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("user_pseudo", pseudo);
             editor.apply();
 
-            Intent homeIntent = new Intent(MainActivity.this, Home.class);
+            Intent homeIntent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(homeIntent);
         } else {
             editTextPseudo.setError("Wrong pseudo");

@@ -5,7 +5,7 @@ import com.orm.SugarRecord;
 import java.security.InvalidParameterException;
 import java.util.List;
 
-public class User extends SugarRecord<User> {
+public class User extends SugarRecord {
 
     private String pseudo;
 

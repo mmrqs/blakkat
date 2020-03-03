@@ -11,7 +11,12 @@ public class Show implements IMedia {
     private String description;
     private float score;
 
+
     public Show() {
+    }
+
+    public Show(String title){
+        this.title = title;
     }
 
     @Override

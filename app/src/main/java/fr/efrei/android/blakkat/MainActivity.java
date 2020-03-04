@@ -5,21 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.List;
-
-import fr.efrei.android.blakkat.consuming.providers.IProvider;
-import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
-import fr.efrei.android.blakkat.model.*;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import fr.efrei.android.blakkat.model.User;
 
 public class MainActivity extends AppCompatActivity {
     private Button btnSignup;
@@ -38,20 +30,6 @@ public class MainActivity extends AppCompatActivity {
         btnSignin = findViewById(R.id.signin);
         pref = getSharedPreferences("user_pseudo", MODE_PRIVATE);
 
-        for (IProvider p : KeeperFactory.getKeeper().getProviders()) {
-            p.searchFor("Chernobyl").enqueue(new Callback<List<IMedia>>() {
-                @Override
-                public void onResponse(Call<List<IMedia>> call, Response<List<IMedia>> response) {
-                    toastage(response.body().stream().map(m -> m.getTitle()).reduce((s1, s2) -> s1 + " " + s2).get());
-                }
-
-                @Override
-                public void onFailure(Call<List<IMedia>> call, Throwable t) {
-                    t.printStackTrace();
-                    Log.e("MANGETESMORTS", t.getLocalizedMessage());
-                }
-            });
-        }
         btnSignin.setOnClickListener(view -> signin(editTextPseudo.getText().toString()));
         btnSignup.setOnClickListener(view -> signup());
     }

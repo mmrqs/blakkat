@@ -15,4 +15,8 @@ public interface IMangaProvider extends IProvider {
 
     @GET("search/manga")
     Call<List<Manga>> searchFor(@Query("q") String name);
+
+    @GET("search/manga")
+    Call<List<Manga>> searchForNbResults(@Query("q") String name, @Query("limit") int nbpp);
+
 }

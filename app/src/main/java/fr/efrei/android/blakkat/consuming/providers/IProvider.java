@@ -16,6 +16,6 @@ import retrofit2.Call;
  */
 public interface IProvider {
     <T extends IMedia> Call<List<T>> searchFor(String title);
+    <T extends IMedia> Call<List<T>> searchForNbResults(String title, int nbpp);
     <T extends IMedia> Call<T> getOne(int id);
-    String niktamer();
 }

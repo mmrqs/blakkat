@@ -26,7 +26,7 @@ public class User extends SugarRecord {
     public static boolean getMatching(String query, String... params) {
         if(checkRequest(query, params))
             return User.find(User.class,
-                    "pseudo = ?", params).size() >= 1;
+                    "pseudo = ?", params).size() == 1;
         else
             throw new InvalidParameterException();
     }

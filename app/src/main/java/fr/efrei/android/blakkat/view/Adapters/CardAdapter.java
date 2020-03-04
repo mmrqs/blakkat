@@ -2,6 +2,7 @@ package fr.efrei.android.blakkat.view.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 import fr.efrei.android.blakkat.MainActivity;
@@ -59,8 +61,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Intent intent=new Intent(_mContext, displayActivity.class);
-                intent.putExtra("idMedia", _myMedias.get(position).getId());
-                _mContext. startActivity(intent);
+                intent.putExtra("MediaClicked", (Parcelable) _myMedias.get(position));
+                _mContext.startActivity(intent);
             }
         });
     }

@@ -27,7 +27,7 @@ public class displayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display);
 
         Intent mediaChosen = getIntent();
-        IMedia media = (IMedia) mediaChosen.getExtras().getParcelable("MediaClicked");
+        IMedia media = mediaChosen.getExtras().getParcelable("MediaClicked");
 
         title = findViewById(R.id.titleDisplay);
         title.setText(media.getTitle());

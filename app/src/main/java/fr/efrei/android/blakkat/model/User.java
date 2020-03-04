@@ -5,8 +5,9 @@ import com.orm.SugarRecord;
 import java.security.InvalidParameterException;
 
 public class User extends SugarRecord {
-    private String pseudo;
+    String pseudo;
 
+    public User() {}
     public User(String pseudo) {
         this.pseudo = pseudo;
     }
@@ -16,7 +17,6 @@ public class User extends SugarRecord {
     }
 
     //TODO use this in every sugarRecord
-    //TODO wtf is this shit
     /**
      * Obtains the record corresponding to the specified request and parameters
      * @param query represented by a string ; parameter placeholders are ?
@@ -26,7 +26,7 @@ public class User extends SugarRecord {
     public static boolean getMatching(String query, String... params) {
         if(checkRequest(query, params))
             return User.find(User.class,
-                    "pseudo = ?", params).size() == 1;
+                    "pseudo = ?", params).size() >= 1;
         else
             throw new InvalidParameterException();
     }

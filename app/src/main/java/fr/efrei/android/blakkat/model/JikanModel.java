@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class JikanModel<T extends IMedia> implements IMedia, Parcelable {
@@ -15,8 +14,8 @@ public abstract class JikanModel<T extends IMedia> implements IMedia, Parcelable
     private String image_url;
     private String synopsis;
     private float score;
-    private List<MALGenre> genres;
-    private List<String> curatedGenres;
+    private ArrayList<MALGenre> genres;
+    private ArrayList<String> curatedGenres;
     public static final Parcelable.Creator CREATOR = null;
 
     protected JikanModel(Parcel in) {
@@ -25,6 +24,9 @@ public abstract class JikanModel<T extends IMedia> implements IMedia, Parcelable
         this.image_url = in.readString();
         this.synopsis = in.readString();
         this.score = in.readFloat();
+        this.genres = in.readArrayList(MALGenre.class.getClassLoader());
+        this.curatedGenres = in.readArrayList(String.class.getClassLoader());
+
     }
 
     @Override
@@ -59,11 +61,10 @@ public abstract class JikanModel<T extends IMedia> implements IMedia, Parcelable
     }
 
     @Override
-    public List<String> getGenres() {
+    public ArrayList<String> getGenres() {
         if(curatedGenres == null)
-            curatedGenres = genres.stream()
-                    .map(g -> g.name)
-                    .collect(Collectors.toList());
+            curatedGenres = genres.stream().map(g -> g.name)
+                    .collect(Collectors.toCollection(ArrayList::new));
         return curatedGenres;
     }
 
@@ -135,5 +136,7 @@ public abstract class JikanModel<T extends IMedia> implements IMedia, Parcelable
         parcel.writeString(this.title);
         parcel.writeString(this.synopsis);
         parcel.writeFloat(this.score);
+        parcel.writeList(this.genres);
+        parcel.writeList(this.curatedGenres);
     }
 }

@@ -8,18 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.List;
 
-import fr.efrei.android.blakkat.MainActivity;
 import fr.efrei.android.blakkat.R;
-import fr.efrei.android.blakkat.SearchActivity;
 import fr.efrei.android.blakkat.displayActivity;
 import fr.efrei.android.blakkat.model.IMedia;
 

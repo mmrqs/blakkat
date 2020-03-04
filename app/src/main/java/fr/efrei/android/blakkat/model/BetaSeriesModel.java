@@ -3,14 +3,14 @@ package fr.efrei.android.blakkat.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public abstract class BetaSeriesModel<T extends IMedia> implements IMedia, Parcelable {
     int id;
     String title;
     ScoreBundle notes;
     ImageBundle images;
-    List<String> genres;
+    ArrayList<String> genres;
     public static final Parcelable.Creator CREATOR = null;
 
     protected BetaSeriesModel(Parcel in) {
@@ -18,6 +18,7 @@ public abstract class BetaSeriesModel<T extends IMedia> implements IMedia, Parce
         this.title = in.readString();
         this.notes = in.readParcelable(ScoreBundle.class.getClassLoader());
         this.images = in.readParcelable(ImageBundle.class.getClassLoader());
+        this.genres = in.readArrayList(String.class.getClassLoader());
     }
 
     @Override
@@ -47,7 +48,7 @@ public abstract class BetaSeriesModel<T extends IMedia> implements IMedia, Parce
     }
 
     @Override
-    public List<String> getGenres() {
+    public ArrayList<String> getGenres() {
         return genres;
     }
 
@@ -117,6 +118,6 @@ public abstract class BetaSeriesModel<T extends IMedia> implements IMedia, Parce
         parcel.writeString(this.title);
         parcel.writeParcelable(this.notes, flags);
         parcel.writeParcelable(this.images, flags);
-        //parcel.writeStringList(this.genres);
+        parcel.writeList(this.genres);
     }
 }

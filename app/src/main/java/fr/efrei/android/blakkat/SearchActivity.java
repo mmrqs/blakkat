@@ -27,7 +27,7 @@ public class SearchActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<IMedia> results;
+    private ArrayList<IMedia> results = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,30 +42,15 @@ public class SearchActivity extends AppCompatActivity {
 
         SearchView search_bar = findViewById(R.id.searchBar);
 
-        search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+        search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 String textSearched = search_bar.getQuery().toString();
+                search_bar.clearFocus();
                 for (IProvider p : KeeperFactory.getKeeper().getProviders()) {
-                    p.searchForNbResults(textSearched,5).enqueue(new Callback<List<IMedia>>() {
-                        @Override
-                        public void onResponse(Call<List<IMedia>> call, Response<List<IMedia>> response) {
-                            results = new ArrayList<>();
-
-                            if(response.body() != null){
-                                results.addAll(response.body());
-                                mAdapter = new CardAdapter(results, SearchActivity.this);
-                                recyclerView.setAdapter(mAdapter);
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<List<IMedia>> call, Throwable t) {
-                            t.printStackTrace();
-                            Log.e("Err", t.getLocalizedMessage());
-                        }
-                    });
+                    p.searchForNbResults(textSearched,5).enqueue(createNewCallack());
                 }
-                return false;
+                return true;
             }
             @Override
             public boolean onQueryTextChange(String s) {
@@ -74,4 +59,21 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    private Callback<List<IMedia>> createNewCallack() {
+        return new Callback<List<IMedia>>() {
+            @Override
+            public void onResponse(Call<List<IMedia>> call, Response<List<IMedia>> response) {
+                if(response.body() != null) {
+                    results.addAll(response.body());
+                    mAdapter = new CardAdapter(results, SearchActivity.this);
+                    recyclerView.setAdapter(mAdapter);
+                }
+            }
+            @Override
+            public void onFailure(Call<List<IMedia>> call, Throwable t) {
+                t.printStackTrace();
+                Log.e("Err", t.getLocalizedMessage());
+            }
+        };
+    }
 }

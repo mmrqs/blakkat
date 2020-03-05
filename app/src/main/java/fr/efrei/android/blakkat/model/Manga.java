@@ -6,23 +6,22 @@ import android.os.Parcelable;
 import java.util.Date;
 
 public class Manga extends JikanModel<Manga> {
-    private Date start_date;
     private DateBundle published;
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        @Override
         public Manga createFromParcel(Parcel in) {
             return new Manga(in);
         }
 
+        @Override
         public Manga[] newArray(int size) {
             return new Manga[size];
         }
     };
 
-    protected Manga(Parcel in) {
+    private Manga(Parcel in) {
         super(in);
-        this.start_date = in.readParcelable(Date.class.getClassLoader());
-        this.published = in.readParcelable(DateBundle.class.getClassLoader());
     }
 
     @Override
@@ -34,7 +33,7 @@ public class Manga extends JikanModel<Manga> {
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
         super.writeToParcel(parcel, flags);
-        parcel.writeParcelable(this.published, flags);
-        parcel.writeLong(getReleaseDate().getTime());
+        this.start_date = getReleaseDate();
+        parcel.writeLong(start_date.getTime());
     }
 }

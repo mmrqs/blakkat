@@ -3,7 +3,6 @@ package fr.efrei.android.blakkat.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -14,19 +13,18 @@ public abstract class JikanModel<T extends IMedia> implements IMedia, Parcelable
     private String image_url;
     private String synopsis;
     private float score;
+    protected Date start_date;
     private ArrayList<MALGenre> genres;
     private ArrayList<String> curatedGenres;
     public static final Parcelable.Creator CREATOR = null;
 
-    protected JikanModel(Parcel in) {
+    JikanModel(Parcel in) {
         this.mal_id = in.readInt();
         this.title = in.readString();
-        this.image_url = in.readString();
         this.synopsis = in.readString();
+        this.image_url = in.readString();
         this.score = in.readFloat();
-        this.genres = in.readArrayList(MALGenre.class.getClassLoader());
-        this.curatedGenres = in.readArrayList(String.class.getClassLoader());
-
+        this.start_date = new Date(in.readLong());
     }
 
     @Override
@@ -135,8 +133,7 @@ public abstract class JikanModel<T extends IMedia> implements IMedia, Parcelable
         parcel.writeInt(this.mal_id);
         parcel.writeString(this.title);
         parcel.writeString(this.synopsis);
+        parcel.writeString(this.image_url);
         parcel.writeFloat(this.score);
-        parcel.writeList(this.genres);
-        parcel.writeList(this.curatedGenres);
     }
 }

@@ -20,7 +20,6 @@ public class DisplayActivity extends AppCompatActivity {
     private TextView synopsis;
     private Button returnButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,23 +32,17 @@ public class DisplayActivity extends AppCompatActivity {
         title.setText(media.getTitle());
 
         imageView = findViewById(R.id.imageCard_displayActivity);
-        Picasso.with(imageView.getContext()).load(media.getImageUrl()).centerCrop().fit().into(imageView);
+        Picasso.with(imageView.getContext())
+                .load(media.getImageUrl())
+                .centerCrop().fit().into(imageView);
 
-        if(media.getReleaseDate() != null) {
-            time = findViewById(R.id.time);
-            time.setText(media.getGenres() + " / " + media.getReleaseDate().toString());
-        }
+        time = findViewById(R.id.time);
+        time.setText(media.getReleaseDate().toString());
 
         synopsis = findViewById(R.id.SynopsisContent_Display);
         synopsis.setText(media.getSynopsis());
 
         returnButton = findViewById(R.id.return_displayActivity);
-        returnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
+        returnButton.setOnClickListener(view -> finish());
     }
 }

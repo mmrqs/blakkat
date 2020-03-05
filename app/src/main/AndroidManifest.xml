@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:theme">
-        <activity android:name=".displayActivity"></activity>
+        <activity android:name=".DisplayActivity"></activity>
         <activity android:name=".SearchActivity" /> <!-- SugarORM -->
         <meta-data
             android:name="DATABASE"
@@ -30,7 +30,7 @@
             android:value="fr.efrei.android.blakkat.model" />
 
         <activity android:name=".SignupActivity" />
-        <activity android:name=".Home" />
+        <activity android:name=".HomeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

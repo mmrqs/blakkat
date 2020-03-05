@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -47,7 +46,7 @@ public class SignupActivity extends AppCompatActivity {
             editor.putString("user_pseudo", pseudo);
             editor.apply();
 
-            Intent homeIntent = new Intent(SignupActivity.this, Home.class);
+            Intent homeIntent = new Intent(SignupActivity.this, HomeActivity.class);
             startActivity(homeIntent);
         } else {
             editTextPseudo.setError("This pseudo already exists");

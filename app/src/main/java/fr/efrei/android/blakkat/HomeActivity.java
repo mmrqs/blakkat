@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class Home extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
     private SharedPreferences prf;
     private TextView pseudoTextView;
 

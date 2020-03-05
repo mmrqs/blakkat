@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import fr.efrei.android.blakkat.model.IMedia;
 
-public class displayActivity extends AppCompatActivity {
+public class DisplayActivity extends AppCompatActivity {
     private TextView title;
     private ImageView imageView;
     private TextView time;

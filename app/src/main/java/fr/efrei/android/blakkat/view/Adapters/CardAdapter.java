@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import fr.efrei.android.blakkat.R;
-import fr.efrei.android.blakkat.displayActivity;
+import fr.efrei.android.blakkat.DisplayActivity;
 import fr.efrei.android.blakkat.model.IMedia;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
@@ -56,7 +56,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
 
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Intent intent=new Intent(_mContext, displayActivity.class);
+                Intent intent=new Intent(_mContext, DisplayActivity.class);
                 intent.putExtra("MediaClicked", (Parcelable) _myMedias.get(position));
                 _mContext.startActivity(intent);
             }

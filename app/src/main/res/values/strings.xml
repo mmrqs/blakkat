@@ -9,4 +9,6 @@
     <string name="title_activity_signup">signup</string>
     <string name="pas_encore_de_compte">Pas encore de compte ?</string>
     <string name="textview">TextView</string>
+    <string name="notviewed">Marked as viewed</string>
+    <string name="viewed">Viewed</string>
 </resources>

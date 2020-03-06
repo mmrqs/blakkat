@@ -8,10 +8,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.orm.SugarRecord;
 import com.squareup.picasso.Picasso;
 
-import java.util.Iterator;
 import java.util.Objects;
 
 import fr.efrei.android.blakkat.model.Media;
@@ -23,10 +21,12 @@ public class DisplayActivity extends AppCompatActivity {
     private TextView time;
     private TextView synopsis;
     private Button returnButton;
+    private Button viewedToggleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_display);
 
         Intent mediaChosen = getIntent();
@@ -34,14 +34,8 @@ public class DisplayActivity extends AppCompatActivity {
                 .getExtras())
                 .getParcelable("MediaClicked");
 
-        MediaRecord mediaRecord = new MediaRecord(media);
-        mediaRecord.save();
-        mediaRecord = SugarRecord.find(MediaRecord.class, "identifier = ?",
-                String.valueOf(media.getId()))
-                .get(0);
-
         titleDisplay = findViewById(R.id.titleDisplay);
-        titleDisplay.setText(media.getTitle() + " — " + mediaRecord.getType());
+        titleDisplay.setText(media.getTitle() + " — " + media.getProviderHint());
 
         imageView = findViewById(R.id.imageCard_displayActivity);
         Picasso.with(imageView.getContext())
@@ -56,5 +50,26 @@ public class DisplayActivity extends AppCompatActivity {
 
         returnButton = findViewById(R.id.return_displayActivity);
         returnButton.setOnClickListener(view -> finish());
+
+        viewedToggleButton = findViewById(R.id.viewed_toggle);
+
+        this.changeToggleViewedButtonContents(MediaRecord
+                .exists(media.getId(), media.getProviderHint()));
+
+        viewedToggleButton.setOnClickListener(view -> {
+            MediaRecord record = MediaRecord.exists(media.getId(), media.getProviderHint());
+            if(record == null) {
+                record = new MediaRecord(media);
+                record.save();
+            } else {
+                record.delete();
+                record = null;
+            }
+            changeToggleViewedButtonContents(record);
+        });
+    }
+
+    void changeToggleViewedButtonContents(MediaRecord mr) {
+        viewedToggleButton.setText(mr == null ? R.string.notviewed : R.string.viewed);
     }
 }

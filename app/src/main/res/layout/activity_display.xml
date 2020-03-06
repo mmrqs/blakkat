@@ -73,5 +73,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <Button
+            android:id="@+id/viewed_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/notviewed" />
+
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

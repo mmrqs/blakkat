@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.orm.SugarRecord;
 import com.squareup.picasso.Picasso;
 
-import java.util.Iterator;
 import java.util.Objects;
 
 import fr.efrei.android.blakkat.model.Media;
@@ -23,6 +22,7 @@ public class DisplayActivity extends AppCompatActivity {
     private TextView time;
     private TextView synopsis;
     private Button returnButton;
+    private Media result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,28 +37,30 @@ public class DisplayActivity extends AppCompatActivity {
         MediaRecord mediaRecord = new MediaRecord(media);
         SugarRecord.save(mediaRecord);
 
-
-        long i = SugarRecord.count(MediaRecord.class);
-        Iterator<MediaRecord> it = SugarRecord.findAll(MediaRecord.class);
-        mediaRecord = it.next();
-        mediaRecord = SugarRecord.findById(MediaRecord.class, 5L);
         mediaRecord = SugarRecord.find(MediaRecord.class, "identifier = ?",
                 String.valueOf(media.getId()))
                 .get(0);
 
         titleDisplay = findViewById(R.id.titleDisplay);
         titleDisplay.setText(media.getTitle() + "    " + mediaRecord.getType());
+        Media result = Objects.requireNonNull(mediaChosen
+                .getExtras())
+                .getParcelable("MediaClicked");
+
+
+        titleDisplay = findViewById(R.id.titleDisplay);
+        titleDisplay.setText(result.getTitle());
 
         imageView = findViewById(R.id.imageCard_displayActivity);
         Picasso.with(imageView.getContext())
-                .load(media.getImageUrl())
+                .load(result.getImageUrl())
                 .centerCrop().fit().into(imageView);
 
         time = findViewById(R.id.time);
-        time.setText(media.getReleaseDate().toString());
+        time.setText(result.getReleaseDate().toString());
 
         synopsis = findViewById(R.id.SynopsisContent_Display);
-        synopsis.setText(media.getSynopsis());
+        synopsis.setText(result.getSynopsis());
 
         returnButton = findViewById(R.id.return_displayActivity);
         returnButton.setOnClickListener(view -> finish());

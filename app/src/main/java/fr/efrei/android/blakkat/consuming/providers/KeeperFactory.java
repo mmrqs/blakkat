@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class KeeperFactory {
     private static final String BETA_SERIES_KEY = "b0781d3bbc01";
-    private static final String BETA_SERIES_URL = "http://api.betaseries.com/";
+    private static final String BETA_SERIES_URL = "https://api.betaseries.com/";
     private static final String JIKAN_URL = "https://api.jikan.moe/v3/";
 
     private static Keeper instance;

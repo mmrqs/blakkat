@@ -37,12 +37,7 @@ public class Show extends BetaSeriesModel<Show> {
         if(this.centralizedGenres == null) {
             this.centralizedGenres = new ArrayList<>();
             for (Iterator<String> it = genres.keys(); it.hasNext(); ) {
-                String s = it.next();
-                try {
-                    centralizedGenres.add(genres.getString(s));
-                } catch (JSONException e) {
-                    Log.e("BETASERIESCYKABLYAT", e.getLocalizedMessage());
-                }
+                centralizedGenres.add(it.next());
             }
         }
         return centralizedGenres;
@@ -60,6 +55,5 @@ public class Show extends BetaSeriesModel<Show> {
 
     Show(Parcel in) {
         super(in);
-        //in.readStringList(genres);
     }
 }

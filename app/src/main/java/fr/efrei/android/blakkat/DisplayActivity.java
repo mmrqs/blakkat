@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.Objects;
 
 import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.model.MediaRecoard;
+import fr.efrei.android.blakkat.model.MediaRecord;
 
 public class DisplayActivity extends AppCompatActivity {
     private TextView titleDisplay;
@@ -34,15 +34,15 @@ public class DisplayActivity extends AppCompatActivity {
                 .getExtras())
                 .getParcelable("MediaClicked");
 
-        MediaRecoard mediaRecord = new MediaRecoard(media);
+        MediaRecord mediaRecord = new MediaRecord(media);
         SugarRecord.save(mediaRecord);
 
 
-        long i = SugarRecord.count(MediaRecoard.class);
-        Iterator<MediaRecoard> it = SugarRecord.findAll(MediaRecoard.class);
+        long i = SugarRecord.count(MediaRecord.class);
+        Iterator<MediaRecord> it = SugarRecord.findAll(MediaRecord.class);
         mediaRecord = it.next();
-        mediaRecord = SugarRecord.findById(MediaRecoard.class, 5L);
-        mediaRecord = SugarRecord.find(MediaRecoard.class, "identifier = ?",
+        mediaRecord = SugarRecord.findById(MediaRecord.class, 5L);
+        mediaRecord = SugarRecord.find(MediaRecord.class, "identifier = ?",
                 String.valueOf(media.getId()))
                 .get(0);
 

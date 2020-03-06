@@ -13,16 +13,16 @@ import java.util.Date;
  * @param <T> type of the media (anime or manga in this case)
  */
 public abstract class BetaSeriesModel<T extends Media> extends Media {
-    int id;
-    String title;
-    String url;
-    Float score;
+    private int id;
+    private String title;
+    private String url;
+    private Float score;
     Date releaseDate;
     String description;
 
-    ScoreBundle notes;
-    ImageBundle images;
-    ArrayList<String> genres;
+    private ScoreBundle notes;
+    private ImageBundle images;
+    private ArrayList<String> genres;
 
     @Override
     public int getId() {
@@ -60,8 +60,6 @@ public abstract class BetaSeriesModel<T extends Media> extends Media {
     private static final class ImageBundle {
         private String show;
     }
-
-    public static final Parcelable.Creator CREATOR = null;
 
     protected BetaSeriesModel(Parcel in) {
         this.id = in.readInt();

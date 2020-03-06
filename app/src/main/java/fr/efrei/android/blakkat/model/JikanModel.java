@@ -15,19 +15,12 @@ import java.util.stream.Collectors;
  */
 public abstract class JikanModel<T extends Media> extends Media {
     private int mal_id;
-    
     private String title;
-    
     private String image_url;
-    
     private String synopsis;
-    
     private float score;
-    
-    protected Date start_date;
-    
+    Date start_date;
     private ArrayList<String> curatedGenres;
-    
     private ArrayList<MALGenre> genres;
 
     @Override

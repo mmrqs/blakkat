@@ -35,19 +35,13 @@ public class DisplayActivity extends AppCompatActivity {
                 .getParcelable("MediaClicked");
 
         MediaRecord mediaRecord = new MediaRecord(media);
-        SugarRecord.save(mediaRecord);
-
-
-        long i = SugarRecord.count(MediaRecord.class);
-        Iterator<MediaRecord> it = SugarRecord.findAll(MediaRecord.class);
-        mediaRecord = it.next();
-        mediaRecord = SugarRecord.findById(MediaRecord.class, 5L);
+        mediaRecord.save();
         mediaRecord = SugarRecord.find(MediaRecord.class, "identifier = ?",
                 String.valueOf(media.getId()))
                 .get(0);
 
         titleDisplay = findViewById(R.id.titleDisplay);
-        titleDisplay.setText(media.getTitle() + "    " + mediaRecord.getType());
+        titleDisplay.setText(media.getTitle() + " — " + mediaRecord.getType());
 
         imageView = findViewById(R.id.imageCard_displayActivity);
         Picasso.with(imageView.getContext())

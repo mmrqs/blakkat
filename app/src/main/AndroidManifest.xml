@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:theme">
-        <activity android:name=".DisplayActivity"></activity>
+        <activity android:name=".DisplayActivity" />
         <activity android:name=".SearchActivity" /> <!-- SugarORM -->
         <meta-data
             android:name="DATABASE"

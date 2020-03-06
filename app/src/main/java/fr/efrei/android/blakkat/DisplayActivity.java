@@ -4,17 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 import fr.efrei.android.blakkat.model.IMedia;
 
 public class DisplayActivity extends AppCompatActivity {
-    private TextView title;
+    private TextView titleDisplay;
     private ImageView imageView;
     private TextView time;
     private TextView synopsis;
@@ -26,10 +27,12 @@ public class DisplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display);
 
         Intent mediaChosen = getIntent();
-        IMedia media = mediaChosen.getExtras().getParcelable("MediaClicked");
+        IMedia media = Objects.requireNonNull(mediaChosen
+                .getExtras())
+                .getParcelable("MediaClicked");
 
-        title = findViewById(R.id.titleDisplay);
-        title.setText(media.getTitle());
+        titleDisplay = findViewById(R.id.titleDisplay);
+        titleDisplay.setText(media.getTitle());
 
         imageView = findViewById(R.id.imageCard_displayActivity);
         Picasso.with(imageView.getContext())

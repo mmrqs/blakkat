@@ -23,17 +23,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
     private List<IMedia> _myMedias;
     private Context _mContext;
 
-    public static class CardHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
-        public ImageView imageView;
-        public View v;
+    static class CardHolder extends RecyclerView.ViewHolder {
+        TextView textView;
+        ImageView imageView;
+        View v;
 
-        public CardHolder(View vi) {
+        CardHolder(View vi) {
             super(vi);
-            v = vi;
-            textView = vi.findViewById(R.id.title);
-            imageView = vi.findViewById(R.id.imageCard);
-
+            this.v = vi;
+            this.textView = vi.findViewById(R.id.title);
+            this.imageView = vi.findViewById(R.id.imageCard);
         }
     }
 
@@ -44,22 +43,25 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
 
     @Override
     public CardAdapter.CardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_cards, parent, false);
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.cell_cards, parent, false);
         CardHolder vh = new CardHolder(v);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(CardHolder holder, int position) {
-        holder.textView.setText(_myMedias.get(position).getTitle());
-        Picasso.with(holder.imageView.getContext()).load(_myMedias.get(position).getImageUrl()).centerCrop().fit().into(holder.imageView);
+        holder.textView.setText(_myMedias.get(position).getTitle() +
+                " – " + _myMedias.get(position).getProviderHint());
+        Picasso.with(holder.imageView.getContext())
+                .load(_myMedias.get(position)
+                        .getImageUrl()).centerCrop().fit()
+                .into(holder.imageView);
 
-        holder.v.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                Intent intent=new Intent(_mContext, DisplayActivity.class);
-                intent.putExtra("MediaClicked", (Parcelable) _myMedias.get(position));
-                _mContext.startActivity(intent);
-            }
+        holder.v.setOnClickListener(v -> {
+            Intent intent = new Intent(_mContext, DisplayActivity.class);
+            intent.putExtra("MediaClicked", (Parcelable)_myMedias.get(position));
+            _mContext.startActivity(intent);
         });
     }
 

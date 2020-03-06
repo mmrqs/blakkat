@@ -17,12 +17,13 @@ public abstract class BetaSeriesModel<T extends Media> extends Media {
     private String title;
     private String url;
     private Float score;
+
+    ArrayList<String> centralizedGenres;
     Date releaseDate;
     String description;
 
     private ScoreBundle notes;
     private ImageBundle images;
-    private ArrayList<String> genres;
 
     @Override
     public int getId() {
@@ -48,11 +49,6 @@ public abstract class BetaSeriesModel<T extends Media> extends Media {
         return score;
     }
 
-    @Override
-    public ArrayList<String> getGenres() {
-        return genres;
-    }
-
     private static final class ScoreBundle {
         private float mean;
     }
@@ -68,5 +64,6 @@ public abstract class BetaSeriesModel<T extends Media> extends Media {
         this.releaseDate = new Date(in.readLong());
         this.score = in.readFloat();
         this.description = in.readString();
+        //TODO Genres
     }
 }

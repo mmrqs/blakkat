@@ -61,24 +61,23 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
 
     @Override
     public void onBindViewHolder(CardHolder holder, int position) {
-        _specificMedia = _myMedias.get(position);
 
-        holder.textView.setText(_specificMedia.getTitle() +
-                " – " + _specificMedia.getProviderHint());
+        holder.textView.setText(_myMedias.get(position).getTitle() +
+                " – " + _myMedias.get(position).getProviderHint());
         Picasso.with(holder.imageView.getContext())
-                .load(_specificMedia
+                .load(_myMedias.get(position)
                         .getImageUrl()).centerCrop().fit()
                 .into(holder.imageView);
 
         holder.v.setOnClickListener(v -> {
-            if (_specificMedia.getProviderHint().equals("Anime")) {
+            if (_myMedias.get(position).getProviderHint().equals("Anime")) {
                 IAnimeProvider provider = KeeperFactory.getKeeper().getAnimeProvider();
-                provider.getOne(_specificMedia.getId()).enqueue(createNewCallBackAnime());
-            } else if (_specificMedia.getProviderHint().equals("Manga")) {
+                provider.getOne(_myMedias.get(position).getId()).enqueue(createNewCallBackAnime(position));
+            } else if (_myMedias.get(position).getProviderHint().equals("Manga")) {
                 IMangaProvider provider = KeeperFactory.getKeeper().getMangaProvider();
-                provider.getOne(_specificMedia.getId()).enqueue(createNewCallBackManga());
+                provider.getOne(_myMedias.get(position).getId()).enqueue(createNewCallBackManga(position));
             } else {
-                Dispatch();
+                Dispatch(position);
             }
         });
     }
@@ -88,12 +87,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
         return _myMedias.size();
     }
 
-    private Callback<Anime> createNewCallBackAnime() {
+    private Callback<Anime> createNewCallBackAnime(int position) {
         return new Callback<Anime>() {
             @Override
             public void onResponse(Call<Anime> call, Response<Anime> response) {
-                _specificMedia = response.body();
-                Dispatch();
+                _myMedias.set(position, response.body());
+                Dispatch(position);
             }
             @Override
             public void onFailure(Call<Anime> call, Throwable t) {
@@ -102,12 +101,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
         };
     }
 
-    private Callback<Manga> createNewCallBackManga() {
+    private Callback<Manga> createNewCallBackManga(int position) {
         return new Callback<Manga>() {
             @Override
             public void onResponse(Call<Manga> call, Response<Manga> response) {
-                _specificMedia = response.body();
-                Dispatch();
+                _myMedias.set(position, response.body());
+                Dispatch(position);
             }
             @Override
             public void onFailure(Call<Manga> call, Throwable t) {
@@ -116,9 +115,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
         };
     }
 
-    private void Dispatch() {
+    private void Dispatch(int position) {
         Intent intent = new Intent(_mContext, DisplayActivity.class);
-        intent.putExtra("MediaClicked", _specificMedia);
+        intent.putExtra("MediaClicked", _myMedias.get(position));
         _mContext.startActivity(intent);
     }
 }

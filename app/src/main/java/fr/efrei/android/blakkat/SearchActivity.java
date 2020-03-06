@@ -1,14 +1,12 @@
 package fr.efrei.android.blakkat;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
 
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ public class SearchActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<IMedia> results = new ArrayList<>();
+    private ArrayList<IMedia> results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +43,7 @@ public class SearchActivity extends AppCompatActivity {
         search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                results = results = new ArrayList<>();
                 String textSearched = search_bar.getQuery().toString();
                 search_bar.clearFocus();
                 for (IProvider p : KeeperFactory.getKeeper().getProviders()) {

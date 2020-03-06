@@ -43,7 +43,7 @@ public class SearchActivity extends AppCompatActivity {
         search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                results = results = new ArrayList<>();
+                results = new ArrayList<>();
                 String textSearched = search_bar.getQuery().toString();
                 search_bar.clearFocus();
                 for (IProvider p : KeeperFactory.getKeeper().getProviders()) {

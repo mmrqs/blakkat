@@ -2,7 +2,7 @@ package fr.efrei.android.blakkat.consuming.providers;
 
 import java.util.List;
 
-import fr.efrei.android.blakkat.model.IMedia;
+import fr.efrei.android.blakkat.model.Media;
 import retrofit2.Call;
 
 /**
@@ -15,7 +15,7 @@ import retrofit2.Call;
  * This, however, seems like a reasonable trade.
  */
 public interface IProvider {
-    <T extends IMedia> Call<List<T>> searchFor(String title);
-    <T extends IMedia> Call<List<T>> searchForNbResults(String title, int nbpp);
-    <T extends IMedia> Call<T> getOne(int id);
+    <T extends Media> Call<List<T>> searchFor(String title);
+    <T extends Media> Call<List<T>> searchForNbResults(String title, int nbpp);
+    <T extends Media> Call<T> getOne(int id);
 }

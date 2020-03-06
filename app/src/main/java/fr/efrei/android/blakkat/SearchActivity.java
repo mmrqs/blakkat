@@ -13,7 +13,7 @@ import java.util.List;
 
 import fr.efrei.android.blakkat.consuming.providers.IProvider;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
-import fr.efrei.android.blakkat.model.IMedia;
+import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.view.Adapters.CardAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,7 +23,7 @@ public class SearchActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<IMedia> results;
+    private ArrayList<Media> results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +56,10 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private Callback<List<IMedia>> createNewCallack() {
-        return new Callback<List<IMedia>>() {
+    private Callback<List<Media>> createNewCallack() {
+        return new Callback<List<Media>>() {
             @Override
-            public void onResponse(Call<List<IMedia>> call, Response<List<IMedia>> response) {
+            public void onResponse(Call<List<Media>> call, Response<List<Media>> response) {
                 if(response.body() != null) {
                     results.addAll(response.body());
                     mAdapter = new CardAdapter(results, SearchActivity.this);
@@ -67,7 +67,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<List<IMedia>> call, Throwable t) {
+            public void onFailure(Call<List<Media>> call, Throwable t) {
                 t.printStackTrace();
                 Log.e("Err", t.getLocalizedMessage());
             }

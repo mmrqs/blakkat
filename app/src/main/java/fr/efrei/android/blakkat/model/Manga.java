@@ -18,13 +18,6 @@ public class Manga extends JikanModel<Manga> {
                 published.from : start_date;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int flags) {
-        super.writeToParcel(parcel, flags);
-        this.start_date = getReleaseDate();
-        parcel.writeLong(start_date.getTime());
-    }
-
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         @Override
         public Manga createFromParcel(Parcel in) {

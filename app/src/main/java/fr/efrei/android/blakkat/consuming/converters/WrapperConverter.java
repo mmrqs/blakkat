@@ -7,7 +7,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Objects;
 
-import fr.efrei.android.blakkat.model.IMedia;
+import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.consuming.wrappers.IMediaWrapper;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
@@ -43,7 +43,7 @@ public class WrapperConverter extends Converter.Factory {
         Type underlyingType = parameterizedType.getActualTypeArguments()[0];
 
         //casts the type to a media type, to enforce type checking
-        Class<? extends IMedia> mediaKlazz = (Class<? extends IMedia>)underlyingType;
+        Class<? extends Media> mediaKlazz = (Class<? extends Media>)underlyingType;
 
         // checking if the media has a registered wrapper
         if(!WrapperRegistry.hasListWrapper(mediaKlazz))
@@ -65,7 +65,7 @@ public class WrapperConverter extends Converter.Factory {
      */
     private Converter<ResponseBody, ?> instanceWrapperConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
         //casts the type to a media type, to enforce type checking
-        Class<? extends IMedia> mediaKlazz = (Class<? extends IMedia>)type;
+        Class<? extends Media> mediaKlazz = (Class<? extends Media>)type;
 
         // checking if the media has a registered wrapper
         if(!WrapperRegistry.hasInstanceWrapper(mediaKlazz))
@@ -90,7 +90,6 @@ public class WrapperConverter extends Converter.Factory {
         //asking for the converter matching the type
         Converter<ResponseBody, ?> delegate = retrofit
                 .nextResponseBodyConverter(this, type, annotations);
-
         return delegate::convert;
     }
 }

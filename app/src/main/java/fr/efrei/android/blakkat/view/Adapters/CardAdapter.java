@@ -17,10 +17,10 @@ import java.util.List;
 
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.DisplayActivity;
-import fr.efrei.android.blakkat.model.IMedia;
+import fr.efrei.android.blakkat.model.Media;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
-    private List<IMedia> _myMedias;
+    private List<Media> _myMedias;
     private Context _mContext;
 
     static class CardHolder extends RecyclerView.ViewHolder {
@@ -36,7 +36,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
         }
     }
 
-    public CardAdapter(List<IMedia> myMedias, Context mContext) {
+    public CardAdapter(List<Media> myMedias, Context mContext) {
         _myMedias = myMedias;
         _mContext = mContext;
     }

@@ -8,18 +8,6 @@ import java.util.Date;
 public class Manga extends JikanModel<Manga> {
     private DateBundle published;
 
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        @Override
-        public Manga createFromParcel(Parcel in) {
-            return new Manga(in);
-        }
-
-        @Override
-        public Manga[] newArray(int size) {
-            return new Manga[size];
-        }
-    };
-
     private Manga(Parcel in) {
         super(in);
     }
@@ -36,4 +24,16 @@ public class Manga extends JikanModel<Manga> {
         this.start_date = getReleaseDate();
         parcel.writeLong(start_date.getTime());
     }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        @Override
+        public Manga createFromParcel(Parcel in) {
+            return new Manga(in);
+        }
+
+        @Override
+        public Manga[] newArray(int size) {
+            return new Manga[size];
+        }
+    };
 }

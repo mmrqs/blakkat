@@ -16,6 +16,7 @@ public abstract class JikanModel<T extends IMedia> implements IMedia, Parcelable
     protected Date start_date;
     private ArrayList<MALGenre> genres;
     private ArrayList<String> curatedGenres;
+
     public static final Parcelable.Creator CREATOR = null;
 
     JikanModel(Parcel in) {
@@ -32,7 +33,6 @@ public abstract class JikanModel<T extends IMedia> implements IMedia, Parcelable
         return mal_id;
     }
 
-    //TODO is this necessary ?
     @Override
     public String getProviderHint() {
         return this.getClass().getSimpleName();
@@ -66,61 +66,12 @@ public abstract class JikanModel<T extends IMedia> implements IMedia, Parcelable
         return curatedGenres;
     }
 
-    private static class MALGenre implements Parcelable {
+    private static class MALGenre {
         private String name;
-
-        protected MALGenre(Parcel in) {
-            name = in.readString();
-        }
-
-        public static final Creator<MALGenre> CREATOR = new Creator<MALGenre>() {
-            @Override
-            public MALGenre createFromParcel(Parcel in) {
-                return new MALGenre(in);
-            }
-
-            @Override
-            public MALGenre[] newArray(int size) {
-                return new MALGenre[size];
-            }
-        };
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel parcel, int i) {
-            parcel.writeString(name);
-        }
     }
-    static class DateBundle implements Parcelable {
+
+    static final class DateBundle {
         Date from;
-
-        protected DateBundle(Parcel in) {
-        }
-
-        public static final Creator<DateBundle> CREATOR = new Creator<DateBundle>() {
-            @Override
-            public DateBundle createFromParcel(Parcel in) {
-                return new DateBundle(in);
-            }
-
-            @Override
-            public DateBundle[] newArray(int size) {
-                return new DateBundle[size];
-            }
-        };
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel parcel, int i) {
-        }
     }
 
     @Override

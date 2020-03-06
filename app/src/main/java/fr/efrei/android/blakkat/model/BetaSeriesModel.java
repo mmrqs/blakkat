@@ -3,30 +3,30 @@ package fr.efrei.android.blakkat.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.orm.dsl.Ignore;
+
 import java.util.ArrayList;
 
 public abstract class BetaSeriesModel<T extends IMedia> implements IMedia, Parcelable {
     int id;
+    @Ignore
     String title;
+    @Ignore
+    String url;
+    @Ignore
+    Float score;
+    @Ignore
     ScoreBundle notes;
+    @Ignore
     ImageBundle images;
+    @Ignore
     ArrayList<String> genres;
-    public static final Parcelable.Creator CREATOR = null;
-
-    protected BetaSeriesModel(Parcel in) {
-        this.id = in.readInt();
-        this.title = in.readString();
-        this.notes = in.readParcelable(ScoreBundle.class.getClassLoader());
-        this.images = in.readParcelable(ImageBundle.class.getClassLoader());
-        this.genres = in.readArrayList(String.class.getClassLoader());
-    }
 
     @Override
     public int getId() {
         return id;
     }
 
-    //TODO is this necessary ?
     @Override
     public String getProviderHint() {
         return this.getClass().getSimpleName();
@@ -39,12 +39,16 @@ public abstract class BetaSeriesModel<T extends IMedia> implements IMedia, Parce
 
     @Override
     public String getImageUrl() {
-        return images.show;
+        if(this.url == null)
+            url = this.images.show;
+        return url;
     }
 
     @Override
     public float getPublicScore() {
-        return notes.mean;
+        if(this.score == null)
+            this.score = this.notes.mean;
+        return score;
     }
 
     @Override
@@ -52,72 +56,30 @@ public abstract class BetaSeriesModel<T extends IMedia> implements IMedia, Parce
         return genres;
     }
 
-    static final class ScoreBundle implements Parcelable{
+    private static final class ScoreBundle {
         private float mean;
-
-        protected ScoreBundle(Parcel in) {
-            mean = in.readFloat();
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeFloat(mean);
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        public static final Creator<ScoreBundle> CREATOR = new Creator<ScoreBundle>() {
-            @Override
-            public ScoreBundle createFromParcel(Parcel in) {
-                return new ScoreBundle(in);
-            }
-
-            @Override
-            public ScoreBundle[] newArray(int size) {
-                return new ScoreBundle[size];
-            }
-        };
     }
 
-    static final class ImageBundle implements Parcelable{
+    private static final class ImageBundle {
         private String show;
-
-        protected ImageBundle(Parcel in) {
-            show = in.readString();
-        }
-
-        public static final Creator<ImageBundle> CREATOR = new Creator<ImageBundle>() {
-            @Override
-            public ImageBundle createFromParcel(Parcel in) {
-                return new ImageBundle(in);
-            }
-
-            @Override
-            public ImageBundle[] newArray(int size) {
-                return new ImageBundle[size];
-            }
-        };
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel parcel, int i) {
-            parcel.writeString(show);
-        }
     }
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(this.id);
         parcel.writeString(this.title);
-        parcel.writeParcelable(this.notes, flags);
-        parcel.writeParcelable(this.images, flags);
+        parcel.writeFloat(this.getPublicScore());
+        parcel.writeString(this.getImageUrl());
         parcel.writeList(this.genres);
+    }
+
+    public static final Parcelable.Creator CREATOR = null;
+
+    protected BetaSeriesModel(Parcel in) {
+        this.id = in.readInt();
+        this.title = in.readString();
+        this.score = in.readFloat();
+        this.url = in.readString();
+        this.genres = in.readArrayList(String.class.getClassLoader());
     }
 }

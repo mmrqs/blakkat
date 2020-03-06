@@ -2,11 +2,17 @@ package fr.efrei.android.blakkat.model;
 
 import com.orm.SugarRecord;
 
-public class MediaRecord extends SugarRecord {
+public class MediaRecoard extends SugarRecord {
     private int identifier;
     private String type;
 
-    public MediaRecord(Media m) {
+    /**
+     * AN EMPTY CONSTRUCTOR IS MANDATORY
+     */
+    public MediaRecoard() {
+    }
+
+    public MediaRecoard(Media m) {
         this.identifier = m.getId();
         this.type = m.getProviderHint();
     }

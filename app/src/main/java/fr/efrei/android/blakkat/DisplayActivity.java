@@ -8,14 +8,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.orm.SugarRecord;
 import com.squareup.picasso.Picasso;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Objects;
 
 import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.model.MediaRecord;
+import fr.efrei.android.blakkat.model.MediaRecoard;
 
 public class DisplayActivity extends AppCompatActivity {
     private TextView titleDisplay;
@@ -34,16 +34,17 @@ public class DisplayActivity extends AppCompatActivity {
                 .getExtras())
                 .getParcelable("MediaClicked");
 
-        MediaRecord mediaRecord = new MediaRecord(media);
-        Long id = mediaRecord.save();
+        MediaRecoard mediaRecord = new MediaRecoard(media);
+        SugarRecord.save(mediaRecord);
 
-        long i = MediaRecord.count(MediaRecord.class);
-        Iterator<MediaRecord> it = MediaRecord.findAll(MediaRecord.class);
+
+        long i = SugarRecord.count(MediaRecoard.class);
+        Iterator<MediaRecoard> it = SugarRecord.findAll(MediaRecoard.class);
         mediaRecord = it.next();
-        mediaRecord = MediaRecord.findById(MediaRecord.class, id);
-        mediaRecord = MediaRecord.findById(MediaRecord.class, 5);
-        mediaRecord = MediaRecord.find(MediaRecord.class, "identifier = ?",
-                String.valueOf(media.getId())).get(0);
+        mediaRecord = SugarRecord.findById(MediaRecoard.class, 5L);
+        mediaRecord = SugarRecord.find(MediaRecoard.class, "identifier = ?",
+                String.valueOf(media.getId()))
+                .get(0);
 
         titleDisplay = findViewById(R.id.titleDisplay);
         titleDisplay.setText(media.getTitle() + "    " + mediaRecord.getType());

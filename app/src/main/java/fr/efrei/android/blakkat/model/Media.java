@@ -24,8 +24,13 @@ public abstract class Media implements Parcelable {
         parcel.writeInt(this.getId());
         parcel.writeString(this.getTitle());
         parcel.writeString(this.getImageUrl());
-        parcel.writeFloat(this.getReleaseDate().getTime());
+        parcel.writeLong(this.getReleaseDate().getTime());
         parcel.writeFloat(this.getPublicScore());
         parcel.writeString(this.getSynopsis());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

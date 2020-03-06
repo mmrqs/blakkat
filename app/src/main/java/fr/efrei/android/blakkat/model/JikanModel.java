@@ -3,9 +3,6 @@ package fr.efrei.android.blakkat.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.orm.dsl.Column;
-import com.orm.dsl.Ignore;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -17,7 +14,6 @@ import java.util.stream.Collectors;
  * @param <T> type of the media (anime or manga in this case)
  */
 public abstract class JikanModel<T extends Media> extends Media {
-    @Column(name = "id")
     private int mal_id;
     
     private String title;
@@ -75,19 +71,12 @@ public abstract class JikanModel<T extends Media> extends Media {
         Date from;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Parcelable.Creator CREATOR = null;
-
     JikanModel(Parcel in) {
         this.mal_id = in.readInt();
         this.title = in.readString();
-        this.synopsis = in.readString();
         this.image_url = in.readString();
-        this.score = in.readFloat();
         this.start_date = new Date(in.readLong());
+        this.score = in.readFloat();
+        this.synopsis = in.readString();
     }
 }

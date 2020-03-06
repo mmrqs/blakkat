@@ -3,10 +3,8 @@ package fr.efrei.android.blakkat.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.orm.dsl.Column;
-import com.orm.dsl.Ignore;
-
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Represents a common model for objects gotten from the BetaSeries API
@@ -16,17 +14,14 @@ import java.util.ArrayList;
  */
 public abstract class BetaSeriesModel<T extends Media> extends Media {
     int id;
-    
     String title;
-    
     String url;
-    
     Float score;
-    
+    Date releaseDate;
+    String description;
+
     ScoreBundle notes;
-    
     ImageBundle images;
-    
     ArrayList<String> genres;
 
     @Override
@@ -71,8 +66,9 @@ public abstract class BetaSeriesModel<T extends Media> extends Media {
     protected BetaSeriesModel(Parcel in) {
         this.id = in.readInt();
         this.title = in.readString();
-        this.score = in.readFloat();
         this.url = in.readString();
-        this.genres = in.readArrayList(String.class.getClassLoader());
+        this.releaseDate = new Date(in.readLong());
+        this.score = in.readFloat();
+        this.description = in.readString();
     }
 }

@@ -2,9 +2,10 @@ package fr.efrei.android.blakkat.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
-import org.json.JSONException;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class Show extends BetaSeriesModel<Show> {
     private int creation;
-    private JSONObject genres;
+    private JsonObject genres;
 
     @Override
     public Date getReleaseDate() {
@@ -36,9 +37,7 @@ public class Show extends BetaSeriesModel<Show> {
     public List<String> getGenres() {
         if(this.centralizedGenres == null) {
             this.centralizedGenres = new ArrayList<>();
-            for (Iterator<String> it = genres.keys(); it.hasNext(); ) {
-                centralizedGenres.add(it.next());
-            }
+            centralizedGenres.addAll(genres.keySet());
         }
         return centralizedGenres;
     }

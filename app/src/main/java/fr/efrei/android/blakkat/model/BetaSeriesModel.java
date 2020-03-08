@@ -57,13 +57,13 @@ public abstract class BetaSeriesModel<T extends Media> extends Media {
         private String show;
     }
 
-    protected BetaSeriesModel(Parcel in) {
+    BetaSeriesModel(Parcel in) {
         this.id = in.readInt();
         this.title = in.readString();
         this.url = in.readString();
         this.releaseDate = new Date(in.readLong());
         this.score = in.readFloat();
         this.description = in.readString();
-        //TODO Genres
+        this.centralizedGenres = in.readArrayList(ArrayList.class.getClassLoader());
     }
 }

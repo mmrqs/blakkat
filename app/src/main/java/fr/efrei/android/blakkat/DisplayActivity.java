@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.orm.SugarRecord;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
@@ -23,33 +22,21 @@ public class DisplayActivity extends AppCompatActivity {
     private TextView synopsis;
     private Button returnButton;
     private TextView genre;
-    private Media result;
+    private Button viewedToggleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_display);
 
         Intent mediaChosen = getIntent();
-        Media media = Objects.requireNonNull(mediaChosen
-                .getExtras())
-                .getParcelable("MediaClicked");
-
-        MediaRecord mediaRecord = new MediaRecord(media);
-        SugarRecord.save(mediaRecord);
-
-        mediaRecord = SugarRecord.find(MediaRecord.class, "identifier = ?",
-                String.valueOf(media.getId()))
-                .get(0);
-
-        titleDisplay = findViewById(R.id.titleDisplay);
-        titleDisplay.setText(media.getTitle() + "    " + mediaRecord.getType());
         Media result = Objects.requireNonNull(mediaChosen
                 .getExtras())
                 .getParcelable("MediaClicked");
 
-
         titleDisplay = findViewById(R.id.titleDisplay);
+        assert result != null;
         titleDisplay.setText(result.getTitle());
 
         imageView = findViewById(R.id.imageCard_displayActivity);
@@ -60,14 +47,34 @@ public class DisplayActivity extends AppCompatActivity {
         time = findViewById(R.id.time);
         time.setText(result.getReleaseDate().toString());
 
-        System.out.println("genre"+ media.getGenres());
         genre = findViewById(R.id.genre);
-        genre.setText(media.getGenres().toString());
+        genre.setText(result.getGenres().toString());
 
         synopsis = findViewById(R.id.SynopsisContent_Display);
         synopsis.setText(result.getSynopsis());
 
         returnButton = findViewById(R.id.return_displayActivity);
         returnButton.setOnClickListener(view -> finish());
+
+        viewedToggleButton = findViewById(R.id.viewed_toggle);
+
+        this.changeToggleViewedButtonContents(MediaRecord
+                .exists(result.getId(), result.getProviderHint()));
+
+        viewedToggleButton.setOnClickListener(view -> {
+            MediaRecord record = MediaRecord.exists(result.getId(), result.getProviderHint());
+            if(record == null) {
+                record = new MediaRecord(result);
+                record.save();
+            } else {
+                record.delete();
+                record = null;
+            }
+            changeToggleViewedButtonContents(record);
+        });
+    }
+
+    void changeToggleViewedButtonContents(MediaRecord mr) {
+        viewedToggleButton.setText(mr == null ? R.string.notviewed : R.string.viewed);
     }
 }

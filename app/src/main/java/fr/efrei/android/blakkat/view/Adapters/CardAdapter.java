@@ -2,7 +2,6 @@ package fr.efrei.android.blakkat.view.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,9 +28,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
-    private List<Media> _myMedias;
-    private Context _mContext;
-    private Media _specificMedia;
+    private List<Media> medias;
+    private Context context;
 
     static class CardHolder extends RecyclerView.ViewHolder {
         TextView textView;
@@ -47,77 +45,54 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
     }
 
     public CardAdapter(List<Media> myMedias, Context mContext) {
-        _myMedias = myMedias;
-        _mContext = mContext;
+        medias = myMedias;
+        context = mContext;
     }
 
     @Override
     public CardAdapter.CardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cell_cards, parent, false);
-        CardHolder vh = new CardHolder(v);
-        return vh;
+        return new CardHolder(v);
     }
 
     @Override
     public void onBindViewHolder(CardHolder holder, int position) {
-
-        holder.textView.setText(_myMedias.get(position).getTitle() +
-                " – " + _myMedias.get(position).getProviderHint());
+        holder.textView.setText(medias.get(position).getTitle() +
+                " – " + medias.get(position).getProviderHint());
         Picasso.with(holder.imageView.getContext())
-                .load(_myMedias.get(position)
+                .load(medias.get(position)
                         .getImageUrl()).centerCrop().fit()
                 .into(holder.imageView);
 
-        holder.v.setOnClickListener(v -> {
-            if (_myMedias.get(position).getProviderHint().equals("Anime")) {
-                IAnimeProvider provider = KeeperFactory.getKeeper().getAnimeProvider();
-                provider.getOne(_myMedias.get(position).getId()).enqueue(createNewCallBackAnime(position));
-            } else if (_myMedias.get(position).getProviderHint().equals("Manga")) {
-                IMangaProvider provider = KeeperFactory.getKeeper().getMangaProvider();
-                provider.getOne(_myMedias.get(position).getId()).enqueue(createNewCallBackManga(position));
-            } else {
-                Dispatch(position);
-            }
-        });
+        holder.v.setOnClickListener(v -> KeeperFactory.getKeeper()
+                .getProviderFor(medias.get(position))
+                .getOne(medias.get(position).getId())
+                .enqueue(createNewCallBack(position)));
     }
 
     @Override
     public int getItemCount() {
-        return _myMedias.size();
+        return medias.size();
     }
 
-    private Callback<Anime> createNewCallBackAnime(int position) {
-        return new Callback<Anime>() {
+    private Callback<Media> createNewCallBack(int position) {
+        return new Callback<Media>() {
             @Override
-            public void onResponse(Call<Anime> call, Response<Anime> response) {
-                _myMedias.set(position, response.body());
-                Dispatch(position);
+            public void onResponse(Call<Media> call, Response<Media> response) {
+                medias.set(position, response.body());
+                dispatch(position);
             }
             @Override
-            public void onFailure(Call<Anime> call, Throwable t) {
+            public void onFailure(Call<Media> call, Throwable t) {
                 Log.e("", t.toString());
             }
         };
     }
 
-    private Callback<Manga> createNewCallBackManga(int position) {
-        return new Callback<Manga>() {
-            @Override
-            public void onResponse(Call<Manga> call, Response<Manga> response) {
-                _myMedias.set(position, response.body());
-                Dispatch(position);
-            }
-            @Override
-            public void onFailure(Call<Manga> call, Throwable t) {
-                Log.e("", t.toString());
-            }
-        };
-    }
-
-    private void Dispatch(int position) {
-        Intent intent = new Intent(_mContext, DisplayActivity.class);
-        intent.putExtra("MediaClicked", _myMedias.get(position));
-        _mContext.startActivity(intent);
+    private void dispatch(int position) {
+        Intent intent = new Intent(context, DisplayActivity.class);
+        intent.putExtra("MediaClicked", medias.get(position));
+        context.startActivity(intent);
     }
 }

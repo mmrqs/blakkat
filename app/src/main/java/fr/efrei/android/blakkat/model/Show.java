@@ -85,10 +85,4 @@ public class Show extends BetaSeriesModel<Show> {
         this.centralizedSeasons = (HashMap<Integer, Integer>) in.readSerializable();
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int flags) {
-        super.writeToParcel(parcel, flags);
-        parcel.writeSerializable(getSeasons());
-    }
-
 }

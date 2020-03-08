@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public abstract class Media implements Parcelable {
+    public String getProviderHint() {
+        return this.getClass().getSimpleName();
+    }
     public abstract int getId();
     public abstract String getTitle();
     public abstract String getImageUrl();
@@ -29,6 +32,7 @@ public abstract class Media implements Parcelable {
         parcel.writeFloat(this.getPublicScore());
         parcel.writeString(this.getSynopsis());
         parcel.writeList(this.getGenres());
+        parcel.writeSerializable(this.getSeasons());
     }
 
     @Override

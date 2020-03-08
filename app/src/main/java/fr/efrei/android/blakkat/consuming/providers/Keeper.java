@@ -6,7 +6,7 @@ import java.util.List;
 import retrofit2.Retrofit;
 
 /**
- * Holds instances to the providers for every {@link fr.efrei.android.blakkat.model.IMedia}
+ * Holds instances to the providers for every {@link fr.efrei.android.blakkat.model.Media}
  * TODO may be used in general purpose requests
  */
 public class Keeper {
@@ -21,7 +21,22 @@ public class Keeper {
         return providers;
     }
 
-    public Keeper(Retrofit betaSeries, Retrofit jikan) {
+    public IProvider getProviderFor(String s) {
+        switch (s) {
+            case "Anime":
+                return this.animeProvider;
+            case "Manga":
+                return this.mangaProvider;
+            case "Movie":
+                return this.movieProvider;
+            case "Show":
+                return this.showProvider;
+            default:
+                return null;
+        }
+    }
+
+    Keeper(Retrofit betaSeries, Retrofit jikan) {
         this.animeProvider = jikan.create(IAnimeProvider.class);
         this.mangaProvider = jikan.create(IMangaProvider.class);
         this.movieProvider = betaSeries.create(IMovieProvider.class);

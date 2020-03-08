@@ -60,7 +60,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
 
         holder.v.setOnClickListener(v -> {
             Intent intent = new Intent(_mContext, DisplayActivity.class);
-            intent.putExtra("MediaClicked", (Parcelable)_myMedias.get(position));
+            intent.putExtra("MediaClicked", _myMedias.get(position));
             _mContext.startActivity(intent);
         });
     }

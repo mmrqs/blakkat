@@ -23,6 +23,12 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/buttonViewed"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:text="@string/takeMe" />
+
         <LinearLayout
             android:id="@+id/resultSearch"
             android:layout_width="match_parent"
@@ -32,9 +38,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent" >
+
+            </androidx.recyclerview.widget.RecyclerView>
 
         </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

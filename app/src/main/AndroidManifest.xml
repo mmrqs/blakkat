@@ -14,6 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:theme">
+        <activity
+            android:name=".ViewedActivity"
+            android:label="@string/title_activity_viewed"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".DisplayActivity" />
         <activity android:name=".SearchActivity" /> <!-- SugarORM -->
         <meta-data

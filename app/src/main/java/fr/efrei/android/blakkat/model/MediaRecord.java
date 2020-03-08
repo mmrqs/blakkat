@@ -5,6 +5,10 @@ import com.orm.SugarRecord;
 import java.util.Date;
 import java.util.List;
 
+import fr.efrei.android.blakkat.consuming.providers.Keeper;
+import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
+import retrofit2.Call;
+
 public class MediaRecord extends SugarRecord {
     private int identifier;
     private String type;
@@ -43,5 +47,11 @@ public class MediaRecord extends SugarRecord {
                 "identifier = ? and type = ?",
                 String.valueOf(identifier), type);
         return res.size() == 0 ? null : res.get(0);
+    }
+
+    public <T extends Media> Call<T> getCorresponding() {
+        return KeeperFactory.getKeeper()
+                .getProviderFor(this.type)
+                .getOne(this.identifier);
     }
 }

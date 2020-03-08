@@ -3,12 +3,11 @@ package fr.efrei.android.blakkat.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Anime extends JikanModel<Anime> {
     private DateBundle aired;
+    private int episodes;
 
     @Override
     public Date getReleaseDate() {
@@ -17,8 +16,8 @@ public class Anime extends JikanModel<Anime> {
     }
 
     @Override
-    public ArrayList<?> getSeasons() {
-        return null;
+    public Integer getSeasons() {
+        return this.episodes;
     }
 
     @Override
@@ -40,5 +39,6 @@ public class Anime extends JikanModel<Anime> {
 
     private Anime(Parcel in) {
         super(in);
+        this.episodes =  (Integer) in.readSerializable();
     }
 }

@@ -5,13 +5,14 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Manga extends JikanModel<Manga> {
     private DateBundle published;
+    private int volumes;
 
     private Manga(Parcel in) {
         super(in);
+        this.volumes = (Integer) in.readSerializable();
     }
 
     @Override
@@ -21,8 +22,8 @@ public class Manga extends JikanModel<Manga> {
     }
 
     @Override
-    public ArrayList<?> getSeasons() {
-        return null;
+    public Integer getSeasons() {
+        return this.volumes;
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {

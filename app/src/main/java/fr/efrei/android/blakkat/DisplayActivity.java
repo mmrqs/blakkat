@@ -68,6 +68,11 @@ public class DisplayActivity extends AppCompatActivity {
             System.out.println((HashMap) result.getSeasons());
         }
         System.out.println("coucou");
+        if(result.getProviderHint().equals("Anime")) {
+            System.out.println((Integer) result.getSeasons());
+        }
+
+
         viewedToggleButton.setOnClickListener(view -> {
             MediaRecord record = MediaRecord.exists(result.getId(), result.getProviderHint());
             if(record == null) {

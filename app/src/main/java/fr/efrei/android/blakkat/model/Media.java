@@ -3,8 +3,10 @@ package fr.efrei.android.blakkat.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class Media implements Parcelable {
@@ -15,11 +17,7 @@ public abstract class Media implements Parcelable {
     public abstract float getPublicScore();
     public abstract String getSynopsis();
     public abstract List<String> getGenres();
-    public abstract boolean hasSeasons();
-
-    public String getProviderHint() {
-        return this.getClass().getSimpleName();
-    }
+    public abstract <E> E getSeasons();
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {

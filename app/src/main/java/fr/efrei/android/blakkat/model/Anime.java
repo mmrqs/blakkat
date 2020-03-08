@@ -3,7 +3,9 @@ package fr.efrei.android.blakkat.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Anime extends JikanModel<Anime> {
     private DateBundle aired;
@@ -12,6 +14,11 @@ public class Anime extends JikanModel<Anime> {
     public Date getReleaseDate() {
         return start_date == null ?
                 aired.from : start_date;
+    }
+
+    @Override
+    public ArrayList<?> getSeasons() {
+        return null;
     }
 
     @Override

@@ -59,4 +59,9 @@ public abstract class BetaSeriesModel<T extends Media> extends Media {
         this.description = in.readString();
         this.centralizedGenres = in.readArrayList(ArrayList.class.getClassLoader());
     }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        super.writeToParcel(parcel, flags);
+    }
 }

@@ -43,27 +43,27 @@ public class SearchActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        SearchView search_bar = findViewById(R.id.searchBar);
+        SearchView searchBar = findViewById(R.id.searchBar);
 
-        search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 results = new ArrayList<>();
-                String textSearched = search_bar.getQuery().toString();
-                search_bar.clearFocus();
+                String textSearched = searchBar.getQuery().toString();
+                searchBar.clearFocus();
                 for (IProvider p : KeeperFactory.getKeeper().getProviders()) {
-                    p.searchForNbResults(textSearched,5).enqueue(createNewCallack());
+                    p.searchForNbResults(textSearched,5).enqueue(createNewCallback());
                 }
                 return true;
             }
             @Override
-            public boolean onQueryTextChange(String s) {
+            public boolean onQueryTextChange(String query) {
                 return false;
             }
         });
     }
 
-    private Callback<List<Media>> createNewCallack() {
+    private Callback<List<Media>> createNewCallback() {
         return new Callback<List<Media>>() {
             @Override
             public void onResponse(Call<List<Media>> call, Response<List<Media>> response) {

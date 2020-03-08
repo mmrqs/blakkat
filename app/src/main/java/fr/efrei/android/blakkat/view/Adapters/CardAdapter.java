@@ -1,5 +1,6 @@
 package fr.efrei.android.blakkat.view.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -49,6 +51,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
         context = mContext;
     }
 
+    @NonNull
     @Override
     public CardAdapter.CardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
@@ -56,6 +59,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
         return new CardHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(CardHolder holder, int position) {
         holder.textView.setText(medias.get(position).getTitle() +

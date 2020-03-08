@@ -16,6 +16,7 @@ public abstract class BetaSeriesModel<T extends Media> extends Media {
     private String title;
     String imageUrl;
     private Float score;
+    int seasons;
 
     ArrayList<String> centralizedGenres;
     Date releaseDate;
@@ -38,6 +39,11 @@ public abstract class BetaSeriesModel<T extends Media> extends Media {
         if(this.score == null)
             this.score = this.notes.mean;
         return score;
+    }
+
+    @Override
+    public boolean hasSeasons() {
+        return this.seasons != 0;
     }
 
     private static final class ScoreBundle {

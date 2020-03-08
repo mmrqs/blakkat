@@ -3,6 +3,7 @@ package fr.efrei.android.blakkat.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public abstract class Media implements Parcelable {
         parcel.writeLong(this.getReleaseDate().getTime());
         parcel.writeFloat(this.getPublicScore());
         parcel.writeString(this.getSynopsis());
+        parcel.writeList(this.getGenres());
     }
 
     @Override

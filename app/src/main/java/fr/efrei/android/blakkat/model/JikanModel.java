@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -20,8 +21,8 @@ public abstract class JikanModel<T extends Media> extends Media {
     private String synopsis;
     private float score;
     Date start_date;
-    private ArrayList<String> curatedGenres;
-    private ArrayList<MALGenre> genres;
+    private List<String> curatedGenres;
+    private List<MALGenre> genres;
 
     @Override
     public int getId() {
@@ -49,10 +50,10 @@ public abstract class JikanModel<T extends Media> extends Media {
     }
 
     @Override
-    public ArrayList<String> getGenres() {
+    public List<String> getGenres() {
         if(curatedGenres == null)
             curatedGenres = genres.stream().map(g -> g.name)
-                    .collect(Collectors.toCollection(ArrayList::new));
+                    .collect(Collectors.toList());
         return curatedGenres;
     }
 
@@ -71,5 +72,6 @@ public abstract class JikanModel<T extends Media> extends Media {
         this.start_date = new Date(in.readLong());
         this.score = in.readFloat();
         this.synopsis = in.readString();
+        this.curatedGenres = in.readArrayList(ArrayList.class.getClassLoader());
     }
 }

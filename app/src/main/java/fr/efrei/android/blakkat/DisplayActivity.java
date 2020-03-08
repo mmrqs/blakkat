@@ -22,6 +22,7 @@ public class DisplayActivity extends AppCompatActivity {
     private TextView time;
     private TextView synopsis;
     private Button returnButton;
+    private TextView genre;
     private Media result;
 
     @Override
@@ -58,6 +59,10 @@ public class DisplayActivity extends AppCompatActivity {
 
         time = findViewById(R.id.time);
         time.setText(result.getReleaseDate().toString());
+
+        System.out.println("genre"+ media.getGenres());
+        genre = findViewById(R.id.genre);
+        genre.setText(media.getGenres().toString());
 
         synopsis = findViewById(R.id.SynopsisContent_Display);
         synopsis.setText(result.getSynopsis());

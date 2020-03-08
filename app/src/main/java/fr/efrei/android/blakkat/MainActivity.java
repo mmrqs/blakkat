@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import android.view.KeyEvent;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import fr.efrei.android.blakkat.model.User;
@@ -31,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
         pref = getSharedPreferences("user_pseudo", MODE_PRIVATE);
 
         btnSignin.setOnClickListener(view -> signin(editTextPseudo.getText().toString()));
+        editTextPseudo.setOnEditorActionListener((textView, i, keyEvent) -> {
+            signin(editTextPseudo.getText().toString());
+            return true;
+        });
         btnSignup.setOnClickListener(view -> signup());
     }
 

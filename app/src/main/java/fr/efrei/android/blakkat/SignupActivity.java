@@ -28,6 +28,11 @@ public class SignupActivity extends AppCompatActivity {
         btnReturn.setOnClickListener(view -> back());
 
         btnSignup.setOnClickListener(view -> signup(editTextPseudo.getText().toString()));
+
+        editTextPseudo.setOnEditorActionListener((textView, i, keyEvent) -> {
+            signup(editTextPseudo.getText().toString());
+            return true;
+        });
     }
 
     public void back() {

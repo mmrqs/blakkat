@@ -14,6 +14,7 @@ public class KeeperFactory {
     private static final String BETA_SERIES_KEY = "b0781d3bbc01";
     private static final String BETA_SERIES_URL = "https://api.betaseries.com/";
     private static final String JIKAN_URL = "https://api.jikan.moe/v3/";
+    private static final String JIKAN_FILTER = "12,9,33,34,26,28,44,42,43";
 
     private static Keeper instance;
 
@@ -40,6 +41,7 @@ public class KeeperFactory {
     private static Retrofit buildJikan() {
         return new Retrofit.Builder()
                 .baseUrl(JIKAN_URL)
+                .client(getJikanClient())
                 .addConverterFactory(new WrapperConverter())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -69,6 +71,18 @@ public class KeeperFactory {
             Request original = chain.request();
             HttpUrl newUrl = original.url().newBuilder()
                     .addEncodedQueryParameter("key", BETA_SERIES_KEY)
+                    .build();
+            return chain.proceed(original.newBuilder()
+                    .url(newUrl).build());
+        }).build();
+    }
+
+    private static OkHttpClient getJikanClient() {
+        return new OkHttpClient.Builder().addInterceptor(chain -> {
+            Request original = chain.request();
+            HttpUrl newUrl = original.url().newBuilder()
+                    .addEncodedQueryParameter("genre", JIKAN_FILTER)
+                    .addEncodedQueryParameter("genre_exclude", "0")
                     .build();
             return chain.proceed(original.newBuilder()
                     .url(newUrl).build());

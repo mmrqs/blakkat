@@ -13,6 +13,7 @@ public class Movie extends BetaSeriesModel<Movie> {
     private String synopsis;
     private Date release_date;
     private ArrayList<String> genres;
+    private String poster;
 
     @Override
     public Date getReleaseDate() {
@@ -26,6 +27,13 @@ public class Movie extends BetaSeriesModel<Movie> {
         if(description == null)
             description = synopsis;
         return description;
+    }
+
+    @Override
+    public String getImageUrl() {
+        if(this.imageUrl == null)
+            this.imageUrl = poster;
+        return imageUrl;
     }
 
     @Override

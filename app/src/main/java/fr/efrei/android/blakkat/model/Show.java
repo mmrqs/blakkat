@@ -17,6 +17,7 @@ import java.util.List;
 public class Show extends BetaSeriesModel<Show> {
     private int creation;
     private JsonObject genres;
+    private ImageBundle images;
 
     @Override
     public Date getReleaseDate() {
@@ -40,6 +41,17 @@ public class Show extends BetaSeriesModel<Show> {
             centralizedGenres.addAll(genres.keySet());
         }
         return centralizedGenres;
+    }
+
+    @Override
+    public String getImageUrl() {
+        if(this.imageUrl == null)
+            imageUrl = this.images.show;
+        return imageUrl;
+    }
+
+    private static final class ImageBundle {
+        private String show;
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {

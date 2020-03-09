@@ -14,13 +14,6 @@ public class Anime extends JikanModel<Anime> {
                 aired.from : start_date;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int flags) {
-        super.writeToParcel(parcel, flags);
-        this.start_date = getReleaseDate();
-        parcel.writeLong(start_date.getTime());
-    }
-
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Anime createFromParcel(Parcel in) {
             return new Anime(in);

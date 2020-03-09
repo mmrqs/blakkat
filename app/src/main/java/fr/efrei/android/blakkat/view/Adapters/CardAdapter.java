@@ -18,11 +18,7 @@ import java.util.List;
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.DisplayActivity;
 import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.consuming.providers.IAnimeProvider;
-import fr.efrei.android.blakkat.consuming.providers.IMangaProvider;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
-import fr.efrei.android.blakkat.model.Anime;
-import fr.efrei.android.blakkat.model.Manga;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,10 +56,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
     public void onBindViewHolder(CardHolder holder, int position) {
         holder.textView.setText(medias.get(position).getTitle() +
                 " – " + medias.get(position).getProviderHint());
-        Picasso.with(holder.imageView.getContext())
-                .load(medias.get(position)
-                        .getImageUrl()).centerCrop().fit()
-                .into(holder.imageView);
+
+        if(medias.get(position).getImageUrl().isEmpty())
+            holder.imageView.setImageResource(R.drawable.question_mark);
+        else
+            Picasso.with(holder.imageView.getContext())
+                    .load(medias.get(position).getImageUrl())
+                    .placeholder(R.drawable.question_mark)
+                    .error(R.drawable.question_mark)
+                    .centerCrop().fit()
+                    .into(holder.imageView);
 
         holder.v.setOnClickListener(v -> KeeperFactory.getKeeper()
                 .getProviderFor(medias.get(position))

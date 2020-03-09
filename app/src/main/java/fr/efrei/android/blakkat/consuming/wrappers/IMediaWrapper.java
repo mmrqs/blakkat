@@ -8,3 +8,4 @@ public interface IMediaWrapper<T extends Media> {
     T getMedia();
     List<T> getMedias();
 }
+

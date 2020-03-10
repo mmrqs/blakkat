@@ -1,4 +1,4 @@
-package fr.efrei.android.blakkat.fragments;
+package fr.efrei.android.blakkat.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;

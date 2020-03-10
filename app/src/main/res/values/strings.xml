@@ -9,7 +9,7 @@
     <string name="signin_no_account_yet">No account yet ?</string>
     <string name="textview">TextView</string>
     <string name="notviewed">Marked as viewed</string>
-    <string name="viewed">Viewed</string>
+    <string name="viewed">Viewed on %1$tD</string>
     <string name="title_activity_viewed">Viewed</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>

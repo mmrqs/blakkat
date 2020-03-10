@@ -14,12 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:theme">
+        <activity android:name=".ui.activities.MainActivity"></activity>
         <activity
-            android:name=".activities.ViewedActivity"
+            android:name=".ui.fragments.ViewedFragment"
             android:label="@string/title_activity_viewed"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.DisplayMediaActivity" />
-        <activity android:name=".activities.SearchActivity" /> <!-- SugarORM -->
+        <activity android:name=".ui.fragments.DisplayMediaFragment" />
+        <activity android:name=".ui.fragments.SearchFragment" /> <!-- SugarORM -->
         <meta-data
             android:name="DATABASE"
             android:value="blakkat_sugar.db" />
@@ -33,7 +34,7 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="fr.efrei.android.blakkat.model" />
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".ui.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

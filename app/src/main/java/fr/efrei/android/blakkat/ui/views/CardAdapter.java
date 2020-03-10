@@ -1,7 +1,5 @@
-package fr.efrei.android.blakkat.view.Adapters;
+package fr.efrei.android.blakkat.ui.views;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +14,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import fr.efrei.android.blakkat.R;
-import fr.efrei.android.blakkat.activities.DisplayMediaActivity;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
 import retrofit2.Call;
@@ -25,7 +22,7 @@ import retrofit2.Response;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
     private List<Media> medias;
-    private Context context;
+    private DisplayActionsListener displayActionsListener;
 
     static class CardHolder extends RecyclerView.ViewHolder {
         TextView textView;
@@ -40,9 +37,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
         }
     }
 
-    public CardAdapter(List<Media> myMedias, Context mContext) {
-        medias = myMedias;
-        context = mContext;
+    public CardAdapter(List<Media> medias, DisplayActionsListener displayActionsListener) {
+        this.medias = medias;
+        this.displayActionsListener = displayActionsListener;
     }
 
     @Override
@@ -83,7 +80,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
             @Override
             public void onResponse(Call<Media> call, Response<Media> response) {
                 medias.set(position, response.body());
-                dispatch(position);
+                displayActionsListener.onMediaChosen(medias.get(position));
             }
             @Override
             public void onFailure(Call<Media> call, Throwable t) {
@@ -92,9 +89,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
         };
     }
 
-    private void dispatch(int position) {
-        Intent intent = new Intent(context, DisplayMediaActivity.class);
-        intent.putExtra("MediaClicked", medias.get(position));
-        context.startActivity(intent);
+    public interface DisplayActionsListener {
+        void onMediaChosen(Media media);
     }
 }

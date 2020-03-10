@@ -1,12 +1,17 @@
-package fr.efrei.android.blakkat.activities;
+package fr.efrei.android.blakkat.ui.fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import java.util.ArrayList;
@@ -15,34 +20,47 @@ import java.util.List;
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
 import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.view.Adapters.CardAdapter;
+import fr.efrei.android.blakkat.ui.views.CardAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchFragment extends Fragment {
+    private CardAdapter.DisplayActionsListener displayActionsListener;
+    private SearchActionsListener searchActionsListener;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.Adapter adapter;
     private ArrayList<Media> results;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_medias);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            this.searchActionsListener = (SearchActionsListener) context;
+            this.displayActionsListener = (CardAdapter.DisplayActionsListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement SearchActionsListener and DisplayActionsListener");
+        }
+    }
 
-        findViewById(R.id.buttonViewed)
-                .setOnClickListener(v -> startActivity(
-                        new Intent(SearchActivity.this,
-                            ViewedActivity.class)));
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.search_medias, container, false);
 
-        recyclerView = findViewById(R.id.recyclerView);
+        view.findViewById(R.id.buttonViewed)
+                .setOnClickListener(v -> searchActionsListener.onViewedRequest());
+
+        recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        SearchView searchBar = findViewById(R.id.searchBar);
+        SearchView searchBar = view.findViewById(R.id.searchBar);
         searchBar.setOnQueryTextListener(createNewQueryTextListener(searchBar));
+
+        return view;
     }
 
     private SearchView.OnQueryTextListener createNewQueryTextListener(SearchView searchBar) {
@@ -72,8 +90,8 @@ public class SearchActivity extends AppCompatActivity {
             public void onResponse(Call<List<Media>> call, Response<List<Media>> response) {
                 if(response.body() != null) {
                     results.addAll(response.body());
-                    mAdapter = new CardAdapter(results, SearchActivity.this);
-                    recyclerView.setAdapter(mAdapter);
+                    adapter = new CardAdapter(results, displayActionsListener);
+                    recyclerView.setAdapter(adapter);
                 }
             }
             @Override
@@ -82,5 +100,12 @@ public class SearchActivity extends AppCompatActivity {
                 Log.e("Err", t.getLocalizedMessage());
             }
         };
+    }
+
+    /**
+     * Serves as a bridge to allow communication with parent activity
+     */
+    public interface SearchActionsListener {
+        void onViewedRequest();
     }
 }

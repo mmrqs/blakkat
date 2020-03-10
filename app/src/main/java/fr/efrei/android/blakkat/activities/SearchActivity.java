@@ -28,7 +28,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.search_medias);
 
         findViewById(R.id.buttonViewed)
                 .setOnClickListener(v -> startActivity(

@@ -29,7 +29,7 @@
                 android:layout_width="139dp"
                 android:layout_height="81dp"
                 android:layout_gravity="center_horizontal"
-                app:srcCompat="@drawable/logoblakkatdark" />
+                app:srcCompat="@drawable/logo_blakkat_dark" />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView

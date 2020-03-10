@@ -29,7 +29,7 @@ public class DisplayMediaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_display);
+        setContentView(R.layout.display_media);
 
         Intent mediaChosen = getIntent();
         Media result = Objects.requireNonNull(mediaChosen

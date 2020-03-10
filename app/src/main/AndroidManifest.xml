@@ -17,7 +17,7 @@
         <activity
             android:name=".activities.ViewedActivity"
             android:label="@string/title_activity_viewed"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.DisplayMediaActivity" />
         <activity android:name=".activities.SearchActivity" /> <!-- SugarORM -->
         <meta-data
@@ -33,8 +33,7 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="fr.efrei.android.blakkat.model" />
 
-        <activity android:name=".activities.SignUpActivity" />
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

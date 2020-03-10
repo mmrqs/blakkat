@@ -38,10 +38,10 @@ public class ViewedMediasFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.view_content_viewed, container, false);
+        View view = inflater.inflate(R.layout.fragment_viewed_medias, container, false);
 
         this.seen = new ArrayList<>();
-        this.recyclerView = view.findViewById(R.id.viewed_medias);
+        this.recyclerView = view.findViewById(R.id.viewedMedias_recyclerView_viewed);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         MediaRecord.findAll(MediaRecord.class)

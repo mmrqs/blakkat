@@ -3,10 +3,7 @@ package fr.efrei.android.blakkat.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 public abstract class Media implements Parcelable {

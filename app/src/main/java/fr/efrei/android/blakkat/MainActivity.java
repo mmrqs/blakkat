@@ -9,9 +9,8 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import fr.efrei.android.blakkat.model.User;
+import fr.efrei.android.blakkat.model.Record.User;
 
 public class MainActivity extends AppCompatActivity {
     private EditText editTextPseudo;
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnSignUp = findViewById(R.id.signup);
         Button btnSignIn = findViewById(R.id.signin);
         editTextPseudo = findViewById(R.id.editText_Pseudo);
-        pref = getSharedPreferences("user_pseudo", MODE_PRIVATE);
+        pref = getSharedPreferences("User", MODE_PRIVATE);
 
         btnSignIn.setOnClickListener(view -> signIn(editTextPseudo.getText().toString()));
         editTextPseudo.setOnEditorActionListener((textView, i, keyEvent) -> {
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public void signIn(String pseudo) {
         if(User.exists(pseudo)) {
             SharedPreferences.Editor editor = pref.edit();
-            editor.putString("user_pseudo", pseudo);
+            editor.putString("User", pseudo);
             editor.apply();
 
             startActivity(new Intent(MainActivity.this,

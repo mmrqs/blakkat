@@ -12,10 +12,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        SharedPreferences prf = getSharedPreferences("user_pseudo", MODE_PRIVATE);
+        SharedPreferences prf = getSharedPreferences("User", MODE_PRIVATE);
         TextView pseudoTextView = findViewById(R.id.textViewHome);
 
-        pseudoTextView.setText("Coucou ô secrétaire " + prf.getString("user_pseudo", null));
+        pseudoTextView.setText("Coucou ô secrétaire " + prf.getString("User", null));
 
     }
 }

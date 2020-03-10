@@ -12,17 +12,16 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.model.MediaRecord;
-import fr.efrei.android.blakkat.model.Show;
+import fr.efrei.android.blakkat.model.Record.MediaRecord;
+import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
 import fr.efrei.android.blakkat.view.Adapters.CardAdapter;
-import fr.efrei.android.blakkat.view.Adapters.SeriesAdvancementAdapter;
+import fr.efrei.android.blakkat.view.Adapters.CardAdvancementAdapter;
 
 public class DisplayActivity extends AppCompatActivity {
     private TextView titleDisplay;
@@ -74,14 +73,6 @@ public class DisplayActivity extends AppCompatActivity {
         this.changeToggleViewedButtonContents(MediaRecord
                 .exists(result.getId(), result.getProviderHint()));
 
-        //TODO : delete this
-        if(result.getProviderHint().equals("Show")) {
-            System.out.println((HashMap) result.getSeasons());
-        }
-        if(result.getProviderHint().equals("Anime")) {
-            System.out.println((Integer) result.getSeasons());
-        }
-
         recyclerView = findViewById(R.id.RecyclerView_ActivityDisplay);
         recyclerView.setHasFixedSize(true);
 
@@ -90,21 +81,20 @@ public class DisplayActivity extends AppCompatActivity {
 
         // Seasons cards :
         switch (result.getProviderHint()) {
-            case "Show" :
-                mAdapter = new SeriesAdvancementAdapter(seasonsFormatter(result.getSeasons()),
-                        DisplayActivity.this);
+            case "Show":
+                mAdapter = new CardAdvancementAdapter(seasonsFormatter(result.getSeasons()),DisplayActivity.this,
+                        result);
                 break;
-            case "Anime" :
-            case "Manga" :
-                mAdapter = new SeriesAdvancementAdapter(mangaAnimeFormatter(result.getSeasons()),
-                        DisplayActivity.this);
+            case "Anime":
+            case "Manga":
+                mAdapter = new CardAdvancementAdapter(mangaAnimeFormatter(result.getSeasons()),DisplayActivity.this,
+                        result);
                 break;
             default :
                 break;
         }
 
         recyclerView.setAdapter(mAdapter);
-
 
         viewedToggleButton.setOnClickListener(view -> {
             MediaRecord record = MediaRecord.exists(result.getId(), result.getProviderHint());
@@ -127,7 +117,7 @@ public class DisplayActivity extends AppCompatActivity {
         ArrayList<String> a = new ArrayList<>();
         for (int i : h.keySet()) {
             for (int j = 1; j <= h.get(i) ; j++) {
-                a.add("Saison : " + i + " Episode " + j);
+                a.add("Saison " + i + " Episode " + j);
             }
         }
         return a;

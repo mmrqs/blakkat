@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
-import fr.efrei.android.blakkat.model.User;
+import fr.efrei.android.blakkat.model.Record.User;
 
 public class SignupActivity extends AppCompatActivity {
     private Button btnReturn;

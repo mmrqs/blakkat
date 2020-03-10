@@ -33,8 +33,7 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="fr.efrei.android.blakkat.model" />
 
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

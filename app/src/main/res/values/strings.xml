@@ -5,20 +5,19 @@
     <string name="todo">TODO</string>
     <string name="logo">logo</string>
     <string name="title_activity_home">Home</string>
-    <string name="pseudo">Pseudo</string>
-    <string name="title_activity_signup">signup</string>
+    <string name="title_activity_signup">signUp</string>
     <string name="pas_encore_de_compte">Pas encore de compte ?</string>
     <string name="textview">TextView</string>
     <string name="notviewed">Marked as viewed</string>
     <string name="viewed">Viewed</string>
     <string name="title_activity_viewed">Viewed</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="takeMe">Take me to viewed medias !</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="pseudo_welcome">Welcome, %1$s !</string>
+    <string name="pseudo_wrong">Wrong pseudo</string>
+    <string name="pseudo_exists">This pseudo already exists</string>
+    <string name="pseudo_created">Be welcomed here forever, O secretary %1$s</string>
 </resources>

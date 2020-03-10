@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.SearchView;
 
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class SearchActivity extends AppCompatActivity {
                 String textSearched = search_bar.getQuery().toString();
                 search_bar.clearFocus();
                 for (IProvider p : KeeperFactory.getKeeper().getProviders()) {
-                    p.searchForNbResults(textSearched,5).enqueue(createNewCallack());
+                    p.searchForNbResults(textSearched,5).enqueue(createNewCallback());
                 }
                 return true;
             }
@@ -63,7 +62,7 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private Callback<List<Media>> createNewCallack() {
+    private Callback<List<Media>> createNewCallback() {
         return new Callback<List<Media>>() {
             @Override
             public void onResponse(Call<List<Media>> call, Response<List<Media>> response) {

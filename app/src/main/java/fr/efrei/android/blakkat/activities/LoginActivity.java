@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextPseudo = findViewById(R.id.editText_Pseudo);
         pref = getSharedPreferences("user_pseudo", MODE_PRIVATE);
 
-        Button btnSignU p = findViewById(R.id.signup);
+        Button btnSignUp = findViewById(R.id.signup);
         Button btnSignIn = findViewById(R.id.signin);
         btnSignIn.setOnClickListener(view -> signIn(editTextPseudo.getText().toString()));
         editTextPseudo.setOnEditorActionListener((textView, i, keyEvent) -> {

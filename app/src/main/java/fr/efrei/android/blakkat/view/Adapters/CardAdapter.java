@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import fr.efrei.android.blakkat.R;
-import fr.efrei.android.blakkat.DisplayActivity;
+import fr.efrei.android.blakkat.activities.DisplayMediaActivity;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
 import retrofit2.Call;
@@ -93,7 +93,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
     }
 
     private void dispatch(int position) {
-        Intent intent = new Intent(context, DisplayActivity.class);
+        Intent intent = new Intent(context, DisplayMediaActivity.class);
         intent.putExtra("MediaClicked", medias.get(position));
         context.startActivity(intent);
     }

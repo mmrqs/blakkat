@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:ems="10"
+            android:hint="@string/pseudo"
             android:inputType="textPersonName"
             android:text="@string/pseudo" />
 

@@ -1,4 +1,4 @@
-package fr.efrei.android.blakkat;
+package fr.efrei.android.blakkat.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,10 +12,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
+import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.model.MediaRecord;
 
-public class DisplayActivity extends AppCompatActivity {
+public class DisplayMediaActivity extends AppCompatActivity {
     private TextView titleDisplay;
     private ImageView imageView;
     private TextView time;

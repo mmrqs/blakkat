@@ -1,9 +1,6 @@
-package fr.efrei.android.blakkat;
+package fr.efrei.android.blakkat.activities;
 
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,12 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
-import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
+import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.model.MediaRecord;
 import fr.efrei.android.blakkat.view.Adapters.CardAdapter;

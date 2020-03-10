@@ -1,4 +1,4 @@
-package fr.efrei.android.blakkat;
+package fr.efrei.android.blakkat.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,7 +12,7 @@ import android.widget.SearchView;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.efrei.android.blakkat.consuming.providers.IProvider;
+import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.view.Adapters.CardAdapter;

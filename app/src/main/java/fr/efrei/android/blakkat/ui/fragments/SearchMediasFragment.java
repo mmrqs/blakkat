@@ -25,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchFragment extends Fragment {
+public class SearchMediasFragment extends Fragment {
     private CardAdapter.DisplayActionsListener displayActionsListener;
     private SearchActionsListener searchActionsListener;
     private RecyclerView recyclerView;
@@ -46,7 +46,7 @@ public class SearchFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.search_medias, container, false);
+        View view = inflater.inflate(R.layout.fragment_search_medias, container, false);
 
         view.findViewById(R.id.buttonViewed)
                 .setOnClickListener(v -> searchActionsListener.onViewedRequest());

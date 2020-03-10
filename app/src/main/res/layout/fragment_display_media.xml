@@ -18,7 +18,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/return_displayActivity"
+                android:id="@+id/displayMedia_button_return"
                 android:layout_width="134dp"
                 android:layout_gravity="left"
                 android:layout_height="wrap_content"

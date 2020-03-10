@@ -5,8 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,10 +24,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ViewedFragment extends Fragment {
+public class ViewedMediasFragment extends Fragment {
     private ArrayList<Media> seen;
     private CardAdapter.DisplayActionsListener listener;
-    private RecyclerView.Adapter adapter;
     private RecyclerView recyclerView;
 
     @Override
@@ -41,7 +38,7 @@ public class ViewedFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.content_viewed, container, false);
+        View view = inflater.inflate(R.layout.view_content_viewed, container, false);
 
         this.seen = new ArrayList<>();
         this.recyclerView = view.findViewById(R.id.viewed_medias);
@@ -60,8 +57,7 @@ public class ViewedFragment extends Fragment {
             public void onResponse(Call<Media> call, Response<Media> response) {
                 if(response.body() != null) {
                     seen.add(response.body());
-                    adapter = new CardAdapter(seen, listener);
-                    recyclerView.setAdapter(adapter);
+                    recyclerView.setAdapter(new CardAdapter(seen, listener));
                 }
             }
 

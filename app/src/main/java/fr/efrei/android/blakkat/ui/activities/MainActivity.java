@@ -8,22 +8,22 @@ import android.os.Bundle;
 
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.ui.fragments.DisplayMediaFragment;
-import fr.efrei.android.blakkat.ui.fragments.SearchFragment;
+import fr.efrei.android.blakkat.ui.fragments.SearchMediasFragment;
 import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.ui.fragments.ViewedFragment;
+import fr.efrei.android.blakkat.ui.fragments.ViewedMediasFragment;
 import fr.efrei.android.blakkat.ui.views.CardAdapter;
 
-public class MainActivity extends AppCompatActivity implements SearchFragment.SearchActionsListener, CardAdapter.DisplayActionsListener {
+public class MainActivity extends AppCompatActivity implements SearchMediasFragment.SearchActionsListener, CardAdapter.DisplayActionsListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        changeFragment(new SearchFragment());
+        changeFragment(new SearchMediasFragment());
     }
 
     @Override
     public void onViewedRequest() {
-        changeFragment(new ViewedFragment());
+        changeFragment(new ViewedMediasFragment());
     }
 
     @Override
@@ -31,6 +31,10 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
         changeFragment(new DisplayMediaFragment(media));
     }
 
+    /**
+     * Ease the change between two fragments
+     * @param fragment target fragment (will be shown)
+     */
     private void changeFragment(Fragment fragment) {
         FragmentTransaction transaction = this.getSupportFragmentManager()
                 .beginTransaction();

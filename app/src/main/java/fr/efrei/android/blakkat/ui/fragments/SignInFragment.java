@@ -39,7 +39,7 @@ public class SignInFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.signin, container, false);
+        View view = inflater.inflate(R.layout.fragment_signin, container, false);
         editTextPseudo = view.findViewById(R.id.signin_editText_pseudo);
 
         view.findViewById(R.id.signin_button_signin)

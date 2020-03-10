@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.ViewedFragment">
+    tools:context=".ui.fragments.ViewedMediasFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +20,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_viewed" />
+    <include layout="@layout/view_content_viewed" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

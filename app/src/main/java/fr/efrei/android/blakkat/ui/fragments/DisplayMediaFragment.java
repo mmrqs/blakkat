@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.model.MediaRecord;
@@ -29,22 +31,11 @@ public class DisplayMediaFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.display_media, container, false);
+        View view = inflater.inflate(R.layout.fragment_display_media, container, false);
 
         assert displayedMedia != null;
 
         initGraphicalComponents(view);
-        viewedToggleButton.setOnClickListener(v -> {
-            MediaRecord record = MediaRecord.exists(displayedMedia.getId(), displayedMedia.getProviderHint());
-            if(record == null) {
-                record = new MediaRecord(displayedMedia);
-                record.save();
-            } else {
-                record.delete();
-                record = null;
-            }
-            changeToggleViewedButtonContents(record);
-        });
 
         return view;
     }
@@ -68,6 +59,21 @@ public class DisplayMediaFragment extends Fragment {
                 .setText(displayedMedia.getSynopsis());
 
         viewedToggleButton = view.findViewById(R.id.viewed_toggle);
+        viewedToggleButton.setOnClickListener(v -> {
+            MediaRecord record = MediaRecord.exists(displayedMedia.getId(), displayedMedia.getProviderHint());
+            if(record == null) {
+                record = new MediaRecord(displayedMedia);
+                record.save();
+            } else {
+                record.delete();
+                record = null;
+            }
+            changeToggleViewedButtonContents(record);
+        });
+
+        view.findViewById(R.id.displayMedia_button_return)
+                .setOnClickListener(v -> Objects.requireNonNull(this.getActivity())
+                        .onBackPressed());
 
         this.changeToggleViewedButtonContents(MediaRecord
                 .exists(displayedMedia.getId(), displayedMedia.getProviderHint()));

@@ -16,11 +16,11 @@
         tools:replace="android:icon,android:theme">
         <activity android:name=".ui.activities.MainActivity"></activity>
         <activity
-            android:name=".ui.fragments.ViewedFragment"
+            android:name=".ui.fragments.ViewedMediasFragment"
             android:label="@string/title_activity_viewed"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.fragments.DisplayMediaFragment" />
-        <activity android:name=".ui.fragments.SearchFragment" /> <!-- SugarORM -->
+        <activity android:name=".ui.fragments.SearchMediasFragment" /> <!-- SugarORM -->
         <meta-data
             android:name="DATABASE"
             android:value="blakkat_sugar.db" />

@@ -23,7 +23,6 @@ import retrofit2.Response;
 public class SearchActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Media> results;
 
     @Override
@@ -39,27 +38,32 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        SearchView search_bar = findViewById(R.id.searchBar);
+        SearchView searchBar = findViewById(R.id.searchBar);
+        searchBar.setOnQueryTextListener(createNewQueryTextListener(searchBar));
+    }
 
-        search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+    private SearchView.OnQueryTextListener createNewQueryTextListener(SearchView searchBar) {
+        return new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 results = new ArrayList<>();
-                String textSearched = search_bar.getQuery().toString();
-                search_bar.clearFocus();
-                for (IProvider p : KeeperFactory.getKeeper().getProviders()) {
-                    p.searchForNbResults(textSearched,5).enqueue(createNewCallback());
-                }
+                String textSearched = searchBar.getQuery().toString();
+                searchBar.clearFocus();
+
+                KeeperFactory.getKeeper().getProviders()
+                        .forEach(p -> p.searchForNbResults(textSearched,5)
+                                .enqueue(createNewCallback()));
+
                 return true;
             }
             @Override
             public boolean onQueryTextChange(String s) {
                 return false;
             }
-        });
+        };
     }
 
     private Callback<List<Media>> createNewCallback() {

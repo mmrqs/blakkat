@@ -1,10 +1,14 @@
 package fr.efrei.android.blakkat.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.helpers.Toaster;
@@ -21,7 +25,25 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setSupportActionBar(findViewById(R.id.toolbar));
+
         changeFragment(new SearchMediasFragment());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_overflow_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_settings) {
+            startActivity(new Intent(new Intent(this, SettingsActivity.class)));
+            return true;
+        }
+        Toaster.burn(this, "lol");
+        return false;
     }
 
     /**

@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import fr.efrei.android.blakkat.R;
+import fr.efrei.android.blakkat.helpers.Toaster;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
 import retrofit2.Call;
@@ -64,10 +65,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
                     .centerCrop().fit()
                     .into(holder.imageView);
 
-        holder.v.setOnClickListener(v -> KeeperFactory.getKeeper()
-                .getProviderFor(medias.get(position))
-                .getOne(medias.get(position).getId())
-                .enqueue(createNewCallBack(position)));
+        holder.v.setOnClickListener(v -> displayActionsListener
+                .onMediaChosen(medias.get(position)));
     }
 
     @Override
@@ -75,20 +74,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
         return medias.size();
     }
 
-    private Callback<Media> createNewCallBack(int position) {
-        return new Callback<Media>() {
-            @Override
-            public void onResponse(Call<Media> call, Response<Media> response) {
-                medias.set(position, response.body());
-                displayActionsListener.onMediaChosen(medias.get(position));
-            }
-            @Override
-            public void onFailure(Call<Media> call, Throwable t) {
-                Log.e("", t.toString());
-            }
-        };
-    }
-
+    /**
+     * Allows communication with the parent activity to request the display of a chosen media
+     */
     public interface DisplayActionsListener {
         void onMediaChosen(Media media);
     }

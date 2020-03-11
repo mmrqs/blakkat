@@ -7,18 +7,21 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 import fr.efrei.android.blakkat.R;
+import fr.efrei.android.blakkat.helpers.Toaster;
 import fr.efrei.android.blakkat.ui.fragments.DisplayMediaFragment;
 import fr.efrei.android.blakkat.ui.fragments.SearchMediasFragment;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.ui.fragments.ViewedMediasFragment;
 import fr.efrei.android.blakkat.ui.views.CardAdapter;
 
-public class MainActivity extends AppCompatActivity implements SearchMediasFragment.SearchActionsListener, CardAdapter.DisplayActionsListener {
+public class MainActivity extends AppCompatActivity
+        implements SearchMediasFragment.SearchActionsListener, CardAdapter.DisplayActionsListener,
+        DisplayMediaFragment.MediaLoadedListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        changeFragment(new SearchMediasFragment(), false);
+        changeFragment(new SearchMediasFragment());
     }
 
     @Override
@@ -28,18 +31,28 @@ public class MainActivity extends AppCompatActivity implements SearchMediasFragm
 
     @Override
     public void onMediaChosen(Media media) {
-        changeFragment(new DisplayMediaFragment(media));
+        changeFragment(new DisplayMediaFragment(media, this));
+    }
+
+    @Override
+    public void onMediaLoaded(Media media) {
+        Toaster.toast(this, media.getTitle() + " has finished loading");
     }
 
     /**
      * Ease the change between two fragments
-     *
+     * Will add it to the backStack
      * @param fragment target fragment (will be shown)
      */
     private void changeFragment(Fragment fragment) {
         changeFragment(fragment, true);
     }
 
+
+    /**
+     * Ease the change between two fragments
+     * @param fragment target fragment (will be shown)
+     */
     private void changeFragment(Fragment fragment, boolean addToBackStack) {
         FragmentTransaction transaction = this.getSupportFragmentManager()
                 .beginTransaction();

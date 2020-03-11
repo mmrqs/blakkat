@@ -25,4 +25,5 @@
 
     <string name="signup_call_to_signin">SIGN IN</string>
     <string name="signup_already_account">Existing account ?</string>
+    <string name="loading_text">Loading infformation…</string>
 </resources>

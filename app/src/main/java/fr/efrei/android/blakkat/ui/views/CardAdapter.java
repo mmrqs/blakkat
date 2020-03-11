@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.helpers.Toaster;
@@ -39,7 +41,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
     }
 
     public CardAdapter(List<Media> medias, DisplayActionsListener displayActionsListener) {
-        this.medias = medias;
+        this.medias = medias.stream().sorted(Comparator.comparing(Media::getTitle)).collect(Collectors.toList());
         this.displayActionsListener = displayActionsListener;
     }
 

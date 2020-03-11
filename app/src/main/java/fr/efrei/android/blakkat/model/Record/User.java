@@ -1,4 +1,4 @@
-package fr.efrei.android.blakkat.model;
+package fr.efrei.android.blakkat.model.Record;
 
 import com.orm.SugarRecord;
 
@@ -8,6 +8,7 @@ public class User extends SugarRecord {
     String pseudo;
 
     public User() {}
+
     public User(String pseudo) {
         this.pseudo = pseudo;
     }

@@ -1,12 +1,12 @@
-package fr.efrei.android.blakkat.model;
+package fr.efrei.android.blakkat.model.Record;
 
 import com.orm.SugarRecord;
 
 import java.util.Date;
 import java.util.List;
 
-import fr.efrei.android.blakkat.consuming.providers.Keeper;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
+import fr.efrei.android.blakkat.model.Media;
 import retrofit2.Call;
 
 public class MediaRecord extends SugarRecord {
@@ -14,11 +14,7 @@ public class MediaRecord extends SugarRecord {
     private String type;
     private Date watched;
 
-    /**
-     * AN EMPTY CONSTRUCTOR IS MANDATORY
-     */
-    public MediaRecord() {
-    }
+    public MediaRecord() { }
 
     public MediaRecord(Media m) {
         this.identifier = m.getId();

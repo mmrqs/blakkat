@@ -16,6 +16,7 @@ public abstract class BetaSeriesModel<T extends Media> extends Media {
     private String title;
     String imageUrl;
     private Float score;
+    int seasons;
 
     ArrayList<String> centralizedGenres;
     Date releaseDate;

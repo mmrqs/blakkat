@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.ui.fragments.SignInFragment;
 import fr.efrei.android.blakkat.ui.fragments.SignUpFragment;
-import fr.efrei.android.blakkat.model.User;
+import fr.efrei.android.blakkat.model.Record.User;
 
 public class LoginActivity extends AppCompatActivity
         implements SignInFragment.SignInActionsListener, SignUpFragment.SignUpActionsListener {
@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pref = getSharedPreferences("user_pseudo", MODE_PRIVATE);
+        pref = getSharedPreferences("User", MODE_PRIVATE);
         setContentView(R.layout.activity_login);
         changeSignFragment(new SignInFragment());
     }
@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity
     public boolean onSignIn(String pseudo) {
         if(User.exists(pseudo)) {
             SharedPreferences.Editor editor = pref.edit();
-            editor.putString("user_pseudo", pseudo);
+            editor.putString("User", pseudo);
             editor.apply();
 
             this.startActivity(new Intent(this, MainActivity.class));

@@ -3,21 +3,21 @@ package fr.efrei.android.blakkat.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 
 public class Show extends BetaSeriesModel<Show> {
     private int creation;
     private JsonObject genres;
     private ImageBundle images;
+    private List<SeasonsBundle> seasons_details;
+    private HashMap<Integer, Integer> centralizedSeasons;
 
     @Override
     public Date getReleaseDate() {
@@ -44,6 +44,17 @@ public class Show extends BetaSeriesModel<Show> {
     }
 
     @Override
+    public HashMap<Integer, Integer> getSeasons() {
+        if(this.centralizedSeasons == null) {
+            this.centralizedSeasons = new HashMap<>();
+            for(SeasonsBundle s : seasons_details) {
+                this.centralizedSeasons.put(s.number, s.episodes);
+            }
+        }
+        return this.centralizedSeasons;
+    }
+
+    @Override
     public String getImageUrl() {
         if(this.imageUrl == null)
             imageUrl = this.images.show;
@@ -52,6 +63,11 @@ public class Show extends BetaSeriesModel<Show> {
 
     private static final class ImageBundle {
         private String show;
+    }
+
+    private static final class SeasonsBundle {
+        private int number;
+        private int episodes;
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
@@ -66,5 +82,7 @@ public class Show extends BetaSeriesModel<Show> {
 
     Show(Parcel in) {
         super(in);
+        this.centralizedSeasons = (HashMap<Integer, Integer>) in.readSerializable();
     }
+
 }

@@ -7,11 +7,17 @@ import java.util.Date;
 
 public class Anime extends JikanModel<Anime> {
     private DateBundle aired;
+    private int episodes;
 
     @Override
     public Date getReleaseDate() {
         return start_date == null ?
                 aired.from : start_date;
+    }
+
+    @Override
+    public Integer getSeasons() {
+        return this.episodes;
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
@@ -26,5 +32,6 @@ public class Anime extends JikanModel<Anime> {
 
     private Anime(Parcel in) {
         super(in);
+        this.episodes =  (Integer) in.readSerializable();
     }
 }

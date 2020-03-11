@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.model.MediaRecord;
+import fr.efrei.android.blakkat.model.Record.MediaRecord;
 import fr.efrei.android.blakkat.ui.views.CardAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;

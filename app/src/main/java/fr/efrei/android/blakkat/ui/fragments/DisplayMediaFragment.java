@@ -3,6 +3,8 @@ package fr.efrei.android.blakkat.ui.fragments;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,26 +12,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
 import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.model.MediaRecord;
+import fr.efrei.android.blakkat.ui.views.CardAdvancementAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DisplayMediaFragment extends Fragment {
     private MediaLoadedListener listener;
-    private Button viewedToggleButton;
     private Media displayedMedia;
     private View view;
 
@@ -112,26 +113,37 @@ public class DisplayMediaFragment extends Fragment {
                 .setText(displayedMedia.getSynopsis() +
                         getResources().getString(R.string.loading_text));
 
-        viewedToggleButton = view.findViewById(R.id.viewed_toggle);
-        viewedToggleButton.setOnClickListener(v -> {
-            MediaRecord record = MediaRecord.exists(displayedMedia.getId(), displayedMedia.getProviderHint());
-            if(record == null) {
-                record = new MediaRecord(displayedMedia);
-                record.save();
-            } else {
-                record.delete();
-                record = null;
-            }
-            changeToggleViewedButtonContents(record == null ? null : record.getWatched());
-        });
-
         view.findViewById(R.id.displayMedia_button_return)
                 .setOnClickListener(v -> Objects.requireNonNull(this.getActivity())
                         .onBackPressed());
 
-        MediaRecord record = MediaRecord.exists(displayedMedia.getId(),
-                displayedMedia.getProviderHint());
-        changeToggleViewedButtonContents(record == null ? null : record.getWatched());
+        RecyclerView recyclerView = view.findViewById(R.id.RecyclerView_ActivityDisplay);
+        recyclerView.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        RecyclerView.Adapter mAdapter = null;
+        // Seasons cards :
+        switch (displayedMedia.getProviderHint()) {
+            case "Show":
+                mAdapter = new CardAdvancementAdapter(seasonsFormatter(displayedMedia.getSeasons()), DisplayMediaFragment.this.getContext(),
+                        displayedMedia);
+                break;
+            case "Anime":
+            case "Manga":
+                mAdapter = new CardAdvancementAdapter(mangaAnimeFormatter(displayedMedia.getSeasons()),DisplayMediaFragment.this.getContext(),
+                        displayedMedia);
+                break;
+            case "Movie":
+                mAdapter = new CardAdvancementAdapter(new ArrayList<String>() {{add(displayedMedia.getTitle());}},
+                        DisplayMediaFragment.this.getContext(), displayedMedia);
+            default :
+                break;
+        }
+
+        recyclerView.setAdapter(mAdapter);
+
     }
 
     /**
@@ -145,19 +157,25 @@ public class DisplayMediaFragment extends Fragment {
                 .setText(displayedMedia.getSynopsis());
     }
 
-    /**
-     * Changes the content of the button
-     * @param date {@link Date} on which the user has seen the media null if not seen
-     */
-    private void changeToggleViewedButtonContents(Date date) {
-        viewedToggleButton.setText(date == null ?
-                getResources().getString(R.string.notviewed) :
-                String.format(getResources()
-                        .getString(R.string.viewed),
-                        date));
-    }
-
     public interface MediaLoadedListener {
         void onMediaLoaded(Media media);
+    }
+
+    public ArrayList<String> seasonsFormatter(HashMap<Integer, Integer> h) {
+        ArrayList<String> a = new ArrayList<>();
+        for (int i : h.keySet()) {
+            for (int j = 1; j <= h.get(i) ; j++) {
+                a.add("Saison " + i + " Episode " + j);
+            }
+        }
+        return a;
+    }
+
+    public ArrayList<String> mangaAnimeFormatter ( int nbVolumes ) {
+        ArrayList<String> a = new ArrayList<>();
+        for (int i = 1; i <= nbVolumes; i++) {
+            a.add("Volume : " + i);
+        }
+        return a;
     }
 }

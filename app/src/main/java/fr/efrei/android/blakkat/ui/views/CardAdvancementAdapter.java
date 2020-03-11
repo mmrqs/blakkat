@@ -1,4 +1,4 @@
-package fr.efrei.android.blakkat.view.Adapters;
+package fr.efrei.android.blakkat.ui.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

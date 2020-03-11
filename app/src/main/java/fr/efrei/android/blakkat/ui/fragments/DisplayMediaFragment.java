@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,10 +33,19 @@ public class DisplayMediaFragment extends Fragment {
     private Media displayedMedia;
     private View view;
 
-    public DisplayMediaFragment(Media displayedMedia, MediaLoadedListener listener) {
+    public DisplayMediaFragment(Media displayedMedia) {
         this.displayedMedia = displayedMedia;
-        this.listener = listener;
-        loadMedia();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            listener = (MediaLoadedListener) context;
+            loadMedia();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement MediaLoadedListener");
+        }
     }
 
     @Nullable
@@ -77,6 +87,9 @@ public class DisplayMediaFragment extends Fragment {
         };
     }
 
+    /**
+     * Displays the {@link Media} infos
+     */
     private void initGraphicalComponents() {
         ((TextView)view.findViewById(R.id.titleDisplay))
                 .setText(displayedMedia.getTitle());
@@ -121,6 +134,9 @@ public class DisplayMediaFragment extends Fragment {
         changeToggleViewedButtonContents(record == null ? null : record.getWatched());
     }
 
+    /**
+     * Refreshes the infos on the displayed {@link Media} after it finishes loading
+     */
     private void refreshGraphicalComponent() {
         ((TextView)view.findViewById(R.id.genre))
                 .setText(displayedMedia.getGenres().toString());

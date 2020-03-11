@@ -24,16 +24,26 @@ public class MainActivity extends AppCompatActivity
         changeFragment(new SearchMediasFragment());
     }
 
+    /**
+     * Displays a new {@link ViewedMediasFragment}
+     */
     @Override
     public void onViewedRequest() {
         changeFragment(new ViewedMediasFragment());
     }
 
+    /**
+     * Displays a new {@link DisplayMediaFragment} whith the informations of the chosen {@link Media}
+     * @param media chosen {@link Media}
+     */
     @Override
     public void onMediaChosen(Media media) {
-        changeFragment(new DisplayMediaFragment(media, this));
+        changeFragment(new DisplayMediaFragment(media));
     }
 
+    /**
+     * Displays a toast when the {@link Media} currently displayed in a {@link DisplayMediaFragment} finishes loading
+     */
     @Override
     public void onMediaLoaded(Media media) {
         Toaster.toast(this, media.getTitle() + " has finished loading");

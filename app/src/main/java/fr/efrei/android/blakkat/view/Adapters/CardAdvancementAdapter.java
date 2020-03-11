@@ -16,9 +16,7 @@ import java.util.ArrayList;
 
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.model.Record.MediaRecord;
-import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
-import fr.efrei.android.blakkat.model.Record.User;
+import fr.efrei.android.blakkat.model.Record.*;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -64,17 +62,20 @@ public class CardAdvancementAdapter extends RecyclerView.Adapter<CardAdvancement
     public void onBindViewHolder(CardAdvancementAdapter.CardHolderSerie holder, int position) {
         //info Episodes / saisons
         ArrayList<String> infoAvancement = getInfosSaisonEpisode(position);
-        //media record :
+
+        //Toggle button :
         if(MediaRecord.exists(_media.getId(), _media.getProviderHint()) != null) {
             this.changeToggleViewedButtonContents(ProgressionRecord.exists(_user,infoAvancement.get(0), infoAvancement.get(1),
                     MediaRecord.exists(_media.getId(), _media.getProviderHint())) != null, holder);
         } else {
             this.changeToggleViewedButtonContents(false, holder);
         }
+
+        //Display text :
         holder.textView.setText(_displaySeasons.get(position));
 
         holder.seenButton.setOnClickListener(view -> {
-            //we create a media record :
+
             MediaRecord record = MediaRecord.exists(_media.getId(), _media.getProviderHint());
             if(record == null) {
                 record = new MediaRecord(_media);
@@ -82,47 +83,17 @@ public class CardAdvancementAdapter extends RecyclerView.Adapter<CardAdvancement
             }
 
            if(holder.seenButton.getText().equals("Marked as viewed")) {
-                switch(this._media.getProviderHint()) {
-                    case "Manga":
-                    case "Anime":
-                        ProgressionRecord pa = new ProgressionRecord("0" ,_displaySeasons.get(position)
-                                .replace("Volume : ",""));
-                        pa.setMediaRecord(record);
-                        pa.setUser(_user);
-                        pa.save();
-                        break;
-                    case "Show":
-                        ProgressionRecord ps = new ProgressionRecord(String.valueOf(_displaySeasons.get(position)
-                                .charAt(7)) ,String.valueOf(_displaySeasons.get(position)
-                                .charAt(17)));
-                        ps.setMediaRecord(record);
-                        ps.setUser(_user);
-                        ps.save();
-                        break;
-                }
+               ProgressionRecord p = new ProgressionRecord(infoAvancement.get(0), infoAvancement.get(1));
+               p.setMediaRecord(record);
+               p.setUser(_user);
+               p.save();
                changeToggleViewedButtonContents(true, holder);
            } else {
-               switch(this._media.getProviderHint()) {
-                   case "Manga":
-                   case "Anime":
-                       ProgressionRecord pa = ProgressionRecord.exists(_user, "0" ,_displaySeasons.get(position)
-                               .replace("Volume : ",""), record);
-
-                       pa.delete();
-                       break;
-                   case "Show":
-                       ProgressionRecord ps = ProgressionRecord.exists(_user, String.valueOf(_displaySeasons.get(position)
-                               .charAt(7)) ,String.valueOf(_displaySeasons.get(position)
-                               .charAt(17)), record);
-                       ps.delete();
-                       break;
-               }
+               ProgressionRecord ps = ProgressionRecord.exists(_user, infoAvancement.get(0), infoAvancement.get(1), record);
+               ps.delete();
                changeToggleViewedButtonContents(false, holder);
            }
         });
-
-
-
     }
 
     void changeToggleViewedButtonContents(Boolean seen, CardAdvancementAdapter.CardHolderSerie holder) {
@@ -147,6 +118,11 @@ public class CardAdvancementAdapter extends RecyclerView.Adapter<CardAdvancement
                         .charAt(7)));
                 a.add(String.valueOf(_displaySeasons.get(position)
                         .charAt(17)));
+                break;
+            case "Movie":
+                a.add("0");
+                a.add("1");
+            default:
                 break;
         }
         return a;

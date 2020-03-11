@@ -68,11 +68,6 @@ public class DisplayActivity extends AppCompatActivity {
         returnButton = findViewById(R.id.return_displayActivity);
         returnButton.setOnClickListener(view -> finish());
 
-        viewedToggleButton = findViewById(R.id.viewed_toggle);
-
-        this.changeToggleViewedButtonContents(MediaRecord
-                .exists(result.getId(), result.getProviderHint()));
-
         recyclerView = findViewById(R.id.RecyclerView_ActivityDisplay);
         recyclerView.setHasFixedSize(true);
 
@@ -90,27 +85,14 @@ public class DisplayActivity extends AppCompatActivity {
                 mAdapter = new CardAdvancementAdapter(mangaAnimeFormatter(result.getSeasons()),DisplayActivity.this,
                         result);
                 break;
+            case "Movie":
+                mAdapter = new CardAdvancementAdapter(new ArrayList<String>() {{add(result.getTitle());}},
+                        DisplayActivity.this, result);
             default :
                 break;
         }
 
         recyclerView.setAdapter(mAdapter);
-
-        viewedToggleButton.setOnClickListener(view -> {
-            MediaRecord record = MediaRecord.exists(result.getId(), result.getProviderHint());
-            if(record == null) {
-                record = new MediaRecord(result);
-                record.save();
-            } else {
-                record.delete();
-                record = null;
-            }
-            changeToggleViewedButtonContents(record);
-        });
-    }
-
-    void changeToggleViewedButtonContents(MediaRecord mr) {
-        viewedToggleButton.setText(mr == null ? R.string.notviewed : R.string.viewed);
     }
 
     public ArrayList<String> seasonsFormatter(HashMap<Integer, Integer> h) {

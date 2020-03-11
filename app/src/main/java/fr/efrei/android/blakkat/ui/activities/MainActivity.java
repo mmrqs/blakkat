@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements SearchMediasFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        changeFragment(new SearchMediasFragment());
+        changeFragment(new SearchMediasFragment(), false);
     }
 
     @Override
@@ -33,14 +33,20 @@ public class MainActivity extends AppCompatActivity implements SearchMediasFragm
 
     /**
      * Ease the change between two fragments
+     *
      * @param fragment target fragment (will be shown)
      */
     private void changeFragment(Fragment fragment) {
+        changeFragment(fragment, true);
+    }
+
+    private void changeFragment(Fragment fragment, boolean addToBackStack) {
         FragmentTransaction transaction = this.getSupportFragmentManager()
                 .beginTransaction();
         transaction.replace(R.id.main_frameLayout_fragment, fragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.addToBackStack(null);
+        if(addToBackStack)
+            transaction.addToBackStack(null);
         transaction.commit();
     }
 }

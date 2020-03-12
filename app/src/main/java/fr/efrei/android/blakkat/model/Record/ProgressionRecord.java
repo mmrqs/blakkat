@@ -1,7 +1,5 @@
 package fr.efrei.android.blakkat.model.Record;
 
-import androidx.annotation.NonNull;
-
 import com.orm.SugarRecord;
 
 import java.util.Date;

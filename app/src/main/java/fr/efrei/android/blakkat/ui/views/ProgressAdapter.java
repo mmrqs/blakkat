@@ -48,7 +48,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
     @Override
     public ProgressHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cell_episode_card, parent, false);
+                .inflate(R.layout.view_card_progress, parent, false);
 
         this.viewed = v.getContext().getResources()
                 .getString(R.string.viewed);

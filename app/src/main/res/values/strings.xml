@@ -29,6 +29,9 @@
     <string name="loading_text">Loading information…</string>
     <string name="main_menu_settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="settings_switch_jikan">Jikan - Enable «eighteen mode»</string>
+    <string name="eighteen_mode_activated">Eighteen mode ACTIVATED don\’t browse Blakkat in a public space</string>
+    <string name="eighteen_mode_desactivated">Eighteen mode DESACTIVATED</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

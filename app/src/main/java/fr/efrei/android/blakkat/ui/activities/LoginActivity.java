@@ -9,28 +9,27 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import fr.efrei.android.blakkat.R;
+import fr.efrei.android.blakkat.helpers.SessionHelper;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
 import fr.efrei.android.blakkat.ui.fragments.SignInFragment;
 import fr.efrei.android.blakkat.ui.fragments.SignUpFragment;
 
 public class LoginActivity extends AppCompatActivity
         implements SignInFragment.SignInActionsListener, SignUpFragment.SignUpActionsListener {
-    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pref = getSharedPreferences(getResources().getString(R.string.user), MODE_PRIVATE);
+        SessionHelper.setupPreferences(getPreferences(MODE_PRIVATE));
         setContentView(R.layout.activity_login);
         changeSignFragment(new SignInFragment());
     }
 
     @Override
     public boolean onSignIn(String pseudo) {
-        if(UserRecord.exists(pseudo)) {
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString(getResources().getString(R.string.user), pseudo);
-            editor.apply();
+        UserRecord u = UserRecord.exists(pseudo);
+        if(u != null) {
+            SessionHelper.save(getResources().getString(R.string.user), u);
 
             this.startActivity(new Intent(this, MainActivity.class));
             return true;
@@ -40,7 +39,7 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     public boolean onSignUp(String pseudo) {
-        if(!UserRecord.exists(pseudo)) {
+        if(UserRecord.exists(pseudo) == null) {
             UserRecord current = new UserRecord(pseudo);
             current.save();
 

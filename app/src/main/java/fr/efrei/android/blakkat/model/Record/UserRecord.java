@@ -3,18 +3,29 @@ package fr.efrei.android.blakkat.model.Record;
 import com.orm.SugarRecord;
 
 import java.security.InvalidParameterException;
+import java.util.List;
 
 public class UserRecord extends SugarRecord {
     private String pseudo;
+    private boolean eighteen;
 
     public UserRecord() {}
 
     public UserRecord(String pseudo) {
         this.pseudo = pseudo;
+        this.eighteen = false;
     }
 
     public String getPseudo() {
         return pseudo;
+    }
+
+    public boolean isEighteen() {
+        return eighteen;
+    }
+
+    public void setEighteen(boolean eighteen) {
+        this.eighteen = eighteen;
     }
 
     /**
@@ -23,11 +34,11 @@ public class UserRecord extends SugarRecord {
      * @param params list of the params ; will throw exception if the number don't match
      * @return TODO
      */
-    public static boolean getMatching(String query, String... params) {
-        if(checkRequest(query, params))
-            return UserRecord.find(UserRecord.class,
-                    "pseudo = ?", params).size() == 1;
-        else
+    public static UserRecord getMatching(String query, String... params) {
+        if(checkRequest(query, params)) {
+            List<UserRecord> res = UserRecord.find(UserRecord.class, query, params);
+            return res.size() == 1 ? res.get(0) : null;
+        } else
             throw new InvalidParameterException();
     }
 
@@ -43,7 +54,7 @@ public class UserRecord extends SugarRecord {
                 .filter(c -> c == '?').count();
     }
 
-    public static boolean exists(String pseudo) {
+    public static UserRecord exists(String pseudo) {
         return getMatching("pseudo = ?", pseudo);
     }
 }

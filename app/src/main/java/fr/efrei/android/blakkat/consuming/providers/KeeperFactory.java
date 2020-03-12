@@ -14,16 +14,24 @@ public class KeeperFactory {
     private static final String BETA_SERIES_KEY = "b0781d3bbc01";
     private static final String BETA_SERIES_URL = "https://api.betaseries.com/";
     private static final String JIKAN_URL = "https://api.jikan.moe/v3/";
-    private static final String JIKAN_FILTER = "12,9,33,34,26,28,44,42,43";
+    private static final String JIKAN_FILTER = "12,9,44"; //ecchi, hentai, dojinshi
+    private static boolean eighteen = true;
 
     private static Keeper instance;
 
     private static Keeper createKeeper() {
-        Retrofit jikan = buildJikan();
+        Retrofit jikan = eighteen ? buildJikanEighteen() : buildJikan();
         Retrofit betaSeries = buildBetaSeries();
 
         return new Keeper(betaSeries, jikan);
     }
+
+    public static void updateJikanSetting(boolean eighteen) {
+        KeeperFactory.eighteen = eighteen;
+        KeeperFactory.instance = createKeeper();
+    }
+
+    public static boolean getJikanSetting() { return eighteen; }
 
     /**
      * @return the {@link Keeper} instance ; creates it if necessary
@@ -42,6 +50,18 @@ public class KeeperFactory {
         return new Retrofit.Builder()
                 .baseUrl(JIKAN_URL)
                 .client(getJikanClient())
+                .addConverterFactory(new WrapperConverter())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    /**
+     * Building the {@link Retrofit} instance for Jikan
+     * @return new {@link Retrofit} instance for the Jikan API
+     */
+    private static Retrofit buildJikanEighteen() {
+        return new Retrofit.Builder()
+                .baseUrl(JIKAN_URL)
                 .addConverterFactory(new WrapperConverter())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

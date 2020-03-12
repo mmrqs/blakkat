@@ -21,6 +21,7 @@ import java.util.Objects;
 
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
+import fr.efrei.android.blakkat.helpers.SessionHelper;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
 import fr.efrei.android.blakkat.ui.views.ProgressAdapter;
@@ -124,9 +125,8 @@ public class DisplayMediaFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        UserRecord userRecord = UserRecord.find(UserRecord.class, "pseudo = ?",
-                getContext().getSharedPreferences(getResources().getString(R.string.user), MODE_PRIVATE)
-                        .getString(getResources().getString(R.string.user), null)).get(0);
+        UserRecord userRecord = SessionHelper.get(getResources()
+                .getString(R.string.user), UserRecord.class);
 
         RecyclerView.Adapter mAdapter = new ProgressAdapter(displayedMedia, userRecord);
 

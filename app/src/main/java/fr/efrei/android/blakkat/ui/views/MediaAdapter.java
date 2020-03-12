@@ -45,7 +45,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
     @Override
     public MediaHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_cell_cards, parent, false);
+                .inflate(R.layout.view_card_media, parent, false);
         return new MediaHolder(v);
     }
 

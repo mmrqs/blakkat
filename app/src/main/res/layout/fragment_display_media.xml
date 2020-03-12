@@ -21,8 +21,7 @@
                 android:id="@+id/displayMedia_button_return"
                 android:layout_width="134dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="Return" />
+                android:text="@string/button_return" />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -84,7 +83,15 @@
                 android:id="@+id/synopsis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SYNOPSIS" />
+                android:text="@string/display_textView_synopsis" />
+
+            <RatingBar
+                android:id="@+id/displayMedia_ratingBar"
+                style="@style/Widget.AppCompat.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="1" />
 
             <TextView
                 android:id="@+id/SynopsisContent_Display"
@@ -92,7 +99,7 @@
                 android:layout_height="wrap_content" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/RecyclerView_ActivityDisplay"
+                android:id="@+id/displayFragment_recyclerView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

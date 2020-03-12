@@ -37,10 +37,10 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         }
     }
 
-    public ProgressAdapter(Media media, UserRecord userRecord) {
+    public ProgressAdapter(Media media, UserRecord userRecord, MediaRecord mediaRecord) {
         this.userRecord = userRecord;
         this.media = media;
-        this.mediaRecord = MediaRecord.exists(media.getId(), media.getProviderHint());
+        this.mediaRecord = mediaRecord;
         this.progress = media.getPossibleProgress();
     }
 

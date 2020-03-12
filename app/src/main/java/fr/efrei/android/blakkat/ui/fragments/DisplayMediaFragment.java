@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -23,15 +24,19 @@ import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
 import fr.efrei.android.blakkat.helpers.SessionHelper;
 import fr.efrei.android.blakkat.model.Media;
+import fr.efrei.android.blakkat.model.Record.RatingRecord;
+import fr.efrei.android.blakkat.model.Record.MediaRecord;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
 import fr.efrei.android.blakkat.ui.views.ProgressAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class DisplayMediaFragment extends Fragment {
+    private UserRecord userRecord;
+    private MediaRecord mediaRecord;
+    private RatingRecord ratingRecord;
+
     private MediaLoadedListener listener;
     private Media displayedMedia;
     private View view;
@@ -94,9 +99,23 @@ public class DisplayMediaFragment extends Fragment {
      * Displays the {@link Media} infos
      */
     private void initGraphicalComponents() {
-        ((TextView)view.findViewById(R.id.titleDisplay))
-                .setText(displayedMedia.getTitle());
+        //TODO put it in the toolbar ?
+        view.findViewById(R.id.displayMedia_button_return)
+                .setOnClickListener(v -> Objects.requireNonNull(this.getActivity())
+                        .onBackPressed());
 
+        userRecord = SessionHelper.get(getResources()
+                .getString(R.string.user), UserRecord.class);
+        mediaRecord = MediaRecord.exists(displayedMedia.getId(),
+                displayedMedia.getProviderHint());
+
+        initImageView();
+        initTextViews();
+        initRatingBar();
+        initRecyclerProgress();
+    }
+
+    private void initImageView() {
         ImageView imageView = view.findViewById(R.id.imageCard_displayActivity);
         Picasso.with(imageView.getContext())
                 .load(displayedMedia.getImageUrl())
@@ -104,6 +123,11 @@ public class DisplayMediaFragment extends Fragment {
                 .error(R.drawable.question_mark)
                 .centerCrop().fit()
                 .into(imageView);
+    }
+
+    private void initTextViews() {
+        ((TextView)view.findViewById(R.id.titleDisplay))
+                .setText(displayedMedia.getTitle());
 
         ((TextView)view.findViewById(R.id.time))
                 .setText(displayedMedia.getReleaseDate().toString());
@@ -111,27 +135,45 @@ public class DisplayMediaFragment extends Fragment {
         ((TextView)view.findViewById(R.id.genre))
                 .setText(getResources().getString(R.string.loading_text));
 
+        String s = displayedMedia.getSynopsis() + getResources().getString(R.string.loading_text);
         ((TextView)view.findViewById(R.id.SynopsisContent_Display))
-                .setText(displayedMedia.getSynopsis() +
-                        getResources().getString(R.string.loading_text));
+                .setText(s);
+    }
 
-        view.findViewById(R.id.displayMedia_button_return)
-                .setOnClickListener(v -> Objects.requireNonNull(this.getActivity())
-                        .onBackPressed());
+    private void initRecyclerProgress() {
+        RecyclerView.Adapter adapter = new ProgressAdapter(displayedMedia, userRecord, mediaRecord);
 
-        RecyclerView recyclerView = view.findViewById(R.id.RecyclerView_ActivityDisplay);
-        recyclerView.setHasFixedSize(true);
+        RecyclerView recyclerProgress = view.findViewById(R.id.displayFragment_recyclerView);
+        recyclerProgress.setHasFixedSize(false);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerProgress.setLayoutManager(layoutManager);
 
-        UserRecord userRecord = SessionHelper.get(getResources()
-                .getString(R.string.user), UserRecord.class);
+        recyclerProgress.setAdapter(adapter);
+    }
 
-        RecyclerView.Adapter mAdapter = new ProgressAdapter(displayedMedia, userRecord);
+    private void initRatingBar() {
+        RatingBar bar = view.findViewById(R.id.displayMedia_ratingBar);
 
-        recyclerView.setAdapter(mAdapter);
+        if(mediaRecord != null) {
+            ratingRecord = RatingRecord.exists(userRecord, mediaRecord);
+            if(ratingRecord != null)
+                bar.setRating(ratingRecord.getRating());
+        }
 
+        bar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+            if(mediaRecord == null) {
+                mediaRecord = new MediaRecord(displayedMedia);
+                mediaRecord.save();
+            }
+
+            ratingRecord = RatingRecord.exists(userRecord, mediaRecord);
+            if(ratingRecord != null)
+                ratingRecord.setRating((int) rating);
+            else
+                ratingRecord = new RatingRecord((int)rating, userRecord, mediaRecord);
+            ratingRecord.save();
+        });
     }
 
     /**

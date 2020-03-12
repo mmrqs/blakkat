@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        changeFragment(new SearchMediasFragment());
+        changeFragment(new SearchMediasFragment(), false);
     }
 
     @Override

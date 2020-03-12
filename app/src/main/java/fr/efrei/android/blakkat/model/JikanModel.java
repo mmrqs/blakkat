@@ -56,6 +56,11 @@ public abstract class JikanModel<T extends Media> extends Media {
         return curatedGenres;
     }
 
+    @Override
+    public String getProgressLevel2Label() {
+        return null;
+    }
+
     private static final class MALGenre {
         private String name;
     }

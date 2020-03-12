@@ -1,61 +1,74 @@
 package fr.efrei.android.blakkat.model.Record;
 
+import androidx.annotation.NonNull;
+
 import com.orm.SugarRecord;
 
+import java.util.Date;
 import java.util.List;
 
 public class ProgressionRecord extends SugarRecord {
-
-    User user;
-    MediaRecord mediaRecord;
-    String av1;
-    String av2;
+    private UserRecord userRecord;
+    private MediaRecord mediaRecord;
+    private Integer progressLevel1;
+    private Integer progressLevel2;
+    private Date made;
 
     public ProgressionRecord() {}
 
-    public ProgressionRecord( String av1, String av2) {
-        //this.user = u;
-        this.av1 = av1;
-        this.av2 = av2;
-        //this.mediaRecord = m;
+    public ProgressionRecord(Integer progressLevel1, Integer progressLevel2) {
+        this.progressLevel1 = progressLevel1;
+        this.progressLevel2 = progressLevel2;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public UserRecord getUserRecord() {
+        return userRecord;
     }
 
     public MediaRecord getMediaRecord() {
         return mediaRecord;
     }
 
-    public void setMediaRecord(MediaRecord mediaRecord) {
-        this.mediaRecord = mediaRecord;
+    public Integer getProgressLevel1() {
+        return progressLevel1;
     }
 
-    public String getAv1() {
-        return av1;
+    public Integer getProgressLevel2() {
+        return progressLevel2;
     }
 
-    public void setAv1(String av1) {
-        this.av1 = av1;
+    public Date getMade() {
+        return made;
     }
 
-    public String getAv2() {
-        return av2;
+    public ProgressionRecord markViewed(UserRecord u, MediaRecord m) {
+        this.userRecord = u;
+        this.mediaRecord = m;
+        this.made = new Date();
+        return this;
     }
 
-    public void setAv2(String av2) {
-        this.av2 = av2;
+    public boolean isViewed() {
+        return this.made == null;
     }
 
-    public static ProgressionRecord exists(User u, String av1, String av2, MediaRecord m) {
+    @Override
+    public boolean delete() {
+        this.made = null;
+        return super.delete();
+    }
+
+    public static ProgressionRecord exists(UserRecord u, MediaRecord mr, Integer progressLevel1, Integer progressLevel2) {
         List<ProgressionRecord> res = ProgressionRecord.find(ProgressionRecord.class,
-                "user = ? and av1 = ? and av2 = ? and media_record = ?",
-                Long.toString(u.getId()), av1, av2, Long.toString(m.getId()));
+                "user_record = ? and progress_level1 = ? and progress_level2 = ? and media_record = ?",
+                String.valueOf(u.getId()),
+                String.valueOf(progressLevel1),
+                String.valueOf(progressLevel2),
+                String.valueOf(mr.getId()));
         return res.size() == 0 ? null : res.get(0);
+    }
+
+    public static ProgressionRecord exists(UserRecord ur, MediaRecord mr, ProgressionRecord p) {
+        return exists(ur, mr, p.getProgressLevel1(), p.getProgressLevel2());
     }
 }

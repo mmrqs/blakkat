@@ -5,15 +5,13 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
 
 public class Manga extends JikanModel<Manga> {
     private DateBundle published;
     private int volumes;
-
-    private Manga(Parcel in) {
-        super(in);
-        this.volumes = (Integer) in.readSerializable();
-    }
 
     @Override
     public Date getReleaseDate() {
@@ -22,8 +20,18 @@ public class Manga extends JikanModel<Manga> {
     }
 
     @Override
-    public Integer getSeasons() {
-        return this.volumes;
+    public String getProgressLevel1Label() {
+        return "Volume";
+    }
+
+    @Override
+    public List<ProgressionRecord> getPossibleProgress() {
+        if(records == null) {
+            records = new ArrayList<>(volumes);
+            for (int i = 1; i <= volumes; i++)
+                records.add(new ProgressionRecord(i, 0));
+        }
+        return records;
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
@@ -37,4 +45,9 @@ public class Manga extends JikanModel<Manga> {
             return new Manga[size];
         }
     };
+
+    private Manga(Parcel in) {
+        super(in);
+        this.volumes = (Integer) in.readSerializable();
+    }
 }

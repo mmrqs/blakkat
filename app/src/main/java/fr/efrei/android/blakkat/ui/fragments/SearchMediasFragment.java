@@ -20,13 +20,13 @@ import java.util.List;
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
 import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.ui.views.CardAdapter;
+import fr.efrei.android.blakkat.ui.views.MediaAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SearchMediasFragment extends Fragment {
-    private CardAdapter.DisplayActionsListener displayActionsListener;
+    private MediaAdapter.DisplayActionsListener displayActionsListener;
     private SearchActionsListener searchActionsListener;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -37,7 +37,7 @@ public class SearchMediasFragment extends Fragment {
         super.onAttach(context);
         try {
             this.searchActionsListener = (SearchActionsListener) context;
-            this.displayActionsListener = (CardAdapter.DisplayActionsListener) context;
+            this.displayActionsListener = (MediaAdapter.DisplayActionsListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement SearchActionsListener and DisplayActionsListener");
         }
@@ -90,7 +90,7 @@ public class SearchMediasFragment extends Fragment {
             public void onResponse(Call<List<Media>> call, Response<List<Media>> response) {
                 if(response.body() != null) {
                     results.addAll(response.body());
-                    adapter = new CardAdapter(results, displayActionsListener);
+                    adapter = new MediaAdapter(results, displayActionsListener);
                     recyclerView.setAdapter(adapter);
                 }
             }

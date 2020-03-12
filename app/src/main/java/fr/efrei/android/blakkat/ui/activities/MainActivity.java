@@ -16,10 +16,10 @@ import fr.efrei.android.blakkat.ui.fragments.DisplayMediaFragment;
 import fr.efrei.android.blakkat.ui.fragments.SearchMediasFragment;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.ui.fragments.ViewedMediasFragment;
-import fr.efrei.android.blakkat.ui.views.CardAdapter;
+import fr.efrei.android.blakkat.ui.views.MediaAdapter;
 
 public class MainActivity extends AppCompatActivity
-        implements SearchMediasFragment.SearchActionsListener, CardAdapter.DisplayActionsListener,
+        implements SearchMediasFragment.SearchActionsListener, MediaAdapter.DisplayActionsListener,
         DisplayMediaFragment.MediaLoadedListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

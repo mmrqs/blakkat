@@ -6,7 +6,11 @@ import android.os.Parcelable;
 import java.util.Date;
 import java.util.List;
 
+import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
+
 public abstract class Media implements Parcelable {
+    protected List<ProgressionRecord> records;
+
     public String getProviderHint() {
         return this.getClass().getSimpleName();
     }
@@ -17,7 +21,9 @@ public abstract class Media implements Parcelable {
     public abstract float getPublicScore();
     public abstract String getSynopsis();
     public abstract List<String> getGenres();
-    public abstract <E> E getSeasons();
+    public abstract List<ProgressionRecord> getPossibleProgress();
+    public abstract String getProgressLevel1Label();
+    public abstract String getProgressLevel2Label();
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
@@ -29,7 +35,7 @@ public abstract class Media implements Parcelable {
         parcel.writeFloat(this.getPublicScore());
         parcel.writeString(this.getSynopsis());
         parcel.writeList(this.getGenres());
-        parcel.writeSerializable(this.getSeasons());
+        //parcel.writeSerializable(this.getPossibleProgress());
     }
 
     @Override

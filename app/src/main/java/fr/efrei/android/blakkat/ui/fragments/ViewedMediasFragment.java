@@ -19,20 +19,20 @@ import java.util.ArrayList;
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.model.Record.MediaRecord;
-import fr.efrei.android.blakkat.ui.views.CardAdapter;
+import fr.efrei.android.blakkat.ui.views.MediaAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ViewedMediasFragment extends Fragment {
     private ArrayList<Media> seen;
-    private CardAdapter.DisplayActionsListener listener;
+    private MediaAdapter.DisplayActionsListener listener;
     private RecyclerView recyclerView;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.listener = (CardAdapter.DisplayActionsListener) context;
+        this.listener = (MediaAdapter.DisplayActionsListener) context;
     }
 
     @Nullable
@@ -57,7 +57,7 @@ public class ViewedMediasFragment extends Fragment {
             public void onResponse(Call<Media> call, Response<Media> response) {
                 if(response.body() != null) {
                     seen.add(response.body());
-                    recyclerView.setAdapter(new CardAdapter(seen, listener));
+                    recyclerView.setAdapter(new MediaAdapter(seen, listener));
                 }
             }
 

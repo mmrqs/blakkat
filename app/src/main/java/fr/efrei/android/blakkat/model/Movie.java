@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
+
 public class Movie extends BetaSeriesModel<Movie> {
     private String synopsis;
     private Date release_date;
@@ -35,6 +37,16 @@ public class Movie extends BetaSeriesModel<Movie> {
     }
 
     @Override
+    public String getProgressLevel1Label() {
+        return "Film";
+    }
+
+    @Override
+    public String getProgressLevel2Label() {
+        return null;
+    }
+
+    @Override
     public ArrayList<String> getGenres() {
         if(this.centralizedGenres == null)
             this.centralizedGenres = this.genres;
@@ -42,8 +54,10 @@ public class Movie extends BetaSeriesModel<Movie> {
     }
 
     @Override
-    public ArrayList<?> getSeasons() {
-        return null;
+    public List<ProgressionRecord> getPossibleProgress() {
+        List<ProgressionRecord> records = new ArrayList<>();
+        records.add(new ProgressionRecord(1, 0));
+        return records;
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {

@@ -11,13 +11,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
 
 public class Show extends BetaSeriesModel<Show> {
     private int creation;
     private JsonObject genres;
     private ImageBundle images;
     private List<SeasonsBundle> seasons_details;
-    private HashMap<Integer, Integer> centralizedSeasons;
 
     @Override
     public Date getReleaseDate() {
@@ -44,14 +46,26 @@ public class Show extends BetaSeriesModel<Show> {
     }
 
     @Override
-    public HashMap<Integer, Integer> getSeasons() {
-        if(this.centralizedSeasons == null) {
-            this.centralizedSeasons = new HashMap<>();
-            for(SeasonsBundle s : seasons_details) {
-                this.centralizedSeasons.put(s.number, s.episodes);
-            }
+    public String getProgressLevel1Label() {
+        return "Season";
+    }
+
+    @Override
+    public String getProgressLevel2Label() {
+        return "Episode";
+    }
+
+    @Override
+    public List<ProgressionRecord> getPossibleProgress() {
+        if(records == null) {
+            records = new ArrayList<>(seasons_details.size() *
+                    seasons_details.get(0).episodes);
+            seasons_details.forEach(s -> {
+                for (int i = 1; i <= s.episodes; i++)
+                    records.add(new ProgressionRecord(s.number, i));
+            });
         }
-        return this.centralizedSeasons;
+        return records;
     }
 
     @Override
@@ -82,7 +96,6 @@ public class Show extends BetaSeriesModel<Show> {
 
     Show(Parcel in) {
         super(in);
-        this.centralizedSeasons = (HashMap<Integer, Integer>) in.readSerializable();
     }
 
 }

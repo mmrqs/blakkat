@@ -1,12 +1,12 @@
 package fr.efrei.android.blakkat.ui.views;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -16,23 +16,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import fr.efrei.android.blakkat.R;
-import fr.efrei.android.blakkat.helpers.Toaster;
 import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
+public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder> {
     private List<Media> medias;
     private DisplayActionsListener displayActionsListener;
 
-    static class CardHolder extends RecyclerView.ViewHolder {
+    static class MediaHolder extends RecyclerView.ViewHolder {
         TextView textView;
         ImageView imageView;
         View v;
 
-        CardHolder(View vi) {
+        MediaHolder(View vi) {
             super(vi);
             this.v = vi;
             this.textView = vi.findViewById(R.id.title);
@@ -40,20 +35,22 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
         }
     }
 
-    public CardAdapter(List<Media> medias, DisplayActionsListener displayActionsListener) {
-        this.medias = medias.stream().sorted(Comparator.comparing(Media::getTitle)).collect(Collectors.toList());
+    public MediaAdapter(List<Media> medias, DisplayActionsListener displayActionsListener) {
+        this.medias = medias.stream().sorted(Comparator.comparing(Media::getTitle))
+                .collect(Collectors.toList());
         this.displayActionsListener = displayActionsListener;
     }
 
+    @NonNull
     @Override
-    public CardAdapter.CardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MediaHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_cell_cards, parent, false);
-        return new CardHolder(v);
+        return new MediaHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(CardHolder holder, int position) {
+    public void onBindViewHolder(MediaHolder holder, int position) {
         holder.textView.setText(medias.get(position).getTitle() +
                 " – " + medias.get(position).getProviderHint());
 

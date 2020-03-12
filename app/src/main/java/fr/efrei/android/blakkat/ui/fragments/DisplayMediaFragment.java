@@ -17,17 +17,18 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
 import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.ui.views.CardAdvancementAdapter;
+import fr.efrei.android.blakkat.model.Record.UserRecord;
+import fr.efrei.android.blakkat.ui.views.ProgressAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class DisplayMediaFragment extends Fragment {
     private MediaLoadedListener listener;
@@ -123,24 +124,11 @@ public class DisplayMediaFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        RecyclerView.Adapter mAdapter = null;
-        // Seasons cards :
-        switch (displayedMedia.getProviderHint()) {
-            case "Show":
-                mAdapter = new CardAdvancementAdapter(seasonsFormatter(displayedMedia.getSeasons()), DisplayMediaFragment.this.getContext(),
-                        displayedMedia);
-                break;
-            case "Anime":
-            case "Manga":
-                mAdapter = new CardAdvancementAdapter(mangaAnimeFormatter(displayedMedia.getSeasons()),DisplayMediaFragment.this.getContext(),
-                        displayedMedia);
-                break;
-            case "Movie":
-                mAdapter = new CardAdvancementAdapter(new ArrayList<String>() {{add(displayedMedia.getTitle());}},
-                        DisplayMediaFragment.this.getContext(), displayedMedia);
-            default :
-                break;
-        }
+        UserRecord userRecord = UserRecord.find(UserRecord.class, "pseudo = ?",
+                getContext().getSharedPreferences(getResources().getString(R.string.user), MODE_PRIVATE)
+                        .getString(getResources().getString(R.string.user), null)).get(0);
+
+        RecyclerView.Adapter mAdapter = new ProgressAdapter(displayedMedia, userRecord);
 
         recyclerView.setAdapter(mAdapter);
 
@@ -159,23 +147,5 @@ public class DisplayMediaFragment extends Fragment {
 
     public interface MediaLoadedListener {
         void onMediaLoaded(Media media);
-    }
-
-    public ArrayList<String> seasonsFormatter(HashMap<Integer, Integer> h) {
-        ArrayList<String> a = new ArrayList<>();
-        for (int i : h.keySet()) {
-            for (int j = 1; j <= h.get(i) ; j++) {
-                a.add("Saison " + i + " Episode " + j);
-            }
-        }
-        return a;
-    }
-
-    public ArrayList<String> mangaAnimeFormatter ( int nbVolumes ) {
-        ArrayList<String> a = new ArrayList<>();
-        for (int i = 1; i <= nbVolumes; i++) {
-            a.add("Volume : " + i);
-        }
-        return a;
     }
 }

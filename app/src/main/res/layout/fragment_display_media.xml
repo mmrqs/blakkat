@@ -12,25 +12,6 @@
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/displayMedia_button_return"
-                android:layout_width="134dp"
-                android:layout_height="wrap_content"
-                android:text="@string/button_return" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="139dp"
-                android:layout_height="81dp"
-                android:layout_gravity="center_horizontal"
-                app:srcCompat="@drawable/logo_blakkat_dark" />
-        </LinearLayout>
-
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view"
             android:layout_width="match_parent"

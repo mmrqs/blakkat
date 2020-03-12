@@ -99,11 +99,6 @@ public class DisplayMediaFragment extends Fragment {
      * Displays the {@link Media} infos
      */
     private void initGraphicalComponents() {
-        //TODO put it in the toolbar ?
-        view.findViewById(R.id.displayMedia_button_return)
-                .setOnClickListener(v -> Objects.requireNonNull(this.getActivity())
-                        .onBackPressed());
-
         userRecord = SessionHelper.get(getResources()
                 .getString(R.string.user), UserRecord.class);
         mediaRecord = MediaRecord.exists(displayedMedia.getId(),

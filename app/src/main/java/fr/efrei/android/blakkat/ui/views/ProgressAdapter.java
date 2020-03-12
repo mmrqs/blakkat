@@ -21,6 +21,9 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
     private MediaRecord mediaRecord;
     private List<ProgressionRecord> progress;
 
+    private String viewed;
+    private String notViewed;
+
     static class ProgressHolder extends RecyclerView.ViewHolder {
         TextView textView;
         Button seenButton;
@@ -46,6 +49,12 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
     public ProgressHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cell_episode_card, parent, false);
+
+        this.viewed = v.getContext().getResources()
+                .getString(R.string.viewed);
+        this.notViewed = v.getContext().getResources()
+                .getString(R.string.not_viewed);
+
         return new ProgressHolder(v);
     }
 
@@ -83,8 +92,8 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
 
     private void changeButtonText(ProgressionRecord subject, ProgressHolder holder) {
         holder.seenButton.setText(subject.isViewed() ?
-                R.string.notviewed :
-                R.string.viewed);
+                this.notViewed :
+                String.format(viewed, subject.getMade()));
     }
 
     private String getLabelProgress(ProgressionRecord p) {

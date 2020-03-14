@@ -13,6 +13,8 @@ public class MediaRecord extends SugarRecord {
     private int identifier;
     private String type;
     private Date watched;
+    private String title;
+    private String url;
 
     public MediaRecord() { }
 
@@ -20,6 +22,8 @@ public class MediaRecord extends SugarRecord {
         this.identifier = m.getId();
         this.type = m.getProviderHint();
         this.watched = new Date();
+        this.title = m.getTitle();
+        this.url = m.getImageUrl();
     }
 
     public Date getWatched() {
@@ -49,5 +53,21 @@ public class MediaRecord extends SugarRecord {
         return KeeperFactory.getKeeper()
                 .getProviderFor(this.type)
                 .getOne(this.identifier);
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

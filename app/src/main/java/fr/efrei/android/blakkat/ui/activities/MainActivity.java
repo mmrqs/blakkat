@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.helpers.Toaster;
 import fr.efrei.android.blakkat.ui.fragments.DisplayMediaFragment;
+import fr.efrei.android.blakkat.ui.fragments.HomeFragment;
 import fr.efrei.android.blakkat.ui.fragments.SearchMediasFragment;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.ui.fragments.ViewedMediasFragment;
@@ -26,8 +27,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setSupportActionBar(findViewById(R.id.toolbar));
-
-        changeFragment(new SearchMediasFragment());
+        changeFragment(new HomeFragment());
+        //changeFragment(new SearchMediasFragment());
     }
 
     @Override
@@ -38,12 +39,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) {
-            startActivity(new Intent(new Intent(this, SettingsActivity.class)));
-            return true;
-        } //TODO retirer le lol
-        Toaster.burn(this, "lol");
-        return false;
+        switch(item.getItemId()) {
+            case R.id.action_settings:
+                startActivity(new Intent(new Intent(this, SettingsActivity.class)));
+                return true;
+            default:
+                Toaster.burn(this, "lol"); //TODO
+                return false;
+        }
+
+
     }
 
     /**

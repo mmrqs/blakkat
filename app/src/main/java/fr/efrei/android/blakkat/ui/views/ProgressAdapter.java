@@ -96,11 +96,17 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
                 sr.setMediaRecord(mediaRecord);
 
                 if(listPossibleSuggestions.indexOf(latest) < listPossibleSuggestions.size()-1) {
-                    sr.setProgressionRecord(listPossibleSuggestions.get(listPossibleSuggestions.indexOf(subject)+1));
+                    ProgressionRecord pp = listPossibleSuggestions.get(listPossibleSuggestions.indexOf(subject)+1);
+                    pp.save();
+                    sr.setProgressionRecord(pp);
                 } else {
-                    sr.setProgressionRecord(listPossibleSuggestions.get(0));
+                    ProgressionRecord p = listPossibleSuggestions.get(0);
+                    p.save();
+                    sr.setProgressionRecord(p);
                 }
                 sr.save();
+
+                System.out.println(sr.getProgressionRecord());
             }
 
 

@@ -38,22 +38,15 @@ public abstract class Media implements Parcelable {
         parcel.writeFloat(this.getPublicScore());
         parcel.writeString(this.getSynopsis());
         parcel.writeList(this.getGenres());
-        //parcel.writeSerializable(this.getPossibleProgress());
     }
 
     public List<ProgressionRecord> getPossibleSuggestion(UserRecord user, MediaRecord mr) {
         List<ProgressionRecord> suggestions = this.getPossibleProgress();
         Iterator<ProgressionRecord> it = suggestions.iterator();
-        System.out.println(user.getPseudo());
 
         while(it.hasNext()) {
             ProgressionRecord pr = it.next();
             if(ProgressionRecord.exists(user, mr, pr.getProgressLevel1(), pr.getProgressLevel2()) != null) it.remove();
-        }
-        System.out.println(suggestions.size());
-        for(ProgressionRecord NIQUETAMERECONNARD : suggestions) {
-            System.out.println("ePISODE : " + NIQUETAMERECONNARD.getProgressLevel2());
-            System.out.println("Saison : " + NIQUETAMERECONNARD.getProgressLevel1());
         }
         return suggestions;
     }

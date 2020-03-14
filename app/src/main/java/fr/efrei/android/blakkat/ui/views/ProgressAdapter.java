@@ -65,7 +65,8 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             mediaRecord = MediaRecord.exists(media.getId(), media.getProviderHint());
             latest = subject;
 
-            List<ProgressionRecord> listPossibleSuggestions = null;
+            List<ProgressionRecord> listPossibleSuggestions;
+
             if(mediaRecord == null) {
                 mediaRecord = new MediaRecord(media);
                 mediaRecord.save();
@@ -85,11 +86,10 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
                                     Condition.prop("media_record").eq(String.valueOf(mediaRecord.getId()))).orderBy("made DESC").list().get(0);
                 }
             }
-
             this.changeButtonText(subject, holder);
 
             //SUGGESTION :
-
+            //We watch if it exists a suggestion for this media :
             List<SuggestionRecord> r = SuggestionRecord.find(SuggestionRecord.class,
                     "user_record = ? and media_record = ?",
                     String.valueOf(userRecord.getId()),
@@ -101,7 +101,6 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
                 sr.setUserRecord(userRecord);
                 sr.setMediaRecord(mediaRecord);
 
-                System.out.println(listPossibleSuggestions.indexOf(latest));
                 if(listPossibleSuggestions.indexOf(latest) < listPossibleSuggestions.size()-1) {
                     ProgressionRecord pp = listPossibleSuggestions.get(listPossibleSuggestions.indexOf(subject)+1);
                     pp.save();

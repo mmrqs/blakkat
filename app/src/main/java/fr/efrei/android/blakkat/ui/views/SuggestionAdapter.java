@@ -99,10 +99,6 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
 
                     suggestions.get(position).delete();
 
-                    for(ProgressionRecord pkdjf : listPossibleSuggestions) {
-                        System.out.println(pkdjf.getProgressLevel1());
-                        System.out.println(pkdjf.getProgressLevel2());
-                    }
                     if (listPossibleSuggestions.size() > 1) {
                         SuggestionRecord sr = new SuggestionRecord();
                         sr.setUserRecord(userRecord);

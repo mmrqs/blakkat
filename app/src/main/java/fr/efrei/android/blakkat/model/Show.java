@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 
 import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
-import fr.efrei.android.blakkat.model.Record.SuggestionRecord;
 
 public class Show extends BetaSeriesModel<Show> {
     private int creation;

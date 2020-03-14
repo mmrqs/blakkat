@@ -1,5 +1,6 @@
 package fr.efrei.android.blakkat.ui.views;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
 import java.util.List;
 
 import fr.efrei.android.blakkat.R;
+import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
+import fr.efrei.android.blakkat.model.Media;
+import fr.efrei.android.blakkat.model.Record.MediaRecord;
+import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
 import fr.efrei.android.blakkat.model.Record.SuggestionRecord;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.SuggestionHolder> {
 
@@ -40,8 +49,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
 
     public SuggestionAdapter(UserRecord userRecord) {
         this.userRecord = userRecord;
-        this.suggestions = SuggestionRecord.listAll(SuggestionRecord.class);
-
+        this.suggestions = SuggestionRecord.find(SuggestionRecord.class,"user_record = ?", String.valueOf(userRecord.getId()));
     }
 
     @NonNull
@@ -66,7 +74,69 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
                     .error(R.drawable.question_mark)
                     .centerCrop().fit()
                     .into(holder.imageView);
+
+        holder.seenButton.setOnClickListener(view -> {
+            SuggestionRecord actualSuggestion = suggestions.get(position);
+
+            KeeperFactory.getKeeper().getProviderFor(actualSuggestion
+                    .getMediaRecord().getType()).getOne(actualSuggestion.getMediaRecord().getIdentifier()).enqueue(createNewCallback(holder, position));
+        });
     }
+
+    private Callback<Media> createNewCallback(@NonNull SuggestionHolder holder, int position) {
+        return new Callback<Media>() {
+            @Override
+            public void onResponse(Call<Media> call, Response<Media> response) {
+                if (response.body() != null) {
+                    ProgressionRecord test = suggestions.get(position).getProgressionRecord();
+                    Media media = response.body();
+
+                    MediaRecord mr = MediaRecord.exists(media.getId(), media.getProviderHint());
+                    suggestions.get(position).getProgressionRecord().markViewed(userRecord, mr).save();
+
+
+                    List<ProgressionRecord> listPossibleSuggestions = media.getPossibleSuggestion(userRecord,mr);
+
+                    suggestions.get(position).delete();
+
+                    for(ProgressionRecord pkdjf : listPossibleSuggestions) {
+                        System.out.println(pkdjf.getProgressLevel1());
+                        System.out.println(pkdjf.getProgressLevel2());
+                    }
+                    if (listPossibleSuggestions.size() > 1) {
+                        SuggestionRecord sr = new SuggestionRecord();
+                        sr.setUserRecord(userRecord);
+                        sr.setMediaRecord(suggestions.get(position).getMediaRecord());
+
+                        if (listPossibleSuggestions.indexOf(test) < listPossibleSuggestions.size() - 1) {
+                            ProgressionRecord pp = listPossibleSuggestions.get(listPossibleSuggestions.indexOf(test) + 1);
+                            pp.save();
+                            sr.setProgressionRecord(pp);
+                        } else {
+                            ProgressionRecord p = listPossibleSuggestions.get(0);
+                            p.save();
+                            sr.setProgressionRecord(p);
+                        }
+                        sr.save();
+                        Collections.replaceAll(suggestions, suggestions.get(position), sr);
+
+                        onBindViewHolder(holder, position);
+                    }
+                    else {
+                        suggestions.remove(holder.getAdapterPosition());
+                        notifyItemRemoved(holder.getAdapterPosition());
+                        notifyItemRangeChanged(holder.getAdapterPosition(), suggestions.size());
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<Media> call, Throwable t) {
+                t.printStackTrace();
+                Log.e("Err", t.getLocalizedMessage());
+            }
+        };
+    }
+
     @Override
     public int getItemCount() {
         return this.suggestions.size();
@@ -74,13 +144,10 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
 
     private String getLabelProgress(SuggestionRecord p) {
         String s = "";
-        System.out.println(p.getProgressionRecord().getProgressLevel1());
-        System.out.println(p.getProgressionRecord().getProgressLevel2());
-        if (p.getProgressionRecord().getProgressLevel1() != null)
+        if (p.getProgressionRecord().getProgressLevel1() != null) {
             s += "Saison : " + p.getProgressionRecord().getProgressLevel1();
+        }
         s += " Episode : " + p.getProgressionRecord().getProgressLevel2();
-
-        System.out.println(s);
         return s;
     }
 }

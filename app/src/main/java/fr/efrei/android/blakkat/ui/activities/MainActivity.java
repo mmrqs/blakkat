@@ -22,13 +22,14 @@ import fr.efrei.android.blakkat.ui.views.MediaAdapter;
 public class MainActivity extends AppCompatActivity
         implements SearchMediasFragment.SearchActionsListener, MediaAdapter.DisplayActionsListener,
         DisplayMediaFragment.MediaLoadedListener {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setSupportActionBar(findViewById(R.id.toolbar));
-        changeFragment(new HomeFragment());
-        //changeFragment(new SearchMediasFragment());
+        //changeFragment(new HomeFragment());
+        changeFragment(new SearchMediasFragment());
     }
 
     @Override
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_settings:
                 startActivity(new Intent(new Intent(this, SettingsActivity.class)));
                 return true;
+
             default:
                 Toaster.burn(this, "lol"); //TODO
                 return false;

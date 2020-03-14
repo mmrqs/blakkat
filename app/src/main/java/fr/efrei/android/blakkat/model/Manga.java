@@ -20,7 +20,7 @@ public class Manga extends JikanModel<Manga> {
     }
 
     @Override
-    public String getProgressLevel1Label() {
+    public String getProgressLevel2Label() {
         return "Volume";
     }
 
@@ -29,7 +29,7 @@ public class Manga extends JikanModel<Manga> {
         if(records == null) {
             records = new ArrayList<>(volumes);
             for (int i = 1; i <= volumes; i++)
-                records.add(new ProgressionRecord(i, 0));
+                records.add(new ProgressionRecord(0, i));
         }
         return records;
     }

@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity
             SharedPreferences.Editor editor = pref.edit();
             editor.putString(getResources().getString(R.string.user), pseudo);
             editor.apply();
-
             this.startActivity(new Intent(this, MainActivity.class));
             return true;
         }

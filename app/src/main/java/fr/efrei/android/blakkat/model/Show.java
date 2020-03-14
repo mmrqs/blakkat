@@ -9,11 +9,10 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
+import fr.efrei.android.blakkat.model.Record.SuggestionRecord;
 
 public class Show extends BetaSeriesModel<Show> {
     private int creation;

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity
         if (item.getItemId() == R.id.action_settings) {
             startActivity(new Intent(new Intent(this, SettingsActivity.class)));
             return true;
-        }
+        } //TODO retirer le lol
         Toaster.burn(this, "lol");
         return false;
     }

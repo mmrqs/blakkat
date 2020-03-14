@@ -20,7 +20,7 @@ public class Anime extends JikanModel<Anime> {
     }
 
     @Override
-    public String getProgressLevel1Label() {
+    public String getProgressLevel2Label() {
         return "Episode";
     }
 
@@ -29,7 +29,7 @@ public class Anime extends JikanModel<Anime> {
         if(records == null) {
             records = new ArrayList<>(episodes);
             for (int i = 1; i <= episodes; i++)
-                records.add(new ProgressionRecord(i, 0));
+                records.add(new ProgressionRecord(0, i));
         }
         return records;
     }

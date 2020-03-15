@@ -1,7 +1,10 @@
 package fr.efrei.android.blakkat.service;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
@@ -21,19 +24,17 @@ public class NotificationService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         System.out.println("coucou");
-        return START_STICKY;
-    }
 
-    public void onDestroy() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo_blakkat_dark)
                 .setContentTitle("Blakkat")
-                .setContentText("Wesh revient stp")
+                .setContentText("Bienvenue sur Blakkat ! ")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(NOTIFICATION_ID, builder.build());
+        return START_STICKY;
     }
 
     @Nullable
@@ -41,5 +42,6 @@ public class NotificationService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
+
 }
 

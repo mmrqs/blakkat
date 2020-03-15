@@ -48,7 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         ((Switch)findViewById(R.id.notifications))
                 .setOnCheckedChangeListener((buttonView, isChecked) -> {
-                    if (isChecked) {
+                    if(isChecked) {
                         createNotificationChannel();
                     } else {
                         deleteNotificationChannel();
@@ -65,7 +65,6 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     }
-
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.channel_name);

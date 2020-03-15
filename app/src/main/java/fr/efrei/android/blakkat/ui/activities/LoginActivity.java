@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity
         SessionHelper.setupPreferences(getPreferences(MODE_PRIVATE));
         setContentView(R.layout.activity_login);
         changeSignFragment(new SignInFragment());
-        startService(new Intent(this, NotificationService.class));
 
     }
 
@@ -32,6 +31,8 @@ public class LoginActivity extends AppCompatActivity
         UserRecord u = UserRecord.exists(pseudo);
         if(u != null) {
             SessionHelper.save(getResources().getString(R.string.user), u);
+            if(u.isEnableNotifs())
+                startService(new Intent(this, NotificationService.class));
 
             this.startActivity(new Intent(this, MainActivity.class));
             return true;

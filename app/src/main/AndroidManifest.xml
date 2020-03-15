@@ -5,6 +5,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+
     <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"
@@ -23,7 +26,8 @@
             android:label="@string/title_activity_viewed"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.fragments.DisplayMediaFragment" />
-        <activity android:name=".ui.fragments.SearchMediasFragment" /> <!-- SugarORM -->
+        <activity android:name=".ui.fragments.SearchMediasFragment" />
+        <!-- SugarORM -->
         <meta-data
             android:name="DATABASE"
             android:value="blakkat_sugar.db" />
@@ -40,10 +44,12 @@
         <activity android:name=".ui.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".service.NotificationService" android:stopWithTask="true" />
+
     </application>
 
 </manifest>

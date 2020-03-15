@@ -1,7 +1,6 @@
 package fr.efrei.android.blakkat.ui.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.helpers.SessionHelper;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
+import fr.efrei.android.blakkat.service.NotificationService;
 import fr.efrei.android.blakkat.ui.fragments.SignInFragment;
 import fr.efrei.android.blakkat.ui.fragments.SignUpFragment;
 
@@ -23,6 +23,8 @@ public class LoginActivity extends AppCompatActivity
         SessionHelper.setupPreferences(getPreferences(MODE_PRIVATE));
         setContentView(R.layout.activity_login);
         changeSignFragment(new SignInFragment());
+        startService(new Intent(this, NotificationService.class));
+
     }
 
     @Override

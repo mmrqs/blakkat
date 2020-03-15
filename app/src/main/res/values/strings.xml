@@ -55,4 +55,9 @@
     <string name="search_item">Search</string>
     <string name="action_search">action_search</string>
     <string name="action_home">action_home</string>
+
+    <string name="channel_name">blakkat</string>
+    <string name="channel_description">daily alert</string>
+    <string name="notification_mode_activated">Notifications activated</string>
+    <string name="notification_mode_desactivated">Notifications desactivated</string>
 </resources>

@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_search:
                 changeFragment(new SearchMediasFragment());
                 return true;
+            case R.id.action_home:
+                changeFragment(new HomeFragment());
+                return true;
             default:
                 Toaster.burn(this, "Error");
                 return false;

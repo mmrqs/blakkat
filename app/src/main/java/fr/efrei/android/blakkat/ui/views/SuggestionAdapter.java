@@ -88,12 +88,15 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
             @Override
             public void onResponse(Call<Media> call, Response<Media> response) {
                 if (response.body() != null) {
-                    ProgressionRecord actualProgression = suggestions.get(position).getProgressionRecord();
+                    ProgressionRecord actualProgression =
+                            new ProgressionRecord(suggestions.get(position).getProgressionRecord().getProgressLevel1(),
+                                    suggestions.get(position).getProgressionRecord().getProgressLevel2());
+
                     Media media = response.body();
                     MediaRecord mr = MediaRecord.exists(media.getId(), media.getProviderHint());
-                    suggestions.get(position).getProgressionRecord().markViewed(userRecord, mr).save();
-
                     List<ProgressionRecord> listPossibleSuggestions = media.getPossibleSuggestion(userRecord,mr);
+
+                    suggestions.get(position).getProgressionRecord().markViewed(userRecord, mr).save();
 
                     suggestions.get(position).delete();
 

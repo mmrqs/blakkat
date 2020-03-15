@@ -61,7 +61,6 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
 
         holder.textView.setText(getLabelProgress(subject));
         holder.seenButton.setOnClickListener(view -> {
-
             mediaRecord = MediaRecord.exists(media.getId(), media.getProviderHint());
             latest = subject;
 
@@ -75,9 +74,8 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
 
             } else {
                 listPossibleSuggestions = media.getPossibleSuggestion(userRecord, mediaRecord);
-                if (subject.isViewed()) {
+                if (subject.isViewed())
                     subject.markViewed(userRecord, mediaRecord).save();
-                }
                 else {
                     subject.delete();
 
@@ -112,8 +110,6 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
                 }
                 sr.save();
             }
-
-
         });
     }
 

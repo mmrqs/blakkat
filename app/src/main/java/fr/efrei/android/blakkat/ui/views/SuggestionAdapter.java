@@ -88,12 +88,10 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
             @Override
             public void onResponse(Call<Media> call, Response<Media> response) {
                 if (response.body() != null) {
-                    ProgressionRecord test = suggestions.get(position).getProgressionRecord();
+                    ProgressionRecord actualProgression = suggestions.get(position).getProgressionRecord();
                     Media media = response.body();
-
                     MediaRecord mr = MediaRecord.exists(media.getId(), media.getProviderHint());
                     suggestions.get(position).getProgressionRecord().markViewed(userRecord, mr).save();
-
 
                     List<ProgressionRecord> listPossibleSuggestions = media.getPossibleSuggestion(userRecord,mr);
 
@@ -104,8 +102,8 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
                         sr.setUserRecord(userRecord);
                         sr.setMediaRecord(suggestions.get(position).getMediaRecord());
 
-                        if (listPossibleSuggestions.indexOf(test) < listPossibleSuggestions.size() - 1) {
-                            ProgressionRecord pp = listPossibleSuggestions.get(listPossibleSuggestions.indexOf(test) + 1);
+                        if (listPossibleSuggestions.indexOf(actualProgression) < listPossibleSuggestions.size() - 1) {
+                            ProgressionRecord pp = listPossibleSuggestions.get(listPossibleSuggestions.indexOf(actualProgression) + 1);
                             pp.save();
                             sr.setProgressionRecord(pp);
                         } else {
@@ -115,7 +113,6 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
                         }
                         sr.save();
                         Collections.replaceAll(suggestions, suggestions.get(position), sr);
-
                         onBindViewHolder(holder, position);
                     }
                     else {
@@ -140,9 +137,8 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
 
     private String getLabelProgress(SuggestionRecord p) {
         String s = "";
-        if (p.getProgressionRecord().getProgressLevel1() != null) {
-            s += "Saison : " + p.getProgressionRecord().getProgressLevel1();
-        }
+        if (p.getProgressionRecord().getProgressLevel1() != 0)
+            s += "Season : " + p.getProgressionRecord().getProgressLevel1();
         s += " Episode : " + p.getProgressionRecord().getProgressLevel2();
         return s;
     }

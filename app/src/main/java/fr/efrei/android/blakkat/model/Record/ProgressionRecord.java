@@ -72,15 +72,9 @@ public class ProgressionRecord extends SugarRecord {
 
     @Override
     public boolean equals(Object o) {
-        if (o == this) {
-            return true;
-        }
-        if (!(o instanceof ProgressionRecord)) {
-            return false;
-        }
-
+        if (o == this) return true;
+        if (!(o instanceof ProgressionRecord)) return false;
         ProgressionRecord c = (ProgressionRecord) o;
-
         return this.progressLevel2 == c.progressLevel2
                 && progressLevel1 == c.progressLevel1
                 && userRecord == c.userRecord

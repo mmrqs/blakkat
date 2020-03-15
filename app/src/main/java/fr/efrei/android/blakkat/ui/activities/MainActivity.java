@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setSupportActionBar(findViewById(R.id.toolbar));
-        //changeFragment(new HomeFragment());
-        changeFragment(new SearchMediasFragment());
+        changeFragment(new HomeFragment());
+        //changeFragment(new SearchMediasFragment());
     }
 
     @Override
@@ -44,9 +44,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_settings:
                 startActivity(new Intent(new Intent(this, SettingsActivity.class)));
                 return true;
-
+            case R.id.action_search:
+                changeFragment(new SearchMediasFragment());
+                return true;
             default:
-                Toaster.burn(this, "lol"); //TODO
+                Toaster.burn(this, "Error");
                 return false;
         }
 

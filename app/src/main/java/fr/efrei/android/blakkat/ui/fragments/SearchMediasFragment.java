@@ -27,7 +27,6 @@ import retrofit2.Response;
 
 public class SearchMediasFragment extends Fragment {
     private MediaAdapter.DisplayActionsListener displayActionsListener;
-    private SearchActionsListener searchActionsListener;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private ArrayList<Media> results;
@@ -36,7 +35,6 @@ public class SearchMediasFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            this.searchActionsListener = (SearchActionsListener) context;
             this.displayActionsListener = (MediaAdapter.DisplayActionsListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement SearchActionsListener and DisplayActionsListener");
@@ -47,9 +45,6 @@ public class SearchMediasFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_medias, container, false);
-
-        view.findViewById(R.id.buttonViewed)
-                .setOnClickListener(v -> searchActionsListener.onViewedRequest());
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -100,12 +95,5 @@ public class SearchMediasFragment extends Fragment {
                 Log.e("Err", t.getLocalizedMessage());
             }
         };
-    }
-
-    /**
-     * Serves as a bridge to allow communication with parent activity
-     */
-    public interface SearchActionsListener {
-        void onViewedRequest();
     }
 }

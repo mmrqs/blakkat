@@ -4,12 +4,16 @@
     <item android:id="@+id/action_settings"
         android:title="@string/main_menu_settings"
         app:showAsAction="never"/>
+    <item android:id="@+id/action_media_seen"
+        android:icon="@drawable/ic_action_media_seen"
+        android:title="action_media_seen"
+        app:showAsAction="always"/>
     <item android:id="@+id/action_home"
         android:icon="@drawable/ic_action_home"
         android:title="@string/action_home"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
     <item android:id="@+id/action_search"
         android:icon="@drawable/ic_action_search"
         android:title="@string/action_search"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 </menu>

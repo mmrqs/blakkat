@@ -20,7 +20,7 @@ import fr.efrei.android.blakkat.ui.fragments.ViewedMediasFragment;
 import fr.efrei.android.blakkat.ui.views.MediaAdapter;
 
 public class MainActivity extends AppCompatActivity
-        implements SearchMediasFragment.SearchActionsListener, MediaAdapter.DisplayActionsListener,
+        implements MediaAdapter.DisplayActionsListener,
         DisplayMediaFragment.MediaLoadedListener {
 
     @Override
@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         setSupportActionBar(findViewById(R.id.toolbar));
         changeFragment(new HomeFragment());
-        //changeFragment(new SearchMediasFragment());
     }
 
     @Override
@@ -50,20 +49,15 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_home:
                 changeFragment(new HomeFragment());
                 return true;
+            case R.id.action_media_seen:
+                changeFragment(new ViewedMediasFragment());
+                return true;
             default:
                 Toaster.burn(this, "Error");
                 return false;
         }
 
 
-    }
-
-    /**
-     * Displays a new {@link ViewedMediasFragment}
-     */
-    @Override
-    public void onViewedRequest() {
-        changeFragment(new ViewedMediasFragment());
     }
 
     /**

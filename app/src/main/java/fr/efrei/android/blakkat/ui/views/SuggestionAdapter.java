@@ -97,7 +97,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
 
                     suggestions.get(position).delete();
 
-                    if (listPossibleSuggestions.size() > 1) {
+                    if (listPossibleSuggestions.size() > 0) {
                         SuggestionRecord sr = new SuggestionRecord();
                         sr.setUserRecord(userRecord);
                         sr.setMediaRecord(suggestions.get(position).getMediaRecord());

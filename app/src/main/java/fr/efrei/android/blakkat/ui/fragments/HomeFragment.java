@@ -14,10 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import fr.efrei.android.blakkat.R;
+import fr.efrei.android.blakkat.helpers.SessionHelper;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
 import fr.efrei.android.blakkat.ui.views.SuggestionAdapter;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment {
 
@@ -36,9 +35,8 @@ public class HomeFragment extends Fragment {
         this.recyclerView = view.findViewById(R.id.recyclerView_home_suggestion);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        recyclerView.setAdapter(new SuggestionAdapter(UserRecord.find(UserRecord.class, "pseudo = ?",
-                getContext().getSharedPreferences(getResources().getString(R.string.user), MODE_PRIVATE)
-                        .getString(getResources().getString(R.string.user), null)).get(0)));
+        recyclerView.setAdapter(new SuggestionAdapter(SessionHelper.get(getResources()
+                .getString(R.string.user), UserRecord.class)));
 
         return view;
     }

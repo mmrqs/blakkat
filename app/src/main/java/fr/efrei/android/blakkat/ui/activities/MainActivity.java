@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setSupportActionBar(findViewById(R.id.toolbar));
-        changeFragment(new HomeFragment());
-        //changeFragment(new SearchMediasFragment());
+        //changeFragment(new HomeFragment());
+        changeFragment(new SearchMediasFragment());
     }
 
     @Override

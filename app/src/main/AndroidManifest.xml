@@ -50,12 +50,9 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".service.NotificationService" android:stopWithTask="true" />
+        <!--Alarm notification : -->
 
         <receiver android:process=":remote" android:name=".service.AlarmSendNotifs"></receiver>
-
-
-
 
         <receiver android:name=".service.AutoStartAlarmNotifications">
             <intent-filter>

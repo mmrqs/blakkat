@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentTransaction;
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.helpers.SessionHelper;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
-import fr.efrei.android.blakkat.service.NotificationService;
 import fr.efrei.android.blakkat.ui.fragments.SignInFragment;
 import fr.efrei.android.blakkat.ui.fragments.SignUpFragment;
 
@@ -31,8 +30,6 @@ public class LoginActivity extends AppCompatActivity
         UserRecord u = UserRecord.exists(pseudo);
         if(u != null) {
             SessionHelper.save(getResources().getString(R.string.user), u);
-            if(u.isEnableNotifs())
-                startService(new Intent(this, NotificationService.class));
 
             this.startActivity(new Intent(this, MainActivity.class));
             return true;

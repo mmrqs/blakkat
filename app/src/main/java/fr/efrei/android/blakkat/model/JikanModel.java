@@ -57,7 +57,7 @@ public abstract class JikanModel<T extends Media> extends Media {
     }
 
     @Override
-    public String getProgressLevel2Label() {
+    public String getProgressLevel1Label() {
         return null;
     }
 

@@ -4,9 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import fr.efrei.android.blakkat.model.Record.MediaRecord;
 import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
+import fr.efrei.android.blakkat.model.Record.UserRecord;
 
 public abstract class Media implements Parcelable {
     protected List<ProgressionRecord> records;
@@ -35,7 +38,17 @@ public abstract class Media implements Parcelable {
         parcel.writeFloat(this.getPublicScore());
         parcel.writeString(this.getSynopsis());
         parcel.writeList(this.getGenres());
-        //parcel.writeSerializable(this.getPossibleProgress());
+    }
+
+    public List<ProgressionRecord> getPossibleSuggestion(UserRecord user, MediaRecord mr) {
+        List<ProgressionRecord> suggestions = this.getPossibleProgress();
+        Iterator<ProgressionRecord> it = suggestions.iterator();
+
+        while(it.hasNext()) {
+            ProgressionRecord pr = it.next();
+            if(ProgressionRecord.exists(user, mr, pr.getProgressLevel1(), pr.getProgressLevel2()) != null) it.remove();
+        }
+        return suggestions;
     }
 
     @Override

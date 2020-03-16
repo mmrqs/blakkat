@@ -18,5 +18,8 @@ public interface IShowProvider extends IProvider {
     Call<List<Show>> searchFor(@Query("title")String name);
 
     @GET("shows/search")
-    Call<List<Show>> searchForNbResults(@Query("title")String name, @Query("nbpp") int nbpp);
+    Call<List<Show>> searchForNbResults(@Query("title")String name, @Query("nbpp") int limit);
+
+    @GET("shows/search?order=popularity")
+    Call<List<Show>> searchForNbResultsByScore(@Query("title")String name, @Query("nbpp") int limit);
 }

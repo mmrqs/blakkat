@@ -57,7 +57,8 @@ public class ViewedMediasFragment extends Fragment {
             public void onResponse(@NonNull Call<Media> call, @NonNull Response<Media> response) {
                 if(response.body() != null) {
                     seen.add(response.body());
-                    recyclerView.setAdapter(new MediaAdapter(seen, listener));
+                    recyclerView.setAdapter(new MediaAdapter(seen, listener,
+                            MediaAdapter.SortMode.TITLE));
                 }
             }
 

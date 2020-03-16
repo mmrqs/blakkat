@@ -66,4 +66,5 @@
     <string name="searchMedias_checkBox_mangas">Mangas</string>
     <string name="searchMedias_checkBox_movies">Movies</string>
     <string name="searchMedias_checkBox_shows">Shows</string>
+    <string name="searchMedias_switch">Get best results for Title | Score</string>
 </resources>

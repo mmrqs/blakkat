@@ -14,15 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.SearchView;
+import android.widget.Switch;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.consuming.providers.IProvider;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
-import fr.efrei.android.blakkat.model.Anime;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.ui.views.MediaAdapter;
 import retrofit2.Call;
@@ -39,6 +38,7 @@ public class SearchMediasFragment extends Fragment {
     private CheckBox mangasCheckbox;
     private CheckBox moviesCheckbox;
     private CheckBox showsCheckbox;
+    private Switch switchOrderByTitle;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -74,6 +74,7 @@ public class SearchMediasFragment extends Fragment {
         mangasCheckbox = view.findViewById(R.id.searchMedias_checkBox_mangas);
         moviesCheckbox = view.findViewById(R.id.searchMedias_checkBox_movies);
         showsCheckbox = view.findViewById(R.id.searchMedias_checkBox_shows);
+        switchOrderByTitle = view.findViewById(R.id.searchMedias_switch);
     }
 
     private SearchView.OnQueryTextListener createNewQueryTextListener(SearchView searchBar) {
@@ -84,10 +85,14 @@ public class SearchMediasFragment extends Fragment {
                 results = new ArrayList<>();
                 String textSearched = searchBar.getQuery().toString();
 
-                getNonExcludedProviders()
-                        .forEach(p -> p.searchForNbResults(textSearched,5)
-                                .enqueue(createNewCallback()));
-
+                if(switchOrderByTitle.isChecked())
+                    getNonExcludedProviders()
+                            .forEach(p -> p.searchForNbResults(textSearched,5)
+                                    .enqueue(createNewCallback()));
+                else
+                    getNonExcludedProviders()
+                            .forEach(p -> p.searchForNbResultsByScore(textSearched,5)
+                                    .enqueue(createNewCallback()));
                 return true;
             }
             @Override
@@ -103,10 +108,13 @@ public class SearchMediasFragment extends Fragment {
             public void onResponse(@NonNull Call<List<Media>> call, @NonNull Response<List<Media>> response) {
                 if(response.body() != null) {
                     results.addAll(response.body());
-                    adapter = new MediaAdapter(results, displayActionsListener);
+                    adapter = new MediaAdapter(results, displayActionsListener,
+                            switchOrderByTitle.isChecked() ?
+                                    MediaAdapter.SortMode.TITLE : MediaAdapter.SortMode.SCORE);
                     recyclerView.setAdapter(adapter);
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<List<Media>> call, @NonNull Throwable t) {
                 t.printStackTrace();

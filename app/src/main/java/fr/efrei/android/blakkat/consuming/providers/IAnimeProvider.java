@@ -16,5 +16,8 @@ public interface IAnimeProvider extends IProvider {
     Call<List<Anime>> searchFor(@Query("q")String name);
 
     @GET("search/anime")
-    Call<List<Anime>> searchForNbResults(@Query("q") String name, @Query("limit") int nbpp);
+    Call<List<Anime>> searchForNbResults(@Query("q") String name, @Query("limit") int limit);
+
+    @GET("search/anime?order_by=score&sort=desc")
+    Call<List<Anime>> searchForNbResultsByScore(@Query("q") String name, @Query("limit") int limit);
 }

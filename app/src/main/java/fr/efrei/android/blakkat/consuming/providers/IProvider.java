@@ -16,6 +16,7 @@ import retrofit2.Call;
  */
 public interface IProvider {
     <T extends Media> Call<List<T>> searchFor(String title);
-    <T extends Media> Call<List<T>> searchForNbResults(String title, int nbpp);
+    <T extends Media> Call<List<T>> searchForNbResults(String title, int limit);
+    <T extends Media> Call<List<T>> searchForNbResultsByScore(String title, int limit);
     <T extends Media> Call<T> getOne(int id);
 }

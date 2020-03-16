@@ -18,5 +18,8 @@ public interface IMovieProvider extends IProvider {
     Call<List<Movie>> searchFor(@Query("title")String name);
 
     @GET("movies/search")
-    Call<List<Movie>> searchForNbResults(@Query("title")String name, @Query("nbpp") int nbpp);
+    Call<List<Movie>> searchForNbResults(@Query("title")String name, @Query("nbpp") int limit);
+
+    @GET("movies/search?order=popularity")
+    Call<List<Movie>> searchForNbResultsByScore(@Query("title")String name, @Query("nbpp") int limit);
 }

@@ -1,5 +1,6 @@
 package fr.efrei.android.blakkat.ui.views;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +36,14 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
         }
     }
 
-    public MediaAdapter(List<Media> medias, DisplayActionsListener displayActionsListener) {
-        this.medias = medias.stream().sorted(Comparator.comparing(Media::getTitle))
-                .collect(Collectors.toList());
+    public MediaAdapter(List<Media> medias, DisplayActionsListener displayActionsListener, SortMode mode) {
+        if(mode == SortMode.TITLE) {
+            this.medias = medias.stream().sorted(Comparator.comparing(Media::getTitle))
+                    .collect(Collectors.toList());
+        } else {
+            this.medias = medias.stream().sorted(Comparator.comparing(Media::getPublicScore))
+                    .collect(Collectors.toList());
+        }
         this.displayActionsListener = displayActionsListener;
     }
 
@@ -49,6 +55,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
         return new MediaHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(MediaHolder holder, int position) {
         holder.textView.setText(medias.get(position).getTitle() +
@@ -78,5 +85,10 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
      */
     public interface DisplayActionsListener {
         void onMediaChosen(Media media);
+    }
+
+    public enum SortMode {
+        TITLE,
+        SCORE
     }
 }

@@ -60,8 +60,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
     @Override
     public void onBindViewHolder(MediaHolder holder, int position) {
         holder.textView.setText(medias.get(position).getTitle() +
-                " – " + medias.get(position).getProviderHint() +
-                " - " + medias.get(position).getPublicScore());
+                " – " + medias.get(position).getProviderHint());
 
         if(medias.get(position).getImageUrl().isEmpty())
             holder.imageView.setImageResource(R.drawable.question_mark);

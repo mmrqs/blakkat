@@ -7,23 +7,20 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 public class AlarmService extends Service {
+    private AlarmSendNotifs alarmSendNotifs = new AlarmSendNotifs();
 
-    AlarmSendNotifs alarmSendNotifs = new AlarmSendNotifs();
-    public void onCreate()
-    {
+    public void onCreate() {
         super.onCreate();
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId)
-    {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         alarmSendNotifs.setAlarm(this);
         return START_STICKY;
     }
 
     @Override
-    public void onStart(Intent intent, int startId)
-    {
+    public void onStart(Intent intent, int startId) {
         alarmSendNotifs.setAlarm(this);
     }
 

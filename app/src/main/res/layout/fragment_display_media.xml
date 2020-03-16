@@ -71,6 +71,7 @@
                 style="@style/Widget.AppCompat.RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:numStars="5"
                 android:stepSize="1" />
 
@@ -81,8 +82,8 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/displayFragment_recyclerView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 

@@ -19,9 +19,6 @@ import fr.efrei.android.blakkat.model.Record.UserRecord;
 import fr.efrei.android.blakkat.ui.views.SuggestionAdapter;
 
 public class HomeFragment extends Fragment {
-
-    private RecyclerView recyclerView;
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -32,8 +29,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        this.recyclerView = view.findViewById(R.id.recyclerView_home_suggestion);
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_home_suggestion);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         recyclerView.setAdapter(new SuggestionAdapter(SessionHelper.get(getResources()
                 .getString(R.string.user), UserRecord.class)));

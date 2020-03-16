@@ -54,7 +54,7 @@ public class ViewedMediasFragment extends Fragment {
     private Callback<Media> createNewCallback() {
         return new Callback<Media>() {
             @Override
-            public void onResponse(Call<Media> call, Response<Media> response) {
+            public void onResponse(@NonNull Call<Media> call, @NonNull Response<Media> response) {
                 if(response.body() != null) {
                     seen.add(response.body());
                     recyclerView.setAdapter(new MediaAdapter(seen, listener));
@@ -62,7 +62,7 @@ public class ViewedMediasFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Media> call, Throwable t) {
+            public void onFailure(@NonNull Call<Media> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 Log.e("Err", t.getLocalizedMessage());
             }

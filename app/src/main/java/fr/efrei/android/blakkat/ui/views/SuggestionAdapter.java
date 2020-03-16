@@ -1,5 +1,6 @@
 package fr.efrei.android.blakkat.ui.views;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.SuggestionHolder> {
-
     private List<SuggestionRecord> suggestions;
     private UserRecord userRecord;
 
@@ -49,7 +49,8 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
 
     public SuggestionAdapter(UserRecord userRecord) {
         this.userRecord = userRecord;
-        this.suggestions = SuggestionRecord.find(SuggestionRecord.class,"user_record = ?", String.valueOf(userRecord.getId()));
+        this.suggestions = SuggestionRecord.find(SuggestionRecord.class,
+                "user_record = ?", String.valueOf(userRecord.getId()));
     }
 
     @NonNull
@@ -60,6 +61,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
         return new SuggestionHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull SuggestionHolder holder, int position) {
         holder.textView.setText(suggestions.get(position).getMediaRecord().getTitle() +
@@ -79,25 +81,24 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
             SuggestionRecord actualSuggestion = suggestions.get(position);
 
             KeeperFactory.getKeeper().getProviderFor(actualSuggestion
-                    .getMediaRecord().getType()).getOne(actualSuggestion.getMediaRecord().getIdentifier()).enqueue(createNewCallback(holder, position));
+                    .getMediaRecord().getType()).getOne(actualSuggestion.getMediaRecord()
+                    .getIdentifier()).enqueue(createNewCallback(holder, position));
         });
     }
 
     private Callback<Media> createNewCallback(@NonNull SuggestionHolder holder, int position) {
         return new Callback<Media>() {
             @Override
-            public void onResponse(Call<Media> call, Response<Media> response) {
+            public void onResponse(@NonNull Call<Media> call, @NonNull Response<Media> response) {
                 if (response.body() != null) {
                     ProgressionRecord actualProgression =
-                            new ProgressionRecord(suggestions.get(position).getProgressionRecord().getProgressLevel1(),
-                                    suggestions.get(position).getProgressionRecord().getProgressLevel2());
+                            new ProgressionRecord(suggestions.get(position));
 
                     Media media = response.body();
-                    MediaRecord mr = MediaRecord.exists(media.getId(), media.getProviderHint());
-                    List<ProgressionRecord> listPossibleSuggestions = media.getPossibleSuggestion(userRecord,mr);
+                    MediaRecord mediaRecord = MediaRecord.exists(media.getId(), media.getProviderHint());
+                    List<ProgressionRecord> listPossibleSuggestions = media.getPossibleSuggestions(userRecord, mediaRecord);
 
-                    suggestions.get(position).getProgressionRecord().markViewed(userRecord, mr).save();
-
+                    suggestions.get(position).getProgressionRecord().markViewed(userRecord, mediaRecord).save();
                     suggestions.get(position).delete();
 
                     if (listPossibleSuggestions.size() > 0) {
@@ -126,7 +127,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
                 }
             }
             @Override
-            public void onFailure(Call<Media> call, Throwable t) {
+            public void onFailure(@NonNull Call<Media> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 Log.e("Err", t.getLocalizedMessage());
             }

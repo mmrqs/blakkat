@@ -3,6 +3,8 @@ package fr.efrei.android.blakkat.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -40,14 +42,16 @@ public abstract class Media implements Parcelable {
         parcel.writeList(this.getGenres());
     }
 
-    public List<ProgressionRecord> getPossibleSuggestion(UserRecord user, MediaRecord mr) {
-        List<ProgressionRecord> suggestions = this.getPossibleProgress();
-        Iterator<ProgressionRecord> it = suggestions.iterator();
+    public List<ProgressionRecord> getPossibleSuggestions(UserRecord user, MediaRecord mr) {
+        List<ProgressionRecord> possibleProgress = this.getPossibleProgress();
 
-        while(it.hasNext()) {
-            ProgressionRecord pr = it.next();
-            if(ProgressionRecord.exists(user, mr, pr.getProgressLevel1(), pr.getProgressLevel2()) != null) it.remove();
-        }
+        List<ProgressionRecord> progressMade = ProgressionRecord.find(ProgressionRecord.class,
+                "user_record = ? and media_record = ?",
+                user.getId().toString(), mr.getId().toString());
+
+        List<ProgressionRecord> suggestions = new ArrayList<>(possibleProgress);
+        suggestions.removeAll(progressMade);
+
         return suggestions;
     }
 

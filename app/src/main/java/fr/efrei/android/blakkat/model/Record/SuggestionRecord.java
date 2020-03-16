@@ -3,14 +3,19 @@ package fr.efrei.android.blakkat.model.Record;
 import com.orm.SugarRecord;
 
 import java.util.List;
+import java.util.Objects;
 
 public class SuggestionRecord extends SugarRecord {
-
     private UserRecord userRecord;
     private ProgressionRecord progressionRecord;
     private MediaRecord mediaRecord;
 
     public SuggestionRecord() {}
+
+    public SuggestionRecord(UserRecord userRecord, MediaRecord mediaRecord) {
+        this.userRecord = userRecord;
+        this.mediaRecord = mediaRecord;
+    }
 
     public MediaRecord getMediaRecord() {
         return mediaRecord;

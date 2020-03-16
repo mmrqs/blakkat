@@ -78,18 +78,19 @@ public class DisplayMediaFragment extends Fragment {
 
     /**
      * Creates a {@link Callback} to the request of the displayed media
-     * @return
+     * @return TODO
      */
     private Callback<Media> createNewCallBack() {
         return new Callback<Media>() {
             @Override
-            public void onResponse(Call<Media> call, Response<Media> response) {
+            public void onResponse(@NonNull Call<Media> call, @NonNull Response<Media> response) {
                 displayedMedia = response.body();
                 listener.onMediaLoaded(displayedMedia);
                 refreshGraphicalComponent();
             }
+
             @Override
-            public void onFailure(Call<Media> call, Throwable t) {
+            public void onFailure(@NonNull Call<Media> call, @NonNull Throwable t) {
                 Log.e("", t.toString());
             }
         };

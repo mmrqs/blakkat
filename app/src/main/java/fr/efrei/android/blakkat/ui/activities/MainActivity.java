@@ -62,8 +62,6 @@ public class MainActivity extends AppCompatActivity
                 Toaster.burn(this, "Error");
                 return false;
         }
-
-
     }
 
     /**

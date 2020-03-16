@@ -19,27 +19,23 @@ public class AlarmSendNotifs extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
         Intent goToBlakkat = new Intent(context, LoginActivity.class);
         goToBlakkat.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, goToBlakkat, 0);
 
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo_blakkat_dark)
                 .setContentTitle("Blakkat")
-                .setContentText("Hey! De nouveaux médias vu? Viens les enregistrer :)")
+                .setContentText("Hey! Have you seen anything lately ? :)")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(NOTIFICATION_ID, builder.build());
-
     }
 
-    public void setAlarm(Context context)
-    {
+    public void setAlarm(Context context) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, AlarmSendNotifs.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);

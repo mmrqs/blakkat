@@ -82,7 +82,7 @@ public class SearchMediasFragment extends Fragment {
     private Callback<List<Media>> createNewCallback() {
         return new Callback<List<Media>>() {
             @Override
-            public void onResponse(Call<List<Media>> call, Response<List<Media>> response) {
+            public void onResponse(@NonNull Call<List<Media>> call, @NonNull Response<List<Media>> response) {
                 if(response.body() != null) {
                     results.addAll(response.body());
                     adapter = new MediaAdapter(results, displayActionsListener);
@@ -90,7 +90,7 @@ public class SearchMediasFragment extends Fragment {
                 }
             }
             @Override
-            public void onFailure(Call<List<Media>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Media>> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 Log.e("Err", t.getLocalizedMessage());
             }

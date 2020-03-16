@@ -4,6 +4,7 @@ import com.orm.SugarRecord;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class ProgressionRecord extends SugarRecord {
     private UserRecord userRecord;
@@ -17,6 +18,11 @@ public class ProgressionRecord extends SugarRecord {
     public ProgressionRecord(Integer progressLevel1, Integer progressLevel2) {
         this.progressLevel1 = progressLevel1;
         this.progressLevel2 = progressLevel2;
+    }
+
+    public ProgressionRecord(SuggestionRecord suggestionRecord) {
+        this.progressLevel1 = suggestionRecord.getProgressionRecord().getProgressLevel1();
+        this.progressLevel2 = suggestionRecord.getProgressionRecord().getProgressLevel2();
     }
 
     public UserRecord getUserRecord() {
@@ -72,12 +78,15 @@ public class ProgressionRecord extends SugarRecord {
 
     @Override
     public boolean equals(Object o) {
-        if (o == this) return true;
-        if (!(o instanceof ProgressionRecord)) return false;
-        ProgressionRecord c = (ProgressionRecord) o;
-        return this.progressLevel2 == c.progressLevel2
-                && progressLevel1 == c.progressLevel1
-                && userRecord == c.userRecord
-                && mediaRecord == c.mediaRecord;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProgressionRecord that = (ProgressionRecord) o;
+        return Objects.equals(progressLevel1, that.progressLevel1) &&
+                Objects.equals(progressLevel2, that.progressLevel2);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userRecord, mediaRecord, progressLevel1, progressLevel2, made);
     }
 }

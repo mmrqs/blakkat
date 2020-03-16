@@ -70,7 +70,7 @@ public class Movie extends BetaSeriesModel<Movie> {
         }
     };
 
-    Movie(Parcel in) {
+    private Movie(Parcel in) {
         super(in);
     }
 }

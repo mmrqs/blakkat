@@ -73,50 +73,46 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             mediaRecord = MediaRecord.exists(media.getId(), media.getProviderHint());
             latest = subject;
 
-            List<ProgressionRecord> listPossibleSuggestions;
-
             if(mediaRecord == null) {
                 mediaRecord = new MediaRecord(media);
                 mediaRecord.save();
-                listPossibleSuggestions = media.getPossibleSuggestion(userRecord, mediaRecord);
                 subject.markViewed(userRecord, mediaRecord).save();
-
             } else {
-                listPossibleSuggestions = media.getPossibleSuggestion(userRecord, mediaRecord);
                 if (subject.isViewed())
                     subject.markViewed(userRecord, mediaRecord).save();
                 else {
                     subject.delete();
 
-                    latest = Select.from(ProgressionRecord.class)
-                            .where(Condition.prop("user_record").eq(String.valueOf(userRecord.getId())),
-                                    Condition.prop("media_record").eq(String.valueOf(mediaRecord.getId()))).orderBy("made DESC").list().get(0);
+                    List<ProgressionRecord> madeProgress = Select.from(ProgressionRecord.class)
+                            .where(Condition.prop("user_record")
+                                            .eq(String.valueOf(userRecord.getId())),
+                                    Condition.prop("media_record")
+                                            .eq(String.valueOf(mediaRecord.getId())))
+                            .orderBy("made DESC").list();
+                    latest = madeProgress.size() > 0 ? madeProgress.get(0) : null;
                 }
             }
             this.changeButtonText(subject, holder);
+
+            List<ProgressionRecord> listPossibleSuggestions = media
+                    .getPossibleSuggestions(userRecord, mediaRecord);
 
             //SUGGESTION :
             //We watch if it exists a suggestion for this media :
             List<SuggestionRecord> r = SuggestionRecord.find(SuggestionRecord.class,
                     "user_record = ? and media_record = ?",
-                    String.valueOf(userRecord.getId()),
-                    String.valueOf(mediaRecord.getId()));
-            if(!r.isEmpty()) r.get(0).delete();
+                    userRecord.getId().toString(),
+                    mediaRecord.getId().toString());
 
-            if(listPossibleSuggestions.size() > 1) {
-                SuggestionRecord sr = new SuggestionRecord();
-                sr.setUserRecord(userRecord);
-                sr.setMediaRecord(mediaRecord);
+            if(!r.isEmpty())
+                r.get(0).delete();
 
-                if(listPossibleSuggestions.indexOf(latest) < listPossibleSuggestions.size()-1) {
-                    ProgressionRecord pp = listPossibleSuggestions.get(listPossibleSuggestions.indexOf(subject)+1);
-                    pp.save();
-                    sr.setProgressionRecord(pp);
-                } else {
-                    ProgressionRecord p = listPossibleSuggestions.get(0);
-                    p.save();
-                    sr.setProgressionRecord(p);
-                }
+            if(listPossibleSuggestions.size() > 0) {
+                SuggestionRecord sr = new SuggestionRecord(userRecord, mediaRecord);
+
+                ProgressionRecord p = listPossibleSuggestions.get(0);
+                p.save();
+                sr.setProgressionRecord(p);
                 sr.save();
             }
         });

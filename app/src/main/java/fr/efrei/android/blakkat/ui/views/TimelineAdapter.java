@@ -12,14 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import fr.efrei.android.blakkat.R;
-import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.model.Record.MediaRecord;
 import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
 
@@ -44,13 +41,12 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
         mediasSortedByDate = Select.from(ProgressionRecord.class)
                 .where(Condition.prop("user_record").eq(String.valueOf(userRecord.getId())))
                 .orderBy("made DESC").list().stream().collect(Collectors.groupingBy((s -> toString().format("%tD", s.getMade()))));
-        
+
     }
 
     @NonNull
     @Override
     public TimelineAdapter.TimelineHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //TODO
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cell_global_timeline, parent, false);
         return new TimelineAdapter.TimelineHolder(v);

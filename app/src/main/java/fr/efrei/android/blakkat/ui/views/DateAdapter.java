@@ -29,8 +29,8 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
         DateHolder(View vi) {
             super(vi);
             this.v = vi;
-            this.textView = vi.findViewById(R.id.title);
-            this.imageView = vi.findViewById(R.id.imageCard);
+            this.textView = vi.findViewById(R.id.title_timeline);
+            this.imageView = vi.findViewById(R.id.imageCard_timeline);
         }
     }
 
@@ -43,7 +43,7 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
     @Override
     public DateAdapter.DateHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_card_media, parent, false);
+                .inflate(R.layout.cell_card_timeline, parent, false);
         return new DateAdapter.DateHolder(v);
     }
 

@@ -2,7 +2,6 @@ package fr.efrei.android.blakkat.model.Record;
 
 import com.orm.SugarRecord;
 
-import java.util.Date;
 import java.util.List;
 
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;

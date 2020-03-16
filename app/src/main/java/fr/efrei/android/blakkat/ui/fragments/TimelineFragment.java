@@ -36,7 +36,6 @@ public class TimelineFragment extends Fragment {
 
         recyclerView.setAdapter(new TimelineAdapter(SessionHelper.get(getResources()
                 .getString(R.string.user), UserRecord.class)));
-
         return view;
     }
 

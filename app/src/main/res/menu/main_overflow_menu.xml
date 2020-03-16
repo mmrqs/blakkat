@@ -4,6 +4,10 @@
     <item android:id="@+id/action_settings"
         android:title="@string/main_menu_settings"
         app:showAsAction="never"/>
+    <item android:id="@+id/action_timeline"
+        android:icon="@drawable/ic_action_timeline"
+        android:title="action_timeline"
+        app:showAsAction="always"/>
     <item android:id="@+id/action_media_seen"
         android:icon="@drawable/ic_action_media_seen"
         android:title="action_media_seen"

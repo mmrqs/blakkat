@@ -11,8 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.orm.query.Condition;
+import com.orm.query.Select;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import fr.efrei.android.blakkat.R;
+import fr.efrei.android.blakkat.helpers.SessionHelper;
 import fr.efrei.android.blakkat.helpers.Toaster;
+import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
+import fr.efrei.android.blakkat.model.Record.UserRecord;
 
 public class SignInFragment extends Fragment {
     private SignInActionsListener signInActionsListener;

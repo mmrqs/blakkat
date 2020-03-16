@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        changeFragment(new HomeFragment());
+        changeFragment(new HomeFragment(), false);
     }
 
     @Override

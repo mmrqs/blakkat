@@ -38,8 +38,7 @@ public class AlarmSendNotifs extends BroadcastReceiver {
 
     }
 
-    public void setAlarm(Context context)
-    {
+    public void setAlarm(Context context) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, AlarmSendNotifs.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);

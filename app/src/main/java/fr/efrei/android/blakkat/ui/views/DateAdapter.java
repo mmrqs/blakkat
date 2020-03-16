@@ -44,15 +44,21 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
     public DateAdapter.DateHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cell_card_timeline, parent, false);
+
         return new DateAdapter.DateHolder(v);
     }
 
     @Override
     public void onBindViewHolder(DateAdapter.DateHolder holder, int position) {
 
-        holder.textView.setText(mediasSorted.get(position).getMediaRecord().getTitle() + " - " +
-                getLabelProgress(mediasSorted.get(position)));
+        String title = mediasSorted.get(position).getMediaRecord().getTitle();
+        if (title.length() > 15) {
+            title = title.substring(0, 15);
+            title += "...";
+        }
 
+        holder.textView.setText(title + " \n " +
+                getLabelProgress(mediasSorted.get(position)));
 
         if(mediasSorted.get(position).getMediaRecord().getUrl().isEmpty())
             holder.imageView.setImageResource(R.drawable.question_mark);
@@ -63,7 +69,6 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
                     .error(R.drawable.question_mark)
                     .centerCrop().fit()
                     .into(holder.imageView);
-
     }
 
     @Override
@@ -74,8 +79,8 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
     private String getLabelProgress(ProgressionRecord p) {
         String s = "";
         if (p.getProgressLevel1() != 0)
-            s += "Season : " + p.getProgressLevel1();
-        s += " Episode : " + p.getProgressLevel2();
+            s += "S" + p.getProgressLevel1();
+        s += " Ep" + p.getProgressLevel2();
         return s;
     }
 }

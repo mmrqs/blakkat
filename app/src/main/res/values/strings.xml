@@ -20,6 +20,7 @@
     <string name="pseudo_welcome">Welcome, %1$s !</string>
     <string name="pseudo_wrong">Wrong pseudo</string>
     <string name="pseudo_exists">This pseudo already exists</string>
+    <string name="pseudo_invalid">Invalid pseudo</string>
     <string name="pseudo_created">Be welcomed here forever, O secretary %1$s</string>
     <string name="title_activity_login">LoginActivity</string>
     <!-- Strings used for fragments for navigation -->

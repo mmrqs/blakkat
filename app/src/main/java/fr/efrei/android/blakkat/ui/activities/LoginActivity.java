@@ -39,16 +39,18 @@ public class LoginActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onSignUp(String pseudo) {
-        if(UserRecord.exists(pseudo) == null) {
+    public String onSignUp(String pseudo) {
+        if(pseudo.equals("")) {
+            return getResources().getString(R.string.pseudo_invalid);
+        } else if (UserRecord.exists(pseudo) == null) {
             UserRecord current = new UserRecord(pseudo);
             current.save();
-
             changeSignFragment(new SignInFragment());
-            return true;
+            return null;
         }
-        return false;
+        return getResources().getString(R.string.pseudo_exists);
     }
+
 
     @Override
     public void onSignUpRequest() {

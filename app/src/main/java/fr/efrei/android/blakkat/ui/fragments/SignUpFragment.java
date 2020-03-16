@@ -57,12 +57,12 @@ public class SignUpFragment extends Fragment {
      * @param pseudo provided pseudo
      */
     private void signUp(String pseudo) {
-        if(signUpActionsListener.onSignUp(pseudo))
+        String message = signUpActionsListener.onSignUp(pseudo);
+        if (message == null)
             Toaster.toast(this.getContext(), String.format(getResources()
-                            .getString(R.string.pseudo_created), pseudo));
+                    .getString(R.string.pseudo_created), pseudo));
         else
-            editTextPseudo.setError(getResources()
-                    .getString(R.string.pseudo_exists));
+            editTextPseudo.setError(message);
     }
 
     /**
@@ -76,7 +76,7 @@ public class SignUpFragment extends Fragment {
      * Allows to communicate the pseudo of the user trying to connect to the activity
      */
     public interface SignUpActionsListener {
-        boolean onSignUp(String pseudo);
+        String onSignUp(String pseudo);
         void onSignInRequest();
     }
 }

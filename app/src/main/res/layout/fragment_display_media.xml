@@ -7,7 +7,7 @@
     tools:context=".ui.fragments.DisplayMediaFragment">
 
     <LinearLayout
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
@@ -48,23 +48,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:padding="10dp">
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/time"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/genre"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/synopsis"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/display_textView_synopsis" />
+                android:gravity="center"/>
 
             <RatingBar
                 android:id="@+id/displayMedia_ratingBar"
@@ -75,10 +79,30 @@
                 android:numStars="5"
                 android:stepSize="1" />
 
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/synopsis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/display_textView_synopsis"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/SynopsisContent_Display"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/displayFragment_recyclerView"

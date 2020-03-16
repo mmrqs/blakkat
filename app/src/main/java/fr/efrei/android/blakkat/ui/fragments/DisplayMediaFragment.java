@@ -126,7 +126,7 @@ public class DisplayMediaFragment extends Fragment {
                 .setText(displayedMedia.getTitle());
 
         ((TextView)view.findViewById(R.id.time))
-                .setText(displayedMedia.getReleaseDate().toString());
+                .setText(toString().format("%tD", displayedMedia.getReleaseDate()));
 
         ((TextView)view.findViewById(R.id.genre))
                 .setText(getResources().getString(R.string.loading_text));

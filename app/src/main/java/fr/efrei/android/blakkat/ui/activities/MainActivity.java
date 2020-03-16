@@ -13,14 +13,16 @@ import android.view.MenuItem;
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.helpers.Toaster;
 import fr.efrei.android.blakkat.ui.fragments.DisplayMediaFragment;
+import fr.efrei.android.blakkat.ui.fragments.HomeFragment;
 import fr.efrei.android.blakkat.ui.fragments.SearchMediasFragment;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.ui.fragments.ViewedMediasFragment;
 import fr.efrei.android.blakkat.ui.views.MediaAdapter;
 
 public class MainActivity extends AppCompatActivity
-        implements SearchMediasFragment.SearchActionsListener, MediaAdapter.DisplayActionsListener,
+        implements MediaAdapter.DisplayActionsListener,
         DisplayMediaFragment.MediaLoadedListener {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +31,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        changeFragment(new SearchMediasFragment(), false);
+        changeFragment(new HomeFragment());
     }
 
     @Override
@@ -41,23 +42,28 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) {
-            startActivity(new Intent(new Intent(this, SettingsActivity.class)));
-            return true;
-        } else if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
+        switch(item.getItemId()) {
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case R.id.action_search:
+                changeFragment(new SearchMediasFragment());
+                return true;
+            case R.id.action_home:
+                changeFragment(new HomeFragment());
+                return true;
+            case R.id.action_media_seen:
+                changeFragment(new ViewedMediasFragment());
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                Toaster.burn(this, "Error");
+                return false;
         }
-        Toaster.burn(this, "lol");
-        return false;
-    }
 
-    /**
-     * Displays a new {@link ViewedMediasFragment}
-     */
-    @Override
-    public void onViewedRequest() {
-        changeFragment(new ViewedMediasFragment());
+
     }
 
     /**

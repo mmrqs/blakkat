@@ -8,12 +8,14 @@ import java.util.List;
 public class UserRecord extends SugarRecord {
     private String pseudo;
     private boolean eighteen;
+    private boolean enableNotifs;
 
     public UserRecord() {}
 
     public UserRecord(String pseudo) {
         this.pseudo = pseudo;
         this.eighteen = false;
+        this.enableNotifs = false;
     }
 
     public String getPseudo() {
@@ -56,5 +58,13 @@ public class UserRecord extends SugarRecord {
 
     public static UserRecord exists(String pseudo) {
         return getMatching("pseudo = ?", pseudo);
+    }
+
+    public boolean isEnableNotifs() {
+        return enableNotifs;
+    }
+
+    public void setEnableNotifs(boolean enableNotifs) {
+        this.enableNotifs = enableNotifs;
     }
 }

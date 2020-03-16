@@ -37,12 +37,12 @@ public class Movie extends BetaSeriesModel<Movie> {
     }
 
     @Override
-    public String getProgressLevel1Label() {
+    public String getProgressLevel2Label() {
         return "Film";
     }
 
     @Override
-    public String getProgressLevel2Label() {
+    public String getProgressLevel1Label() {
         return null;
     }
 

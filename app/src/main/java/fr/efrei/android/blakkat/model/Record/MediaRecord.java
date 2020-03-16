@@ -12,6 +12,8 @@ import retrofit2.Call;
 public class MediaRecord extends SugarRecord {
     private int identifier;
     private String type;
+    private String title;
+    private String url;
 
     /**
      * Classes extending {@link SugarRecord} must have an empty constructor
@@ -25,6 +27,8 @@ public class MediaRecord extends SugarRecord {
     public MediaRecord(Media m) {
         this.identifier = m.getId();
         this.type = m.getProviderHint();
+        this.title = m.getTitle();
+        this.url = m.getImageUrl();
     }
 
     /**
@@ -67,5 +71,21 @@ public class MediaRecord extends SugarRecord {
         return KeeperFactory.getKeeper()
                 .getProviderFor(this.type)
                 .getOne(this.identifier);
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

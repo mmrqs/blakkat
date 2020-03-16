@@ -1,7 +1,6 @@
 package fr.efrei.android.blakkat.ui.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +22,7 @@ public class LoginActivity extends AppCompatActivity
         SessionHelper.setupPreferences(getPreferences(MODE_PRIVATE));
         setContentView(R.layout.activity_login);
         changeSignFragment(new SignInFragment());
+
     }
 
     @Override

@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.efrei.android.blakkat.R;
-import fr.efrei.android.blakkat.consuming.providers.Keeper;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.ui.views.MediaAdapter;
@@ -53,7 +52,7 @@ public class SearchMediasFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        SearchView searchBar = view.findViewById(R.id.searchBar);
+        SearchView searchBar = view.findViewById(R.id.searchMedias_searchBar);
         searchBar.setOnQueryTextListener(createNewQueryTextListener(searchBar));
 
         return view;
@@ -63,9 +62,9 @@ public class SearchMediasFragment extends Fragment {
         return new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                searchBar.clearFocus();
                 results = new ArrayList<>();
                 String textSearched = searchBar.getQuery().toString();
-                searchBar.clearFocus();
 
                 KeeperFactory.getKeeper().getProviders()
                         .forEach(p -> p.searchForNbResults(textSearched,5)

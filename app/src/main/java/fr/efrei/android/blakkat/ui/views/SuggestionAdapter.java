@@ -57,7 +57,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
     @Override
     public SuggestionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cell_progression_card, parent, false);
+                .inflate(R.layout.view_card_suggestion, parent, false);
         return new SuggestionHolder(v);
     }
 

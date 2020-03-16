@@ -13,8 +13,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.orm.query.Condition;
+import com.orm.query.Select;
+
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.helpers.SessionHelper;
+import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
 import fr.efrei.android.blakkat.ui.views.SuggestionAdapter;
 

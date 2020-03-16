@@ -18,6 +18,7 @@ import fr.efrei.android.blakkat.ui.fragments.DisplayMediaFragment;
 import fr.efrei.android.blakkat.ui.fragments.HomeFragment;
 import fr.efrei.android.blakkat.ui.fragments.SearchMediasFragment;
 import fr.efrei.android.blakkat.model.Media;
+import fr.efrei.android.blakkat.ui.fragments.TimelineFragment;
 import fr.efrei.android.blakkat.ui.fragments.ViewedMediasFragment;
 import fr.efrei.android.blakkat.ui.views.MediaAdapter;
 
@@ -60,6 +61,9 @@ public class MainActivity extends AppCompatActivity
                 return true;
             case android.R.id.home:
                 onBackPressed();
+                return true;
+            case R.id.action_timeline:
+                changeFragment(new TimelineFragment());
                 return true;
             default:
                 Toaster.burn(this, "Error");

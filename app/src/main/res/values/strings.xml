@@ -62,4 +62,8 @@
     <string name="notification_mode_activated">Notifications activated</string>
     <string name="notification_mode_desactivated">Notifications desactivated</string>
     <string name="mark_as_viewed">Mark as Viewed</string>
+    <string name="searchMedias_checkBox_animes">Animes</string>
+    <string name="searchMedias_checkBox_mangas">Mangas</string>
+    <string name="searchMedias_checkBox_movies">Movies</string>
+    <string name="searchMedias_checkBox_shows">Shows</string>
 </resources>

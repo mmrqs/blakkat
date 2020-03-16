@@ -12,13 +12,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.SearchView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import fr.efrei.android.blakkat.R;
+import fr.efrei.android.blakkat.consuming.providers.IProvider;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
+import fr.efrei.android.blakkat.model.Anime;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.ui.views.MediaAdapter;
 import retrofit2.Call;
@@ -30,6 +34,11 @@ public class SearchMediasFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private ArrayList<Media> results;
+
+    private CheckBox animesCheckBox;
+    private CheckBox mangasCheckbox;
+    private CheckBox moviesCheckbox;
+    private CheckBox showsCheckbox;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -46,6 +55,8 @@ public class SearchMediasFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_medias, container, false);
 
+        initRegistry(view);
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
 
@@ -58,6 +69,13 @@ public class SearchMediasFragment extends Fragment {
         return view;
     }
 
+    private void initRegistry(View view) {
+        animesCheckBox = view.findViewById(R.id.searchMedias_checkBox_animes);
+        mangasCheckbox = view.findViewById(R.id.searchMedias_checkBox_mangas);
+        moviesCheckbox = view.findViewById(R.id.searchMedias_checkBox_movies);
+        showsCheckbox = view.findViewById(R.id.searchMedias_checkBox_shows);
+    }
+
     private SearchView.OnQueryTextListener createNewQueryTextListener(SearchView searchBar) {
         return new SearchView.OnQueryTextListener() {
             @Override
@@ -66,7 +84,7 @@ public class SearchMediasFragment extends Fragment {
                 results = new ArrayList<>();
                 String textSearched = searchBar.getQuery().toString();
 
-                KeeperFactory.getKeeper().getProviders()
+                getNonExcludedProviders()
                         .forEach(p -> p.searchForNbResults(textSearched,5)
                                 .enqueue(createNewCallback()));
 
@@ -95,5 +113,22 @@ public class SearchMediasFragment extends Fragment {
                 Log.e("Err", t.getLocalizedMessage());
             }
         };
+    }
+
+    private List<IProvider> getNonExcludedProviders() {
+        ArrayList<IProvider> includedProviders = new ArrayList<>();
+        if(animesCheckBox.isChecked()) {
+            includedProviders.add(KeeperFactory.getKeeper().getAnimeProvider());
+        }
+        if(mangasCheckbox.isChecked()) {
+            includedProviders.add(KeeperFactory.getKeeper().getMangaProvider());
+        }
+        if(moviesCheckbox.isChecked()) {
+            includedProviders.add(KeeperFactory.getKeeper().getMovieProvider());
+        }
+        if(showsCheckbox.isChecked()) {
+            includedProviders.add(KeeperFactory.getKeeper().getShowProvider());
+        }
+        return includedProviders;
     }
 }

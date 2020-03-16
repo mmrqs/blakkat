@@ -18,7 +18,46 @@
         <SearchView
             android:id="@+id/searchMedias_searchBar"
             android:layout_width="match_parent"
-            android:layout_height="58dp" />
+            android:layout_height="58dp" >
+
+        </SearchView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/searchMedias_checkBox_animes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/searchMedias_checkBox_animes" />
+
+            <CheckBox
+                android:id="@+id/searchMedias_checkBox_mangas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/searchMedias_checkBox_mangas" />
+
+            <CheckBox
+                android:id="@+id/searchMedias_checkBox_movies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/searchMedias_checkBox_movies" />
+
+            <CheckBox
+                android:id="@+id/searchMedias_checkBox_shows"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/searchMedias_checkBox_shows" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/resultSearch"
@@ -29,8 +68,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
         </LinearLayout>
 

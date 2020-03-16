@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import fr.efrei.android.blakkat.R;
+import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
+import fr.efrei.android.blakkat.helpers.SessionHelper;
 import fr.efrei.android.blakkat.helpers.Toaster;
 import fr.efrei.android.blakkat.ui.fragments.DisplayMediaFragment;
 import fr.efrei.android.blakkat.ui.fragments.HomeFragment;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         changeFragment(new HomeFragment(), false);
     }
 

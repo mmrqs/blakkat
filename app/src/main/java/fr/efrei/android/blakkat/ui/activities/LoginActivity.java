@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import fr.efrei.android.blakkat.R;
+import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
 import fr.efrei.android.blakkat.helpers.SessionHelper;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
 import fr.efrei.android.blakkat.ui.fragments.SignInFragment;
@@ -22,7 +23,6 @@ public class LoginActivity extends AppCompatActivity
         SessionHelper.setupPreferences(getPreferences(MODE_PRIVATE));
         setContentView(R.layout.activity_login);
         changeSignFragment(new SignInFragment());
-
     }
 
     @Override
@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity
         UserRecord u = UserRecord.exists(pseudo);
         if(u != null) {
             SessionHelper.save(getResources().getString(R.string.user), u);
+            KeeperFactory.configureFactory(u.isEighteen());
 
             this.startActivity(new Intent(this, MainActivity.class));
             return true;

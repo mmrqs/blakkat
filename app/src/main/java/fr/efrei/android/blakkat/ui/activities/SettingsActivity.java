@@ -53,11 +53,11 @@ public class SettingsActivity extends AppCompatActivity {
 
         ((Switch)findViewById(R.id.notifications))
                 .setOnCheckedChangeListener((buttonView, isChecked) -> {
-                    if(isChecked) {
+                    if(isChecked)
                         createNotificationChannel();
-                    } else {
+                    else
                         deleteNotificationChannel();
-                    }
+
                     currentUser.setEnableNotifs(isChecked);
                     currentUser.save();
                     SessionHelper.save(getResources()

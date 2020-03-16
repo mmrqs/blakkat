@@ -1,6 +1,7 @@
 package fr.efrei.android.blakkat.consuming.providers;
 
 import fr.efrei.android.blakkat.consuming.converters.WrapperConverter;
+import fr.efrei.android.blakkat.model.Record.UserRecord;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -15,8 +16,8 @@ public class KeeperFactory {
     private static final String BETA_SERIES_URL = "https://api.betaseries.com/";
     private static final String JIKAN_URL = "https://api.jikan.moe/v3/";
     private static final String JIKAN_FILTER = "12,9,44"; //ecchi, hentai, dojinshi
-    private static boolean eighteen = true;
 
+    private static boolean eighteen;
     private static Keeper instance;
 
     private static Keeper createKeeper() {
@@ -40,6 +41,10 @@ public class KeeperFactory {
         if (instance == null)
             instance = createKeeper();
         return instance;
+    }
+
+    public static void configureFactory(boolean isEighteen) {
+        eighteen = isEighteen;
     }
 
     /**

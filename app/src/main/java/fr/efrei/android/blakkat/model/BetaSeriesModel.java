@@ -38,7 +38,7 @@ public abstract class BetaSeriesModel<T extends Media> extends Media {
     public float getPublicScore() {
         if(this.score == null)
             this.score = this.notes.mean;
-        return score;
+        return score / 5;
     }
 
     private static final class ScoreBundle {

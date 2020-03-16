@@ -41,7 +41,8 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
             this.medias = medias.stream().sorted(Comparator.comparing(Media::getTitle))
                     .collect(Collectors.toList());
         } else {
-            this.medias = medias.stream().sorted(Comparator.comparing(Media::getPublicScore))
+            this.medias = medias.stream().sorted(Comparator.comparing(Media::getPublicScore)
+                    .reversed())
                     .collect(Collectors.toList());
         }
         this.displayActionsListener = displayActionsListener;
@@ -59,7 +60,8 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
     @Override
     public void onBindViewHolder(MediaHolder holder, int position) {
         holder.textView.setText(medias.get(position).getTitle() +
-                " – " + medias.get(position).getProviderHint());
+                " – " + medias.get(position).getProviderHint() +
+                " - " + medias.get(position).getPublicScore());
 
         if(medias.get(position).getImageUrl().isEmpty())
             holder.imageView.setImageResource(R.drawable.question_mark);

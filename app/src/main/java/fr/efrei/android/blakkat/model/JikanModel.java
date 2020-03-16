@@ -40,7 +40,7 @@ public abstract class JikanModel<T extends Media> extends Media {
 
     @Override
     public float getPublicScore() {
-        return score;
+        return score / 10;
     }
 
     @Override

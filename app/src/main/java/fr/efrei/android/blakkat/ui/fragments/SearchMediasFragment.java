@@ -63,6 +63,12 @@ public class SearchMediasFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
+        ((Switch)view.findViewById(R.id.searchMedias_switch))
+                .setOnCheckedChangeListener((buttonView, isChecked) ->
+                        buttonView.setText(isChecked ?
+                                getResources().getString(R.string.searchMedias_switch_title) :
+                                getResources().getString(R.string.searchMedias_switch_score)));
+
         SearchView searchBar = view.findViewById(R.id.searchMedias_searchBar);
         searchBar.setOnQueryTextListener(createNewQueryTextListener(searchBar));
 

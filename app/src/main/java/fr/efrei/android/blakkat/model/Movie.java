@@ -56,7 +56,7 @@ public class Movie extends BetaSeriesModel<Movie> {
     @Override
     public List<ProgressionRecord> getPossibleProgress() {
         List<ProgressionRecord> records = new ArrayList<>();
-        records.add(new ProgressionRecord(1, 0));
+        records.add(new ProgressionRecord(0, 1));
         return records;
     }
 

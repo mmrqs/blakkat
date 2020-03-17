@@ -15,6 +15,10 @@ public class Movie extends BetaSeriesModel<Movie> {
     private ArrayList<String> genres;
     private String poster;
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public Date getReleaseDate() {
         if(releaseDate == null)
@@ -29,6 +33,10 @@ public class Movie extends BetaSeriesModel<Movie> {
         return description;
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public String getImageUrl() {
         if(this.imageUrl == null)
@@ -36,11 +44,19 @@ public class Movie extends BetaSeriesModel<Movie> {
         return imageUrl;
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public String getProgressLevel2Label() {
         return "Film";
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public String getProgressLevel1Label() {
         return null;
@@ -53,6 +69,10 @@ public class Movie extends BetaSeriesModel<Movie> {
         return this.centralizedGenres;
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public List<ProgressionRecord> getPossibleProgress() {
         List<ProgressionRecord> records = new ArrayList<>();

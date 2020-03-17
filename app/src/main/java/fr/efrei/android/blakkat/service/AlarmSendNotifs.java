@@ -13,10 +13,18 @@ import androidx.core.app.NotificationManagerCompat;
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.ui.activities.LoginActivity;
 
+/**
+ * Send a notification to the user
+ */
 public class AlarmSendNotifs extends BroadcastReceiver {
     private static final int NOTIFICATION_ID = 666;
     public static final String CHANNEL_ID = "channel_notifs_blakkat";
 
+    /**
+     * Build the notification and notify the user through a channel created
+     * @param context
+     * @param intent
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent goToBlakkat = new Intent(context, LoginActivity.class);
@@ -35,6 +43,10 @@ public class AlarmSendNotifs extends BroadcastReceiver {
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
+    /**
+     * Set the timer for the alarm
+     * @param context
+     */
     public void setAlarm(Context context) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, AlarmSendNotifs.class);

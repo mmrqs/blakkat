@@ -6,9 +6,12 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
+/**
+ * Service for our alarm sending notifications
+ */
 public class AlarmService extends Service {
     private AlarmSendNotifs alarmSendNotifs = new AlarmSendNotifs();
-
+    
     public void onCreate() {
         super.onCreate();
     }

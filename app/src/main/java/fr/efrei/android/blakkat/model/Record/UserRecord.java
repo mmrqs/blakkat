@@ -10,8 +10,15 @@ public class UserRecord extends SugarRecord {
     private boolean eighteen;
     private boolean enableNotifs;
 
+    /**
+     * Classes extending {@link SugarRecord} must have an empty constructor
+     */
     public UserRecord() {}
 
+    /**
+     * Creates a {@link UserRecord} from a Pseudo with a string type
+     * It doesn’t check the existence of the record in the database !
+     */
     public UserRecord(String pseudo) {
         this.pseudo = pseudo;
         this.eighteen = false;
@@ -56,14 +63,27 @@ public class UserRecord extends SugarRecord {
                 .filter(c -> c == '?').count();
     }
 
+    /**
+     * Check the existence of a {@link UserRecord} with the specified Pseudo
+     * @param pseudo String
+     * @return the matching {@link UserRecord}
+     */
     public static UserRecord exists(String pseudo) {
         return getMatching("pseudo = ?", pseudo);
     }
 
+    /**
+     * Returns if user agrees to receive notifications
+     * @return true if user agrees to receive notifications, false otherwise
+     */
     public boolean isEnableNotifs() {
         return enableNotifs;
     }
 
+    /**
+     *
+     * @param enableNotifs a boolean
+     */
     public void setEnableNotifs(boolean enableNotifs) {
         this.enableNotifs = enableNotifs;
     }

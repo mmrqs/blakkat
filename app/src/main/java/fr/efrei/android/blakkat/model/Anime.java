@@ -13,17 +13,29 @@ public class Anime extends JikanModel<Anime> {
     private DateBundle aired;
     private int episodes;
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public Date getReleaseDate() {
         return start_date == null ?
                 aired.from : start_date;
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public String getProgressLevel2Label() {
         return "Episode";
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public List<ProgressionRecord> getPossibleProgress() {
         if(records == null) {
@@ -33,7 +45,7 @@ public class Anime extends JikanModel<Anime> {
         }
         return records;
     }
-
+    
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Anime createFromParcel(Parcel in) {
             return new Anime(in);

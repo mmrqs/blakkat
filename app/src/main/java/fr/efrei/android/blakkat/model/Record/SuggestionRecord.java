@@ -10,8 +10,15 @@ public class SuggestionRecord extends SugarRecord {
     private ProgressionRecord progressionRecord;
     private MediaRecord mediaRecord;
 
+    /**
+     * Classes extending {@link SugarRecord} must have an empty constructor
+     */
     public SuggestionRecord() {}
 
+    /**
+     * Creates a {@link SuggestionRecord} from a {@link UserRecord} and a {@link MediaRecord}
+     * It doesn’t check the existence of the record in the database !
+     */
     public SuggestionRecord(UserRecord userRecord, MediaRecord mediaRecord) {
         this.userRecord = userRecord;
         this.mediaRecord = mediaRecord;
@@ -23,10 +30,6 @@ public class SuggestionRecord extends SugarRecord {
 
     public void setMediaRecord(MediaRecord mediaRecord) {
         this.mediaRecord = mediaRecord;
-    }
-
-    public UserRecord getUserRecord() {
-        return userRecord;
     }
 
     public void setUserRecord(UserRecord userRecord) {
@@ -41,6 +44,14 @@ public class SuggestionRecord extends SugarRecord {
         this.progressionRecord = progressionRecord;
     }
 
+    /**
+     * Check the existence of a {@link SuggestionRecord} with the specified {@link UserRecord} and
+     * a {@link ProgressionRecord} and a {@link MediaRecord}
+     * @param u {@link UserRecord}
+     * @param pr {@link ProgressionRecord}
+     * @param mr {@link MediaRecord}
+     * @return the matching {@link SuggestionRecord}
+     */
     public static SuggestionRecord exists(UserRecord u, ProgressionRecord pr, MediaRecord mr) {
         List<SuggestionRecord> res = SuggestionRecord.find(SuggestionRecord.class,
                 "user_record = ? and progression_record = ? and media_record = ?",

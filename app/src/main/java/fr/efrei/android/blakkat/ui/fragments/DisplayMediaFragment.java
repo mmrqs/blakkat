@@ -18,10 +18,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.Objects;
-
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
+import fr.efrei.android.blakkat.helpers.DateHelper;
 import fr.efrei.android.blakkat.helpers.SessionHelper;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.model.Record.RatingRecord;
@@ -126,7 +125,7 @@ public class DisplayMediaFragment extends Fragment {
                 .setText(displayedMedia.getTitle());
 
         ((TextView)view.findViewById(R.id.time))
-                .setText(displayedMedia.getReleaseDate().toString());
+                .setText(DateHelper.format(displayedMedia.getReleaseDate()));
 
         ((TextView)view.findViewById(R.id.genre))
                 .setText(getResources().getString(R.string.loading_text));

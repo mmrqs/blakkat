@@ -1,5 +1,6 @@
 package fr.efrei.android.blakkat.ui.views;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import fr.efrei.android.blakkat.R;
+import fr.efrei.android.blakkat.helpers.DateHelper;
 import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
 
@@ -37,12 +38,16 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
         }
     }
 
+    @SuppressLint("DefaultLocale")
     public TimelineAdapter(UserRecord u) {
         userRecord = u;
         mediasSortedByDate = Select.from(ProgressionRecord.class)
-                .where(Condition.prop("user_record").eq(String.valueOf(userRecord.getId())))
-                .orderBy("made DESC").list().stream().collect(Collectors.groupingBy((s -> toString().format("%tD", s.getMade()))));
-
+                .where(Condition.prop("user_record")
+                        .eq(String.valueOf(userRecord.getId())))
+                .orderBy("made ASC").list().stream()
+                .sorted((o1, o2) -> -o1.getMade().compareTo(o2.getMade()))
+                .collect(Collectors.groupingBy((pr -> DateHelper.format(pr.getMade()))));
+        ;
     }
 
     @NonNull
@@ -59,7 +64,8 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
         holder.textView.setText(date);
 
         recyclerView = holder.v.findViewById(R.id.recyclerview_date);
-        recyclerView.setLayoutManager(new LinearLayoutManager(holder.v.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(holder.v.getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(new DateAdapter(mediasSortedByDate.get(date), userRecord));
     }
 

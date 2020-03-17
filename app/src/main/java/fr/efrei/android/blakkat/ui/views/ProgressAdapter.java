@@ -15,6 +15,7 @@ import com.orm.query.Select;
 import java.util.List;
 
 import fr.efrei.android.blakkat.R;
+import fr.efrei.android.blakkat.helpers.DateHelper;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.model.Record.*;
 
@@ -128,7 +129,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
     private void changeButtonText(ProgressionRecord subject, ProgressHolder holder) {
         holder.seenButton.setText(subject.isViewed() ?
                 this.notViewed :
-                String.format(viewed, subject.getMade()));
+                DateHelper.format(viewed, subject.getMade()));
     }
 
     private String getLabelProgress(ProgressionRecord p) {

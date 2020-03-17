@@ -14,8 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.orm.query.Select;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;

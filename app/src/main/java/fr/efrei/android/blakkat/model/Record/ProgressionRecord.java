@@ -37,6 +37,10 @@ public class ProgressionRecord extends SugarRecord {
         this.progressLevel2 = suggestionRecord.getProgressionRecord().getProgressLevel2();
     }
 
+    public UserRecord getUserRecord() {
+        return userRecord;
+    }
+
     public MediaRecord getMediaRecord() {
         return mediaRecord;
     }

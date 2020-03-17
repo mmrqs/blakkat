@@ -113,7 +113,8 @@ public class DisplayMediaFragment extends Fragment {
     private void initImageView() {
         ImageView imageView = view.findViewById(R.id.imageCard_displayActivity);
         Picasso.with(imageView.getContext())
-                .load(displayedMedia.getImageUrl())
+                .load(displayedMedia.getImageUrl().isEmpty() ? null :
+                        displayedMedia.getImageUrl())
                 .placeholder(R.drawable.question_mark)
                 .error(R.drawable.question_mark)
                 .centerCrop().fit()
@@ -130,9 +131,9 @@ public class DisplayMediaFragment extends Fragment {
         ((TextView)view.findViewById(R.id.genre))
                 .setText(getResources().getString(R.string.loading_text));
 
-        String s = displayedMedia.getSynopsis() + getResources().getString(R.string.loading_text);
         ((TextView)view.findViewById(R.id.SynopsisContent_Display))
-                .setText(s);
+                .setText(String.format(getResources().getString(R.string.loading_text),
+                        displayedMedia.getSynopsis()));
     }
 
     private void initRecyclerProgress() {
@@ -176,7 +177,8 @@ public class DisplayMediaFragment extends Fragment {
      */
     private void refreshGraphicalComponent() {
         ((TextView)view.findViewById(R.id.genre))
-                .setText(displayedMedia.getGenres().toString());
+                .setText(displayedMedia.getGenres() == null ? "" :
+                        displayedMedia.getGenres().toString());
 
         ((TextView)view.findViewById(R.id.SynopsisContent_Display))
                 .setText(displayedMedia.getSynopsis());

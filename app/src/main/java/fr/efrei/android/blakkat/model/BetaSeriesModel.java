@@ -24,16 +24,29 @@ public abstract class BetaSeriesModel<T extends Media> extends Media {
 
     private ScoreBundle notes;
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public int getId() {
         return id;
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public String getTitle() {
         return title;
     }
 
+    /**
+     * {@inheritDoc}
+     * We divide the score by 5 to bring it back to 1
+     * @return
+     */
     @Override
     public float getPublicScore() {
         if(this.score == null)

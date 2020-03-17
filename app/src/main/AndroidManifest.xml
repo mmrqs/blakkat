@@ -29,6 +29,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.fragments.DisplayMediaFragment" />
         <activity android:name=".ui.fragments.SearchMediasFragment" />
+
         <!-- SugarORM -->
         <meta-data
             android:name="DATABASE"
@@ -51,17 +52,14 @@
         </activity>
 
         <!--Alarm notification : -->
-
         <receiver
             android:process=":remote"
             android:name=".service.AlarmSendNotifs" />
-
         <receiver android:name=".service.AutoStartAlarmNotifications">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <service
             android:name=".service.AlarmService"
             android:enabled="true"

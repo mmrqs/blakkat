@@ -16,18 +16,55 @@ import fr.efrei.android.blakkat.model.Record.UserRecord;
 public abstract class Media implements Parcelable {
     protected List<ProgressionRecord> records;
 
+    /**
+     * Return the Media type
+     * @return a string
+     */
     public String getProviderHint() {
         return this.getClass().getSimpleName();
     }
+
+    /**
+     *
+     * @return an integer representing the id of the media
+     */
     public abstract int getId();
     public abstract String getTitle();
+
+    /**
+     * return the media image
+     * @return
+     */
     public abstract String getImageUrl();
+
+    /**
+     * returns the date on which the media was published
+     * @return Date
+     */
     public abstract Date getReleaseDate();
     public abstract float getPublicScore();
     public abstract String getSynopsis();
     public abstract List<String> getGenres();
+
+    /**
+     *
+     * @return a list of {@link ProgressionRecord} which represents all the possible
+     * progressions for a given media
+     */
     public abstract List<ProgressionRecord> getPossibleProgress();
+
+    /**
+     * Get the label of the first level of progression
+     * @return a string representing the label of the first level of progression : season if it
+     * is a show, null otherwise
+     */
     public abstract String getProgressLevel1Label();
+
+    /**
+     * Get the label of the second level of progression
+     * @return a string representing the label of the second level of progression : episode if it is a
+     * show or an anime, volume if it is a manga.
+     */
     public abstract String getProgressLevel2Label();
 
     @Override
@@ -42,6 +79,12 @@ public abstract class Media implements Parcelable {
         parcel.writeList(this.getGenres());
     }
 
+    /**
+     * Return a list of possible suggestions for a given media according to user progress
+     * @param user {@link UserRecord}
+     * @param mr {@link MediaRecord}
+     * @return list of {@link ProgressionRecord}
+     */
     public List<ProgressionRecord> getPossibleSuggestions(UserRecord user, MediaRecord mr) {
         List<ProgressionRecord> possibleProgress = this.getPossibleProgress();
 

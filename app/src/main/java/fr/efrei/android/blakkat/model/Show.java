@@ -19,6 +19,10 @@ public class Show extends BetaSeriesModel<Show> {
     private ImageBundle images;
     private List<SeasonsBundle> seasons_details;
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public Date getReleaseDate() {
         if(releaseDate == null) {
@@ -43,16 +47,28 @@ public class Show extends BetaSeriesModel<Show> {
         return centralizedGenres;
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public String getProgressLevel1Label() {
         return "Season";
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public String getProgressLevel2Label() {
         return "Episode";
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public List<ProgressionRecord> getPossibleProgress() {
         if(records == null) {
@@ -66,6 +82,10 @@ public class Show extends BetaSeriesModel<Show> {
         return records;
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public String getImageUrl() {
         if(this.imageUrl == null)

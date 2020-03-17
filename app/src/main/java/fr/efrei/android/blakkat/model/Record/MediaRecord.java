@@ -80,11 +80,11 @@ public class MediaRecord extends SugarRecord {
         this.title = title;
     }
 
+    /**
+     *
+     * @return the URL of the picture associated with the media
+     */
     public String getUrl() {
         return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }

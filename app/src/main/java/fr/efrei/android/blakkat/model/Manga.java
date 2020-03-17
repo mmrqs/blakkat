@@ -24,6 +24,11 @@ public class Manga extends JikanModel<Manga> {
         return "Volume";
     }
 
+    /**
+     * Get all the possible progresses for a given manga, that is to say
+     * the list of all volumes published
+     * @return a List of {@link ProgressionRecord}
+     */
     @Override
     public List<ProgressionRecord> getPossibleProgress() {
         if(records == null) {

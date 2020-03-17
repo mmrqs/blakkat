@@ -48,6 +48,10 @@ public abstract class JikanModel<T extends Media> extends Media {
         return synopsis;
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public List<String> getGenres() {
         if(curatedGenres == null)

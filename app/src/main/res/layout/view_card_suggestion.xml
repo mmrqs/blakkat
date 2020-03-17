@@ -44,12 +44,5 @@
                 app:srcCompat="@drawable/ic_action_check_notviewed" />
         </LinearLayout>
 
-        <!--
-        <Button
-            android:id="@+id/seen_progression"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/mark_as_viewed" /> -->
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

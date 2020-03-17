@@ -24,11 +24,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
+                android:backgroundTint="#242323"
                 android:ems="10"
                 android:hint="@string/pseudo"
-                android:text="Pseudo"
-                android:inputType="textPersonName"
-                android:backgroundTint="#242323"/>
+                android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/signin_button_signin"

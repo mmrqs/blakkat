@@ -10,9 +10,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import fr.efrei.android.blakkat.R;
-import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
-import fr.efrei.android.blakkat.helpers.SessionHelper;
 import fr.efrei.android.blakkat.helpers.Toaster;
 import fr.efrei.android.blakkat.ui.fragments.DisplayMediaFragment;
 import fr.efrei.android.blakkat.ui.fragments.HomeFragment;
@@ -30,6 +30,31 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);;
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                item -> {
+                    switch (item.getItemId()) {
+                        case R.id.action_search:
+                            changeFragment(new SearchMediasFragment());
+                            return true;
+                        case R.id.action_home:
+                            changeFragment(new HomeFragment());
+                            return true;
+                        case R.id.action_media_seen:
+                            changeFragment(new ViewedMediasFragment());
+                            return true;
+                        case android.R.id.home:
+                            onBackPressed();
+                            return true;
+                        case R.id.action_timeline:
+                            changeFragment(new TimelineFragment());
+                            return true;
+                        default:
+                            Toaster.burn(this, "Error");
+                            return false;
+                    }
+                });
 
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -49,21 +74,6 @@ public class MainActivity extends AppCompatActivity
         switch(item.getItemId()) {
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            case R.id.action_search:
-                changeFragment(new SearchMediasFragment());
-                return true;
-            case R.id.action_home:
-                changeFragment(new HomeFragment());
-                return true;
-            case R.id.action_media_seen:
-                changeFragment(new ViewedMediasFragment());
-                return true;
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            case R.id.action_timeline:
-                changeFragment(new TimelineFragment());
                 return true;
             default:
                 Toaster.burn(this, "Error");

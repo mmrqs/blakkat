@@ -71,5 +71,6 @@
     <string name="searchMedias_switch_score">Get best results for score</string>
 
     <string name="date_timeline">Date</string>
+    <string name="action_timeline">action_timeline</string>
 
 </resources>

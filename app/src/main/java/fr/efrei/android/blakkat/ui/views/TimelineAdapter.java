@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,7 +24,8 @@ import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
 
 public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.TimelineHolder> {
-    private Map<String, List<ProgressionRecord>> mediasSortedByDate;
+    private Map<String, List<ProgressionRecord>> mediasGroupedByDate;
+    private String[] mediasKeys;
     private RecyclerView recyclerView;
     private UserRecord userRecord;
 
@@ -41,13 +43,16 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
     @SuppressLint("DefaultLocale")
     public TimelineAdapter(UserRecord u) {
         userRecord = u;
-        mediasSortedByDate = Select.from(ProgressionRecord.class)
+        mediasGroupedByDate = Select.from(ProgressionRecord.class)
                 .where(Condition.prop("user_record")
                         .eq(String.valueOf(userRecord.getId())))
-                .orderBy("made ASC").list().stream()
-                .sorted((o1, o2) -> -o1.getMade().compareTo(o2.getMade()))
-                .collect(Collectors.groupingBy((pr -> DateHelper.format(pr.getMade()))));
-        ;
+                .orderBy("made DESC").list().stream()
+                .collect(Collectors.groupingBy(pr -> DateHelper.formatInternational(pr.getMade())));
+        mediasKeys = mediasGroupedByDate.keySet()
+                .stream()
+                .sorted(Comparator.comparing(String::toString)
+                        .reversed())
+                .toArray(String[]::new);
     }
 
     @NonNull
@@ -60,17 +65,19 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
 
     @Override
     public void onBindViewHolder(TimelineAdapter.TimelineHolder holder, int position) {
-        String date = mediasSortedByDate.keySet().toArray()[position].toString();
-        holder.textView.setText(date);
+        String dateKey = mediasKeys[position];
+        holder.textView.setText(DateHelper
+                .format(mediasGroupedByDate.get(dateKey)
+                        .get(0).getMade()));
 
         recyclerView = holder.v.findViewById(R.id.recyclerview_date);
         recyclerView.setLayoutManager(new LinearLayoutManager(holder.v.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(new DateAdapter(mediasSortedByDate.get(date), userRecord));
+        recyclerView.setAdapter(new DateAdapter(mediasGroupedByDate.get(dateKey)));
     }
 
     @Override
     public int getItemCount() {
-        return mediasSortedByDate.size();
+        return mediasKeys.length;
     }
 }

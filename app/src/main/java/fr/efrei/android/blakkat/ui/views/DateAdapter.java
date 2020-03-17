@@ -1,5 +1,6 @@
 package fr.efrei.android.blakkat.ui.views;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,7 @@ import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
 
 public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
-    private List<ProgressionRecord> mediasSorted;
-    private UserRecord userRecord;
+    private List<ProgressionRecord> mediasGrouped;
 
     static class DateHolder extends RecyclerView.ViewHolder {
         TextView textView;
@@ -34,9 +34,8 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
         }
     }
 
-    public DateAdapter(List<ProgressionRecord> progressionsList, UserRecord u) {
-        mediasSorted = progressionsList;
-        userRecord = u;
+    public DateAdapter(List<ProgressionRecord> progressionsList) {
+        mediasGrouped = progressionsList;
     }
 
     @NonNull
@@ -48,23 +47,23 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
         return new DateAdapter.DateHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(DateAdapter.DateHolder holder, int position) {
-
-        String title = mediasSorted.get(position).getMediaRecord().getTitle();
+    public void onBindViewHolder(@NonNull DateAdapter.DateHolder holder, int position) {
+        String title = mediasGrouped.get(position).getMediaRecord().getTitle();
         if (title.length() > 15) {
             title = title.substring(0, 15);
             title += "...";
         }
 
         holder.textView.setText(title + " - " +
-                getLabelProgress(mediasSorted.get(position)));
+                getLabelProgress(mediasGrouped.get(position)));
 
-        if(mediasSorted.get(position).getMediaRecord().getUrl().isEmpty())
+        if(mediasGrouped.get(position).getMediaRecord().getUrl().isEmpty())
             holder.imageView.setImageResource(R.drawable.question_mark);
         else
             Picasso.with(holder.imageView.getContext())
-                    .load(mediasSorted.get(position).getMediaRecord().getUrl())
+                    .load(mediasGrouped.get(position).getMediaRecord().getUrl())
                     .placeholder(R.drawable.question_mark)
                     .error(R.drawable.question_mark)
                     .centerCrop().fit()
@@ -73,7 +72,7 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
 
     @Override
     public int getItemCount() {
-        return mediasSorted.size();
+        return mediasGrouped.size();
     }
 
     private String getLabelProgress(ProgressionRecord p) {

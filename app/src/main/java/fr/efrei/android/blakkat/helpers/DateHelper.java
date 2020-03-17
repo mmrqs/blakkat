@@ -18,6 +18,12 @@ public class DateHelper {
         return String.format(s, DateHelper.frenchFormat.format(d));
     }
 
+    public static String formatInternational(Date d) {
+        if(frenchFormat == null)
+            DateHelper.initFormat();
+        return String.format("%tF", d);
+    }
+
     private static void initFormat() {
         DateHelper.frenchFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT, Locale.FRENCH);
     }

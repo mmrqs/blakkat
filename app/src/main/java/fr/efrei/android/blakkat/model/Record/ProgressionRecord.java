@@ -2,6 +2,7 @@ package fr.efrei.android.blakkat.model.Record;
 
 import com.orm.SugarRecord;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;

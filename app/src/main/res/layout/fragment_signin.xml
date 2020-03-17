@@ -26,6 +26,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/pseudo"
+                android:text="Pseudo"
                 android:inputType="textPersonName"
                 android:backgroundTint="#242323"/>
 

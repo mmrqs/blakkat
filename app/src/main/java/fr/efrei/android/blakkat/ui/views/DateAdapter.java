@@ -15,9 +15,12 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import fr.efrei.android.blakkat.R;
+import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
-import fr.efrei.android.blakkat.model.Record.UserRecord;
 
+/**
+ * Displays an horizontal list of the {@link Media} seen at a certain date
+ */
 public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
     private List<ProgressionRecord> mediasGrouped;
 
@@ -34,10 +37,20 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
         }
     }
 
+    /**
+     * Constructor
+     * @param progressionsList list of progressions
+     */
     public DateAdapter(List<ProgressionRecord> progressionsList) {
         mediasGrouped = progressionsList;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public DateAdapter.DateHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,6 +60,11 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
         return new DateAdapter.DateHolder(v);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param holder
+     * @param position
+     */
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull DateAdapter.DateHolder holder, int position) {
@@ -70,11 +88,20 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
                     .into(holder.imageView);
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public int getItemCount() {
         return mediasGrouped.size();
     }
 
+    /**
+     * Creates the label for the progression made
+     * @param p progress made
+     * @return label of the progress
+     */
     private String getLabelProgress(ProgressionRecord p) {
         String s = "";
         if (p.getProgressLevel1() != 0)

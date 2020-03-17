@@ -14,6 +14,9 @@ import androidx.fragment.app.Fragment;
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.helpers.Toaster;
 
+/**
+ * This {@link Fragment} will be shown upon sign up request
+ */
 public class SignUpFragment extends Fragment {
     private SignUpActionsListener signUpActionsListener;
     private TextView editTextPseudo;

@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +28,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Displays a list of suggestions for the user
+ */
 public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.SuggestionHolder> {
     private List<SuggestionRecord> suggestions;
     private UserRecord userRecord;
@@ -48,12 +50,22 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
         }
     }
 
+    /**
+     * Constructor
+     * @param userRecord for which the suggestions will be made
+     */
     public SuggestionAdapter(UserRecord userRecord) {
         this.userRecord = userRecord;
         this.suggestions = SuggestionRecord.find(SuggestionRecord.class,
                 "user_record = ?", String.valueOf(userRecord.getId()));
     }
 
+    /**
+     * {@inheritDoc}
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public SuggestionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -62,10 +74,15 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
         return new SuggestionHolder(v);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param holder
+     * @param position
+     */
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull SuggestionHolder holder, int position) {
-
+        //truncating long titles to avoid overflowing
         String title = suggestions.get(position).getMediaRecord().getTitle();
         if (title.length() > 15) {
             title = title.substring(0, 15);
@@ -94,26 +111,34 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
         });
     }
 
+    /**
+     * Creates a suitable {@link Callback} for the APIs requests
+     * @param holder view actually holding
+     * @param position position of the view in the list
+     * @return a suitable {@link Callback}
+     */
     private Callback<Media> createNewCallback(@NonNull SuggestionHolder holder, int position) {
         return new Callback<Media>() {
             @Override
             public void onResponse(@NonNull Call<Media> call, @NonNull Response<Media> response) {
                 if (response.body() != null) {
-                    ProgressionRecord actualProgression =
-                            new ProgressionRecord(suggestions.get(position));
+                    ProgressionRecord actualProgression = new ProgressionRecord(suggestions.get(position));
 
                     Media media = response.body();
                     MediaRecord mediaRecord = MediaRecord.exists(media.getId(), media.getProviderHint());
                     List<ProgressionRecord> listPossibleSuggestions = media.getPossibleSuggestions(userRecord, mediaRecord);
 
+                    //we save the object of the suggestion
                     suggestions.get(position).getProgressionRecord().markViewed(userRecord, mediaRecord).save();
                     suggestions.get(position).delete();
 
+                    //if there still is something we can suggest
                     if (listPossibleSuggestions.size() > 0) {
                         SuggestionRecord sr = new SuggestionRecord();
                         sr.setUserRecord(userRecord);
                         sr.setMediaRecord(suggestions.get(position).getMediaRecord());
 
+                        //whether there is one suggestion left or not
                         if (listPossibleSuggestions.indexOf(actualProgression) < listPossibleSuggestions.size() - 1) {
                             ProgressionRecord pp = listPossibleSuggestions.get(listPossibleSuggestions.indexOf(actualProgression) + 1);
                             pp.save();
@@ -134,6 +159,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
                     }
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<Media> call, @NonNull Throwable t) {
                 t.printStackTrace();
@@ -142,11 +168,20 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
         };
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public int getItemCount() {
         return this.suggestions.size();
     }
 
+    /**
+     * Creates a label for the progression
+     * @param p subject
+     * @return a {@link String} that represents the infos of the progress
+     */
     private String getLabelProgress(SuggestionRecord p) {
         String s = "";
         if (p.getProgressionRecord().getProgressLevel1() != 0)

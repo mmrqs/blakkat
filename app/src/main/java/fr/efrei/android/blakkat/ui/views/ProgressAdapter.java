@@ -15,19 +15,18 @@ import com.orm.query.Select;
 import java.util.List;
 
 import fr.efrei.android.blakkat.R;
-import fr.efrei.android.blakkat.helpers.DateHelper;
 import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.model.Record.*;
 
+/**
+ * Displays a list of the progress made on a {@link Media}
+ */
 public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ProgressHolder> {
     private UserRecord userRecord;
     private Media media;
     private MediaRecord mediaRecord;
     private List<ProgressionRecord> progress;
     private ProgressionRecord latest;
-
-    private String viewed;
-    private String notViewed;
 
     static class ProgressHolder extends RecyclerView.ViewHolder {
         TextView textView;
@@ -42,6 +41,12 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * @param media
+     * @param userRecord
+     * @param mediaRecord
+     */
     public ProgressAdapter(Media media, UserRecord userRecord, MediaRecord mediaRecord) {
         this.userRecord = userRecord;
         this.media = media;
@@ -49,20 +54,26 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         this.progress = media.getPossibleProgress();
     }
 
+    /**
+     * {@inheritDoc}
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public ProgressHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_card_progress, parent, false);
 
-        this.viewed = v.getContext().getResources()
-                .getString(R.string.viewed);
-        this.notViewed = v.getContext().getResources()
-                .getString(R.string.not_viewed);
-
         return new ProgressHolder(v);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ProgressHolder holder, int position) {
         ProgressionRecord subject = mediaRecord == null ? this.progress.get(position) :
@@ -74,16 +85,19 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             mediaRecord = MediaRecord.exists(media.getId(), media.getProviderHint());
             latest = subject;
 
+            //if the media record is null we create it with a new progress record
             if(mediaRecord == null) {
                 mediaRecord = new MediaRecord(media);
                 mediaRecord.save();
                 subject.markViewed(userRecord, mediaRecord).save();
             } else {
+                //if the progress was made we delete it from database ; otherwise we save it
                 if (subject.isViewed())
                     subject.markViewed(userRecord, mediaRecord).save();
                 else {
                     subject.delete();
 
+                    //finding the latest progress made on this media
                     List<ProgressionRecord> madeProgress = Select.from(ProgressionRecord.class)
                             .where(Condition.prop("user_record")
                                             .eq(String.valueOf(userRecord.getId())),
@@ -119,6 +133,11 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         });
     }
 
+    /**
+     * Tests the existence of a progression record in database
+     * @param p whose existence will be tested
+     * @return true if it exists
+     */
     private ProgressionRecord testExisting(ProgressionRecord p) {
         ProgressionRecord test = ProgressionRecord
                 .exists(userRecord, mediaRecord, p);
@@ -126,12 +145,22 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         return test == null ? p : test;
     }
 
+    /**
+     * Changes the content of the button in accordance with the progress it represents
+     * @param subject progress
+     * @param holder view holding the button
+     */
     private void changeButtonView(ProgressionRecord subject, ProgressHolder holder) {
         holder.seenButton.setImageResource(subject.isViewed() ?
                 R.drawable.ic_action_check_notviewed:
                 R.drawable.ic_action_check_ok);
     }
 
+    /**
+     * Creates a label for the progression
+     * @param p subject
+     * @return a {@link String} that represents the infos of the progress
+     */
     private String getLabelProgress(ProgressionRecord p) {
         String s = "";
         if (media.getProgressLevel1Label() != null)
@@ -140,6 +169,10 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         return s;
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public int getItemCount() {
         return this.progress.size();

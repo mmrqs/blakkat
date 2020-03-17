@@ -22,18 +22,26 @@ import fr.efrei.android.blakkat.ui.fragments.TimelineFragment;
 import fr.efrei.android.blakkat.ui.fragments.ViewedMediasFragment;
 import fr.efrei.android.blakkat.ui.views.MediaAdapter;
 
+/**
+ * This activity is the principal one, as it will be shown in virtualy every standard use case,
+ * beside settings and login
+ */
 public class MainActivity extends AppCompatActivity
         implements MediaAdapter.DisplayActionsListener,
         DisplayMediaFragment.MediaLoadedListener {
 
+    /**
+     * {@inheritDoc}
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);;
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                item -> {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        // bottom navigation options
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
                     switch (item.getItemId()) {
                         case R.id.action_search:
                             changeFragment(new SearchMediasFragment());
@@ -63,12 +71,24 @@ public class MainActivity extends AppCompatActivity
         changeFragment(new HomeFragment(), false);
     }
 
+    /**
+     * Overflown menu
+     * {@inheritDoc}
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_overflow_menu, menu);
         return true;
     }
 
+    /**
+     * Toolbar actions
+     * {@inheritDoc}
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {

@@ -19,6 +19,9 @@ import java.util.stream.Collectors;
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.model.Media;
 
+/**
+ * Shows a list of {@link Media}
+ */
 public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder> {
     private List<Media> medias;
     private DisplayActionsListener displayActionsListener;
@@ -36,6 +39,12 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
         }
     }
 
+    /**
+     * Constructor
+     * @param medias list to display
+     * @param displayActionsListener parent activity
+     * @param mode sorts results by title or public score
+     */
     public MediaAdapter(List<Media> medias, DisplayActionsListener displayActionsListener, SortMode mode) {
         if(mode == SortMode.TITLE) {
             this.medias = medias.stream().sorted(Comparator.comparing(Media::getTitle))
@@ -48,6 +57,12 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
         this.displayActionsListener = displayActionsListener;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public MediaHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -56,6 +71,11 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
         return new MediaHolder(v);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param holder
+     * @param position
+     */
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(MediaHolder holder, int position) {
@@ -76,6 +96,10 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
                 .onMediaChosen(medias.get(position)));
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public int getItemCount() {
         return medias.size();
@@ -88,6 +112,9 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
         void onMediaChosen(Media media);
     }
 
+    /**
+     * Sorting mode for the list
+     */
     public enum SortMode {
         TITLE,
         SCORE

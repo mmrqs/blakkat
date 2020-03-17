@@ -24,17 +24,31 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * This {@link Fragment} will show the list of {@link Media} seen by the user
+ */
 public class ViewedMediasFragment extends Fragment {
     private ArrayList<Media> seen;
     private MediaAdapter.DisplayActionsListener listener;
     private RecyclerView recyclerView;
 
+    /**
+     * {@inheritDoc}
+     * @param context
+     */
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.listener = (MediaAdapter.DisplayActionsListener) context;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +65,10 @@ public class ViewedMediasFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Creates a suitable {@link Callback} for the asynchronous request to the APIs
+     * @return suitable {@link Callback}
+     */
     private Callback<Media> createNewCallback() {
         return new Callback<Media>() {
             @Override

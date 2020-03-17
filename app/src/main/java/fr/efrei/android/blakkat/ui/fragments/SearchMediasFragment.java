@@ -28,6 +28,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * This {@link Fragment} allows the user to search {@link Media}
+ */
 public class SearchMediasFragment extends Fragment {
     private MediaAdapter.DisplayActionsListener displayActionsListener;
     private RecyclerView recyclerView;
@@ -40,6 +43,10 @@ public class SearchMediasFragment extends Fragment {
     private CheckBox showsCheckbox;
     private Switch switchOrderByTitle;
 
+    /**
+     * {@inheritDoc}
+     * @param context
+     */
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -50,6 +57,13 @@ public class SearchMediasFragment extends Fragment {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,6 +89,10 @@ public class SearchMediasFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Gets every checkable component
+     * @param view actual view
+     */
     private void initRegistry(View view) {
         animesCheckBox = view.findViewById(R.id.searchMedias_checkBox_animes);
         mangasCheckbox = view.findViewById(R.id.searchMedias_checkBox_mangas);
@@ -83,6 +101,11 @@ public class SearchMediasFragment extends Fragment {
         switchOrderByTitle = view.findViewById(R.id.searchMedias_switch);
     }
 
+    /**
+     * Creates a suitable {@link android.widget.SearchView.OnQueryTextListener} for the searchbar
+     * @param searchBar searchbar
+     * @return a suitable listener
+     */
     private SearchView.OnQueryTextListener createNewQueryTextListener(SearchView searchBar) {
         return new SearchView.OnQueryTextListener() {
             @Override
@@ -108,6 +131,10 @@ public class SearchMediasFragment extends Fragment {
         };
     }
 
+    /**
+     * Creates a suitable {@link Callback} for the asynchronous call to the api
+     * @return suitable callback
+     */
     private Callback<List<Media>> createNewCallback() {
         return new Callback<List<Media>>() {
             @Override
@@ -129,6 +156,10 @@ public class SearchMediasFragment extends Fragment {
         };
     }
 
+    /**
+     * Returns the providers that are not excluded by the user with the checkboxes
+     * @return list of the remaining providers
+     */
     private List<IProvider> getNonExcludedProviders() {
         ArrayList<IProvider> includedProviders = new ArrayList<>();
         if(animesCheckBox.isChecked()) {

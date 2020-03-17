@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import java.util.Locale;
-
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.consuming.providers.KeeperFactory;
 import fr.efrei.android.blakkat.helpers.SessionHelper;
@@ -16,9 +14,17 @@ import fr.efrei.android.blakkat.model.Record.UserRecord;
 import fr.efrei.android.blakkat.ui.fragments.SignInFragment;
 import fr.efrei.android.blakkat.ui.fragments.SignUpFragment;
 
+/**
+ * This activity will be the first seen by the user ; it controls {@link SignUpFragment} and
+ * {@link SignUpFragment}
+ */
 public class LoginActivity extends AppCompatActivity
         implements SignInFragment.SignInActionsListener, SignUpFragment.SignUpActionsListener {
 
+    /**
+     * {@inheritDoc}
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +33,11 @@ public class LoginActivity extends AppCompatActivity
         changeSignFragment(new SignInFragment());
     }
 
+    /**
+     * Tries to sign the given pseudo in ; upon success, signals it to the caller
+     * @param pseudo that will be signed in
+     * @return true if signed in, false if not
+     */
     @Override
     public boolean onSignIn(String pseudo) {
         UserRecord u = UserRecord.exists(pseudo);
@@ -40,6 +51,11 @@ public class LoginActivity extends AppCompatActivity
         return false;
     }
 
+    /**
+     * Tries to sign the given pseudo up ; upon success, signals it to the caller
+     * @param pseudo that will be signed up
+     * @return the reason of failure or nothing
+     */
     @Override
     public String onSignUp(String pseudo) {
         if(pseudo.equals("")) {
@@ -53,17 +69,26 @@ public class LoginActivity extends AppCompatActivity
         return getResources().getString(R.string.pseudo_exists);
     }
 
-
+    /**
+     * Allows this activity to swap to {@link SignUpFragment} when requested
+     */
     @Override
     public void onSignUpRequest() {
         changeSignFragment(new SignUpFragment());
     }
 
+    /**
+     * Allows this activity to swap to {@link SignInFragment} when requested
+     */
     @Override
     public void onSignInRequest() {
         changeSignFragment(new SignInFragment());
     }
 
+    /**
+     * Swaps the current {@link Fragment} for the provided one
+     * @param fragment that will be displayed
+     */
     private void changeSignFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.login_frameLayout_sign, fragment);

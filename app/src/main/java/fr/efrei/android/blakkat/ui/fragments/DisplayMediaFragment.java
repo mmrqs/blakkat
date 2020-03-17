@@ -31,6 +31,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * This {@link Fragment} will display a media thoroughly
+ */
 public class DisplayMediaFragment extends Fragment {
     private UserRecord userRecord;
     private MediaRecord mediaRecord;
@@ -40,14 +43,23 @@ public class DisplayMediaFragment extends Fragment {
     private Media displayedMedia;
     private View view;
 
+    /**
+     * Constructor
+     * @param displayedMedia media that will be displayed
+     */
     public DisplayMediaFragment(Media displayedMedia) {
         this.displayedMedia = displayedMedia;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param context
+     */
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
+            // listener injection for the media loading
             listener = (MediaLoadedListener) context;
             loadMedia();
         } catch (ClassCastException e) {
@@ -55,6 +67,13 @@ public class DisplayMediaFragment extends Fragment {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,7 +85,7 @@ public class DisplayMediaFragment extends Fragment {
     }
 
     /**
-     * Loads the informations of the media
+     * Loads the infos of the media asynchronously
      */
     private void loadMedia() {
         KeeperFactory.getKeeper()
@@ -77,7 +96,7 @@ public class DisplayMediaFragment extends Fragment {
 
     /**
      * Creates a {@link Callback} to the request of the displayed media
-     * @return TODO
+     * @return a suitable {@link Callback}
      */
     private Callback<Media> createNewCallBack() {
         return new Callback<Media>() {
@@ -110,6 +129,9 @@ public class DisplayMediaFragment extends Fragment {
         initRecyclerProgress();
     }
 
+    /**
+     * Initializes the {@link ImageView} component
+     */
     private void initImageView() {
         ImageView imageView = view.findViewById(R.id.imageCard_displayActivity);
         Picasso.with(imageView.getContext())
@@ -121,6 +143,9 @@ public class DisplayMediaFragment extends Fragment {
                 .into(imageView);
     }
 
+    /**
+     * Initializes the {@link TextView} components
+     */
     private void initTextViews() {
         ((TextView)view.findViewById(R.id.titleDisplay))
                 .setText(displayedMedia.getTitle());
@@ -136,6 +161,9 @@ public class DisplayMediaFragment extends Fragment {
                         displayedMedia.getSynopsis()));
     }
 
+    /**
+     * Initializes the {@link ProgressAdapter} component
+     */
     private void initRecyclerProgress() {
         RecyclerView.Adapter adapter = new ProgressAdapter(displayedMedia, userRecord, mediaRecord);
 
@@ -148,9 +176,13 @@ public class DisplayMediaFragment extends Fragment {
         recyclerProgress.setAdapter(adapter);
     }
 
+    /**
+     * Initializes the {@link RatingBar} component
+     */
     private void initRatingBar() {
         RatingBar bar = view.findViewById(R.id.displayMedia_ratingBar);
 
+        //if the media exists and has a rating we get it from the database
         if(mediaRecord != null) {
             ratingRecord = RatingRecord.exists(userRecord, mediaRecord);
             if(ratingRecord != null)
@@ -165,7 +197,7 @@ public class DisplayMediaFragment extends Fragment {
 
             ratingRecord = RatingRecord.exists(userRecord, mediaRecord);
             if(ratingRecord != null)
-                ratingRecord.setRating((int) rating);
+                ratingRecord.setRating((int)rating);
             else
                 ratingRecord = new RatingRecord((int)rating, userRecord, mediaRecord);
             ratingRecord.save();
@@ -184,6 +216,9 @@ public class DisplayMediaFragment extends Fragment {
                 .setText(displayedMedia.getSynopsis());
     }
 
+    /**
+     * Allows this {@link Fragment} to call the parent activity
+     */
     public interface MediaLoadedListener {
         void onMediaLoaded(Media media);
     }

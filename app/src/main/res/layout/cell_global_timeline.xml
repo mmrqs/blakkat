@@ -8,12 +8,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View
-            android:id="@+id/divider4"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
-
         <TextView
             android:id="@+id/date_timeline_tv"
             android:layout_width="wrap_content"
@@ -25,13 +19,16 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_date"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" >
+
+        </androidx.recyclerview.widget.RecyclerView>
 
         <View
-            android:id="@+id/divider3"
+            android:id="@+id/divider4"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider" />
+
     </LinearLayout>
 
 </FrameLayout>

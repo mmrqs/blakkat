@@ -1,6 +1,5 @@
 package fr.efrei.android.blakkat.ui.views;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +19,16 @@ import java.util.stream.Collectors;
 
 import fr.efrei.android.blakkat.R;
 import fr.efrei.android.blakkat.helpers.DateHelper;
+import fr.efrei.android.blakkat.model.Media;
 import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
 import fr.efrei.android.blakkat.model.Record.UserRecord;
 
+/**
+ * Shows vertically horizontal lists of {@link Media} seen by the user
+ */
 public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.TimelineHolder> {
     private Map<String, List<ProgressionRecord>> mediasGroupedByDate;
     private String[] mediasKeys;
-    private RecyclerView recyclerView;
-    private UserRecord userRecord;
 
     static class TimelineHolder extends RecyclerView.ViewHolder {
         TextView textView;
@@ -40,12 +41,14 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
         }
     }
 
-    @SuppressLint("DefaultLocale")
+    /**
+     * Constructor
+     * @param u user for which we create the timeline
+     */
     public TimelineAdapter(UserRecord u) {
-        userRecord = u;
         mediasGroupedByDate = Select.from(ProgressionRecord.class)
                 .where(Condition.prop("user_record")
-                        .eq(String.valueOf(userRecord.getId())))
+                        .eq(String.valueOf(u.getId())))
                 .orderBy("made DESC").list().stream()
                 .collect(Collectors.groupingBy(pr -> DateHelper.formatInternational(pr.getMade())));
         mediasKeys = mediasGroupedByDate.keySet()
@@ -55,6 +58,12 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
                 .toArray(String[]::new);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public TimelineAdapter.TimelineHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -63,6 +72,11 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
         return new TimelineAdapter.TimelineHolder(v);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(TimelineAdapter.TimelineHolder holder, int position) {
         String dateKey = mediasKeys[position];
@@ -70,12 +84,16 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
                 .format(mediasGroupedByDate.get(dateKey)
                         .get(0).getMade()));
 
-        recyclerView = holder.v.findViewById(R.id.recyclerview_date);
+        RecyclerView recyclerView = holder.v.findViewById(R.id.recyclerview_date);
         recyclerView.setLayoutManager(new LinearLayoutManager(holder.v.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(new DateAdapter(mediasGroupedByDate.get(dateKey)));
     }
 
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public int getItemCount() {
         return mediasKeys.length;

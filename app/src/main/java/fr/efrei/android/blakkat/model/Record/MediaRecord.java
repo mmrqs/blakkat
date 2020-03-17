@@ -66,7 +66,7 @@ public class MediaRecord extends SugarRecord {
      * @param <T> class of the corresponding {@link Media}
      * @return the matching {@link Media} if found, null otherwise
      */
-    public <T extends Media> Call<T> getCorresponding() {
+    public <T extends Media> Call<T> getCorrespondingMedia() {
         return KeeperFactory.getKeeper()
                 .getProviderFor(this.type)
                 .getOne(this.identifier);

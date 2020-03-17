@@ -14,11 +14,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.orm.query.Select;
+
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import fr.efrei.android.blakkat.R;
+import fr.efrei.android.blakkat.helpers.SessionHelper;
 import fr.efrei.android.blakkat.model.Media;
-import fr.efrei.android.blakkat.model.Record.MediaRecord;
+import fr.efrei.android.blakkat.model.Record.ProgressionRecord;
+import fr.efrei.android.blakkat.model.Record.UserRecord;
 import fr.efrei.android.blakkat.ui.views.MediaAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,13 +60,23 @@ public class ViewedMediasFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_viewed_medias, container, false);
 
+        UserRecord u = SessionHelper.get(getResources().getString(R.string.user), UserRecord.class);
         this.seen = new ArrayList<>();
         this.recyclerView = view.findViewById(R.id.viewedMedias_recyclerView_viewed);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        MediaRecord.findAll(MediaRecord.class)
-                .forEachRemaining(mr -> mr.getCorresponding()
-                        .enqueue(createNewCallback()));
+        Set<Long> ids = new HashSet<>();
+
+        ProgressionRecord.findAll(ProgressionRecord.class)
+                .forEachRemaining(pr -> {
+                    if(pr.getMade() != null &&
+                            pr.getUserRecord().getId().equals(u.getId()) &&
+                            !ids.contains(pr.getMediaRecord().getId())) {
+                        ids.add(pr.getMediaRecord().getId());
+                        pr.getMediaRecord().getCorrespondingMedia()
+                                .enqueue(createNewCallback());
+                    }
+                });
 
         return view;
     }

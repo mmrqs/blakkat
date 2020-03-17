@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/login_imageView_blakkat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="87dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/logo"
             app:srcCompat="@drawable/logo_blakkat_dark" />

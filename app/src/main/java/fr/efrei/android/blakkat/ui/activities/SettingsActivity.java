@@ -5,7 +5,9 @@ import android.app.NotificationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,10 +33,13 @@ public class SettingsActivity extends AppCompatActivity {
         UserRecord currentUser = SessionHelper.get(getResources()
                 .getString(R.string.user), UserRecord.class);
 
-        ((Switch)findViewById(R.id.settings_switch_jikan))
+        ((Switch)findViewById(R.id.settingsActivity_switch_jikan))
                 .setChecked(currentUser.isEighteen());
 
-        ((Switch)findViewById(R.id.settings_switch_jikan))
+        ((EditText)findViewById(R.id.settingsActivity_editText_userName))
+                .setText(currentUser.getPseudo());
+
+        ((Switch)findViewById(R.id.settingsActivity_switch_jikan))
                 .setOnCheckedChangeListener((buttonView, isChecked) -> {
                     KeeperFactory.updateJikanSetting(isChecked);
 
@@ -48,10 +53,10 @@ public class SettingsActivity extends AppCompatActivity {
                             getResources().getString(R.string.eighteen_mode_desactivated));
                 });
 
-        ((Switch)findViewById(R.id.notifications))
+        ((Switch)findViewById(R.id.settingsActivity_switch_notifications))
                 .setChecked(currentUser.isEnableNotifs());
 
-        ((Switch)findViewById(R.id.notifications))
+        ((Switch)findViewById(R.id.settingsActivity_switch_notifications))
                 .setOnCheckedChangeListener((buttonView, isChecked) -> {
                     if(isChecked)
                         createNotificationChannel();
@@ -67,8 +72,6 @@ public class SettingsActivity extends AppCompatActivity {
                             getResources().getString(R.string.notification_mode_activated) :
                             getResources().getString(R.string.notification_mode_desactivated));
                 });
-
-
     }
 
     @Override

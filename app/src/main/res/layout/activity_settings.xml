@@ -19,20 +19,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        android:divider="@drawable/custom_divider">
+
+        <TextView
+            android:id="@+id/settingsActivity_textView_userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settingsActivity_userName"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/settingsActivity_editText_userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/settingsActivity_textView_userSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settingsActivity_textView_userSettings"
+            android:textSize="24sp" />
 
         <Switch
-            android:id="@+id/settings_switch_jikan"
-            android:layout_width="wrap_content"
+            android:id="@+id/settingsActivity_switch_jikan"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/settings_switch_jikan" />
+            android:text="@string/settings_switch_jikan"
+            android:textColor="#E91E63" />
 
         <Switch
-            android:id="@+id/notifications"
-            android:layout_width="wrap_content"
+            android:id="@+id/settingsActivity_switch_notifications"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="notifications" />
+            android:text="@string/notifications" />
     </LinearLayout>
 </LinearLayout>

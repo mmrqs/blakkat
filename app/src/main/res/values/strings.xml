@@ -30,9 +30,9 @@
     <string name="loading_text">%1$s Loading information…</string>
     <string name="main_menu_settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="settings_switch_jikan">Jikan - Enable «eighteen mode»</string>
-    <string name="eighteen_mode_activated">Eighteen mode ACTIVATED don\’t browse Blakkat in a public space</string>
-    <string name="eighteen_mode_desactivated">Eighteen mode DESACTIVATED</string>
+    <string name="settings_switch_jikan">Jikan - Enable +18 content</string>
+    <string name="eighteen_mode_activated">+18 mode ACTIVATED don\’t browse Blakkat in a public space</string>
+    <string name="eighteen_mode_desactivated">+18 mode DESACTIVATED</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -72,5 +72,8 @@
 
     <string name="date_timeline">Date</string>
     <string name="action_timeline">action_timeline</string>
+    <string name="notifications">Enable Blakkat notifications</string>
+    <string name="settingsActivity_userName">User informations</string>
+    <string name="settingsActivity_textView_userSettings">User settings</string>
 
 </resources>

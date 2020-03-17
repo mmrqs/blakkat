@@ -57,7 +57,7 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
             title += "...";
         }
 
-        holder.textView.setText(title + " \n " +
+        holder.textView.setText(title + " - " +
                 getLabelProgress(mediasSorted.get(position)));
 
         if(mediasSorted.get(position).getMediaRecord().getUrl().isEmpty())

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +36,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
     static class SuggestionHolder extends RecyclerView.ViewHolder {
         TextView textView;
         ImageView imageView;
-        Button seenButton;
+        ImageButton seenButton;
         View v;
 
         SuggestionHolder(View vi) {
@@ -64,8 +65,15 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull SuggestionHolder holder, int position) {
-        holder.textView.setText(suggestions.get(position).getMediaRecord().getTitle() +
-                " – " + getLabelProgress(suggestions.get(position)));
+
+        String title = suggestions.get(position).getMediaRecord().getTitle();
+        if (title.length() > 15) {
+            title = title.substring(0, 15);
+            title += "...";
+        }
+
+        holder.textView.setText(title +
+                " - " + getLabelProgress(suggestions.get(position)));
 
         if(suggestions.get(position).getMediaRecord().getUrl().isEmpty())
             holder.imageView.setImageResource(R.drawable.question_mark);
@@ -142,8 +150,8 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
     private String getLabelProgress(SuggestionRecord p) {
         String s = "";
         if (p.getProgressionRecord().getProgressLevel1() != 0)
-            s += "Season : " + p.getProgressionRecord().getProgressLevel1();
-        s += " Episode : " + p.getProgressionRecord().getProgressLevel2();
+            s += "S" + p.getProgressionRecord().getProgressLevel1();
+        s += " Ep" + p.getProgressionRecord().getProgressLevel2();
         return s;
     }
 }

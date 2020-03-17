@@ -3,7 +3,7 @@ package fr.efrei.android.blakkat.ui.views;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,7 +31,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
 
     static class ProgressHolder extends RecyclerView.ViewHolder {
         TextView textView;
-        Button seenButton;
+        ImageButton seenButton;
         View v;
 
         ProgressHolder(View vi) {
@@ -67,7 +67,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
     public void onBindViewHolder(@NonNull ProgressHolder holder, int position) {
         ProgressionRecord subject = mediaRecord == null ? this.progress.get(position) :
                 testExisting(this.progress.get(position));
-        this.changeButtonText(subject, holder);
+        this.changeButtonView(subject, holder);
 
         holder.textView.setText(getLabelProgress(subject));
         holder.seenButton.setOnClickListener(view -> {
@@ -93,7 +93,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
                     latest = madeProgress.size() > 0 ? madeProgress.get(0) : null;
                 }
             }
-            this.changeButtonText(subject, holder);
+            this.changeButtonView(subject, holder);
 
             List<ProgressionRecord> listPossibleSuggestions = media
                     .getPossibleSuggestions(userRecord, mediaRecord);
@@ -126,10 +126,10 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         return test == null ? p : test;
     }
 
-    private void changeButtonText(ProgressionRecord subject, ProgressHolder holder) {
-        holder.seenButton.setText(subject.isViewed() ?
-                this.notViewed :
-                DateHelper.format(viewed, subject.getMade()));
+    private void changeButtonView(ProgressionRecord subject, ProgressHolder holder) {
+        holder.seenButton.setImageResource(subject.isViewed() ?
+                R.drawable.ic_action_check_notviewed:
+                R.drawable.ic_action_check_ok);
     }
 
     private String getLabelProgress(ProgressionRecord p) {

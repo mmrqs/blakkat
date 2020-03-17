@@ -7,7 +7,7 @@
     tools:context=".ui.fragments.DisplayMediaFragment">
 
     <LinearLayout
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            app:cardBackgroundColor="@android:color/white"
+            app:cardBackgroundColor="#424242"
             app:cardCornerRadius="2dp"
             app:cardElevation="2dp">
 
@@ -40,7 +40,7 @@
                     android:background="?android:selectableItemBackground"
                     android:fontFamily="sans-serif"
                     android:padding="20dp"
-                    android:textColor="#333"
+                    android:layout_gravity="center"
                     android:textSize="18sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -48,23 +48,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:padding="10dp">
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/time"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/genre"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/synopsis"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/display_textView_synopsis" />
+                android:gravity="center"/>
 
             <RatingBar
                 android:id="@+id/displayMedia_ratingBar"
@@ -75,10 +79,33 @@
                 android:numStars="5"
                 android:stepSize="1" />
 
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/synopsis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/display_textView_synopsis"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/SynopsisContent_Display"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"/>
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/displayFragment_recyclerView"

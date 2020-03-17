@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    app:cardBackgroundColor="@android:color/white"
+    app:cardBackgroundColor="#424242"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp">
     <LinearLayout
@@ -19,20 +19,29 @@
             android:layout_height="200dp"
             android:scaleType="centerCrop"
             tools:src="" />
-        <TextView
-            android:id="@+id/title_progression"
-            android:layout_height="wrap_content"
-            android:background="?android:selectableItemBackground"
-            android:padding="20dp"
-            android:fontFamily="sans-serif"
-            android:textColor="#333"
-            android:textSize="18sp"
-            android:layout_width="wrap_content" />
 
-        <Button
-            android:id="@+id/seen_progression"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/mark_as_viewed" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/title_progression"
+                android:layout_width="223dp"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                android:fontFamily="sans-serif"
+                android:padding="20dp"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/seen_progression"
+                android:layout_width="77dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="#424242"
+                app:srcCompat="@drawable/ic_action_check_notviewed" />
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
